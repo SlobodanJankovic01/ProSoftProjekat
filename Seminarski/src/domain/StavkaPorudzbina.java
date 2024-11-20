@@ -10,9 +10,30 @@ package domain;
  */
 public class StavkaPorudzbina {
     
+    private int idPorudzbina;
     private int rb;
     private int kolicina;
     private int cena;
+    private int idProizvod;
+
+    public StavkaPorudzbina() {
+    }
+
+    public StavkaPorudzbina(int idPorudzbina, int rb, int kolicina, int cena, int idProizvod) {
+        this.idPorudzbina = idPorudzbina;
+        this.rb = rb;
+        this.kolicina = kolicina;
+        this.cena = cena;
+        this.idProizvod = idProizvod;
+    }
+
+    public int getIdPorudzbina() {
+        return idPorudzbina;
+    }
+
+    public void setIdPorudzbina(int idPorudzbina) {
+        this.idPorudzbina = idPorudzbina;
+    }
 
     public int getRb() {
         return rb;
@@ -38,10 +59,43 @@ public class StavkaPorudzbina {
         this.cena = cena;
     }
 
+    public int getIdProizvod() {
+        return idProizvod;
+    }
+
+    public void setIdProizvod(int idProizvod) {
+        this.idProizvod = idProizvod;
+    }
+
     @Override
     public String toString() {
-        return "StavkaPorudzbina{" + "rb=" + rb + ", kolicina=" + kolicina + ", cena=" + cena + '}';
+        return "StavkaPorudzbina{" + "idPorudzbina=" + idPorudzbina + ", rb=" + rb + ", kolicina=" + kolicina + ", cena=" + cena + ", idProizvod=" + idProizvod + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StavkaPorudzbina other = (StavkaPorudzbina) obj;
+        if (this.idPorudzbina != other.idPorudzbina) {
+            return false;
+        }
+        return this.rb == other.rb;
+    }
+    
     
     
     

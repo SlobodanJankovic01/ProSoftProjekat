@@ -14,7 +14,20 @@ public class Musterija {
     private String ime;
     private String prezime;
     private String brojTelefona;
+    private int idMesto;
 
+    public Musterija() {
+    }
+
+    public Musterija(int idMusterija, String ime, String prezime, String brojTelefona, int idMesto) {
+        this.idMusterija = idMusterija;
+        this.ime = ime;
+        this.prezime = prezime;
+        this.brojTelefona = brojTelefona;
+        this.idMesto = idMesto;
+    }
+
+    
     public int getIdMusterija() {
         return idMusterija;
     }
@@ -47,10 +60,40 @@ public class Musterija {
         this.brojTelefona = brojTelefona;
     }
 
+    public int getIdMesto() {
+        return idMesto;
+    }
+
+    public void setIdMesto(int idMesto) {
+        this.idMesto = idMesto;
+    }
+
     @Override
     public String toString() {
-        return "Musterija{" + "idMusterija=" + idMusterija + ", ime=" + ime + ", prezime=" + prezime + ", brojTelefona=" + brojTelefona + '}';
+        return "Musterija{" + "idMusterija=" + idMusterija + ", ime=" + ime + ", prezime=" + prezime + ", brojTelefona=" + brojTelefona + ", idMesto=" + idMesto + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Musterija other = (Musterija) obj;
+        return this.idMusterija == other.idMusterija;
+    }
+
     
     
 }

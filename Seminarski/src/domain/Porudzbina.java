@@ -4,8 +4,7 @@
  */
 package domain;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 /**
  *
  * @author Slobodan
@@ -15,9 +14,23 @@ public class Porudzbina {
     private int idPorudzbina;
     private String nacinIsporuke;
     private int ukupnaCena;
-    //Ovde sam stavio dateTime u seminarskom!!!!
-    private Date datumVreme;
+    private LocalDateTime datumVreme;
     private String napomena;
+    private int idRadnik;
+    private int idMusterija;
+
+    public Porudzbina() {
+    }
+
+    public Porudzbina(int idPorudzbina, String nacinIsporuke, int ukupnaCena, LocalDateTime datumVreme, String napomena, int idRadnik, int idMusterija) {
+        this.idPorudzbina = idPorudzbina;
+        this.nacinIsporuke = nacinIsporuke;
+        this.ukupnaCena = ukupnaCena;
+        this.datumVreme = datumVreme;
+        this.napomena = napomena;
+        this.idRadnik = idRadnik;
+        this.idMusterija = idMusterija;
+    }
 
     public int getIdPorudzbina() {
         return idPorudzbina;
@@ -43,11 +56,11 @@ public class Porudzbina {
         this.ukupnaCena = ukupnaCena;
     }
 
-    public Date getDatumVreme() {
+    public LocalDateTime getDatumVreme() {
         return datumVreme;
     }
 
-    public void setDatumVreme(Date datumVreme) {
+    public void setDatumVreme(LocalDateTime datumVreme) {
         this.datumVreme = datumVreme;
     }
 
@@ -59,10 +72,49 @@ public class Porudzbina {
         this.napomena = napomena;
     }
 
+    public int getIdRadnik() {
+        return idRadnik;
+    }
+
+    public void setIdRadnik(int idRadnik) {
+        this.idRadnik = idRadnik;
+    }
+
+    public int getIdMusterija() {
+        return idMusterija;
+    }
+
+    public void setIdMusterija(int idMusterija) {
+        this.idMusterija = idMusterija;
+    }
+
     @Override
     public String toString() {
-        return "Porudzbina{" + "idPorudzbina=" + idPorudzbina + ", nacinIsporuke=" + nacinIsporuke + ", ukupnaCena=" + ukupnaCena + ", datumVreme=" + datumVreme + ", napomena=" + napomena + '}';
+        return "Porudzbina{" + "idPorudzbina=" + idPorudzbina + ", nacinIsporuke=" + nacinIsporuke + ", ukupnaCena=" + ukupnaCena + ", datumVreme=" + datumVreme + ", napomena=" + napomena + ", idRadnik=" + idRadnik + ", idMusterija=" + idMusterija + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Porudzbina other = (Porudzbina) obj;
+        return this.idPorudzbina == other.idPorudzbina;
+    }
+
+    
     
     
     

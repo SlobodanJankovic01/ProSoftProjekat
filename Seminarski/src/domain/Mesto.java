@@ -14,6 +14,15 @@ public class Mesto {
     private String grad;
     private String adresa;
 
+    public Mesto() {
+    }
+
+    public Mesto(int idMesto, String grad, String adresa) {
+        this.idMesto = idMesto;
+        this.grad = grad;
+        this.adresa = adresa;
+    }
+
     public int getIdMesto() {
         return idMesto;
     }
@@ -41,6 +50,27 @@ public class Mesto {
     @Override
     public String toString() {
         return "Mesto{" + "idMesto=" + idMesto + ", grad=" + grad + ", adresa=" + adresa + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Mesto other = (Mesto) obj;
+        return this.idMesto == other.idMesto;
     }
     
     
