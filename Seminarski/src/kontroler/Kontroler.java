@@ -5,6 +5,8 @@
 package kontroler;
 
 import db.DBbroker;
+import domain.Radnik;
+import java.util.List;
 
 /**
  *
@@ -30,6 +32,17 @@ public class Kontroler {
         }
         
         return instance;
+    }
+
+    public List<Radnik> vratiListuSviRadnik() {
+
+        return dbb.vratiListuSviRadnik();
+    }
+
+    public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
+
+        dbb.kreirajRadnika(ime,prezime,korIme,pass);
+        
     }
 
     

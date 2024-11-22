@@ -4,34 +4,27 @@
  */
 package domain;
 
+import java.util.Objects;
+
 /**
  *
  * @author Slobodan
  */
 public class Radnik {
     
-    private int idRadnik;
     private String ime;
     private String prezime;
-    private String email;
+    private String korIme;
+    private String loznika;
 
     public Radnik() {
     }
 
-    public Radnik(int idRadnik, String ime, String prezime, String email) {
-        this.idRadnik = idRadnik;
+    public Radnik(String ime, String prezime, String korIme, String loznika) {
         this.ime = ime;
         this.prezime = prezime;
-        this.email = email;
-    }
-    
-    
-    public int getIdRadnik() {
-        return idRadnik;
-    }
-
-    public void setIdRadnik(int idRadnik) {
-        this.idRadnik = idRadnik;
+        this.korIme = korIme;
+        this.loznika = loznika;
     }
 
     public String getIme() {
@@ -50,17 +43,25 @@ public class Radnik {
         this.prezime = prezime;
     }
 
-    public String getEmail() {
-        return email;
+    public String getKorIme() {
+        return korIme;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setKorIme(String korIme) {
+        this.korIme = korIme;
+    }
+
+    public String getLoznika() {
+        return loznika;
+    }
+
+    public void setLoznika(String loznika) {
+        this.loznika = loznika;
     }
 
     @Override
     public String toString() {
-        return "Radnik{" + "idRadnik=" + idRadnik + ", ime=" + ime + ", prezime=" + prezime + ", email=" + email + '}';
+        return "Radnik{" + "ime=" + ime + ", prezime=" + prezime + ", korIme=" + korIme + ", loznika=" + loznika + '}';
     }
 
     @Override
@@ -81,7 +82,10 @@ public class Radnik {
             return false;
         }
         final Radnik other = (Radnik) obj;
-        return this.idRadnik == other.idRadnik;
+        if (!Objects.equals(this.korIme, other.korIme)) {
+            return false;
+        }
+        return Objects.equals(this.loznika, other.loznika);
     }
     
     
