@@ -131,18 +131,18 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
         sviRadnici=Kontroler.getInstance().vratiListuSviRadnik();
         
         //ako je lista prazna samo ce nastaviti sa ubacivanjem korisnika u bazu
-        if(sviRadnici==null){
-            
-        }else{
+        if (!sviRadnici.isEmpty()) {
             for (Radnik radnik : sviRadnici) {
-            if(korIme.equals(radnik.getKorIme()))
-                JOptionPane.showMessageDialog(this, "Vec postoji radnik sa unetim korisnickim imenom\nPromeni korisnicko ime");
-            return;
+                if (korIme.equals(radnik.getKorIme())) {
+                    JOptionPane.showMessageDialog(this, "Vec postoji radnik sa unetim korisnickim imenom\nPromeni korisnicko ime");
+                    return;
+                }
             }
         }
-        
-        Kontroler.getInstance().kreirajRadnika(ime,prezime,korIme,pass);
+
+        Kontroler.getInstance().kreirajRadnika(ime, prezime, korIme, pass);
         this.dispose();
+        
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     /**
