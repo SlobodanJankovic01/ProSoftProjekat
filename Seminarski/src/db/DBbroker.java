@@ -4,6 +4,7 @@
  */
 package db;
 
+import domain.Proizvod;
 import domain.Radnik;
 import java.util.List;
 import java.sql.*;
@@ -72,6 +73,35 @@ public class DBbroker {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
 
+        }
+
+    }
+
+    public List<Proizvod> vratiListuSviProizvodi() {
+
+        List<Proizvod> proizvodi=new ArrayList<>();
+        try {
+            Connection k=DBConnection.getInstance().getConnection();
+            
+            Statement s=k.createStatement();
+            
+            String query="SELECT * FROM proizvod";
+            
+            ResultSet rs=s.executeQuery(query);
+            
+            while (rs.next()) {                
+                Proizvod p=new Proizvod(rs.getInt("idProizvod"), rs.getString("naziv"), rs.getInt("jedinicnaCena"));
+                proizvodi.add(p);
+            }
+            
+            s.close();
+            
+            return proizvodi;
+            
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
         }
 
     }

@@ -4,7 +4,12 @@
  */
 package forme;
 
+import domain.Proizvod;
 import domain.Radnik;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import javax.swing.ListSelectionModel;
+import kontroler.Kontroler;
 
 /**
  *
@@ -26,7 +31,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         lblKorIme.setText(radnik.getKorIme());
-        
+        popuniTabelu();
+
     }
 
     /**
@@ -40,11 +46,26 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         lblKorIme = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProizvodi = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Glavna forma");
 
         jLabel1.setText("Radnik:");
+
+        tblProizvodi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProizvodi);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,10 +73,15 @@ public class FrmGlavna extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,7 +90,9 @@ public class FrmGlavna extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,6 +135,55 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblKorIme;
+    private javax.swing.JTable tblProizvodi;
     // End of variables declaration//GEN-END:variables
+
+    private void popuniTabelu() {
+
+        // DefaultTableModel koji onemogućava uređivanje ćelija
+        DefaultTableModel dt = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        // Postavljanje modela na tabelu
+        tblProizvodi.setModel(dt);
+        
+        dt.setColumnCount(2);
+        dt.setRowCount(0);
+        
+        String[] kolone = {"Naziv", "Cena"};
+        dt.setColumnIdentifiers(kolone);
+
+        List<Proizvod> sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
+        int brojac = 0;
+        
+        if (sviProizvodi == null || sviProizvodi.isEmpty()) {
+            System.out.println("Lista proizvoda je prazna");
+            return;
+        }
+        
+        for (Proizvod proizvod : sviProizvodi) {
+            dt.setRowCount(brojac + 1);
+
+            dt.setValueAt(proizvod.getNaziv(), brojac, 0);
+            dt.setValueAt(proizvod.getJedinicnaCena(), brojac, 1);
+
+            brojac++;
+        }
+
+        tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblProizvodi.setRowSelectionAllowed(true);
+        tblProizvodi.setColumnSelectionAllowed(false);
+        
+    }
+    
+    
+    
+    
+    
 }

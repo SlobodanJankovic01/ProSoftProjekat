@@ -5,6 +5,7 @@
 package kontroler;
 
 import db.DBbroker;
+import domain.Proizvod;
 import domain.Radnik;
 import java.util.List;
 
@@ -43,6 +44,10 @@ public class Kontroler {
 
         dbb.kreirajRadnika(ime,prezime,korIme,pass);
         
+    }
+
+    public List<Proizvod> vratiListuSviProizvodi() {
+        return dbb.vratiListuSviProizvodi();
     }
 
     
