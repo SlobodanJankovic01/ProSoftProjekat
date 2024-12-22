@@ -50,6 +50,12 @@ public class Kontroler {
         return dbb.vratiListuSviProizvodi();
     }
 
+    public boolean kreirajProizvod(String naziv, int cena) {
+        
+        return dbb.kreirajProizvod(naziv,cena);
+
+    }
+
     
     
     

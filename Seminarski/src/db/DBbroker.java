@@ -105,6 +105,31 @@ public class DBbroker {
         }
 
     }
+
+    public boolean kreirajProizvod(String naziv, int cena) {
+
+        try {
+            Connection k=DBConnection.getInstance().getConnection();
+            
+            String query="INSERT INTO proizvod (naziv,jedinicnaCena) VALUES (?,?)";
+            PreparedStatement ps=k.prepareStatement(query);
+            
+            ps.setString(1, naziv);
+            ps.setInt(2, cena);
+            
+            ps.executeUpdate();
+            
+            ps.close();
+            
+            JOptionPane.showMessageDialog(null, "Uspesno kreiran proizvod");
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+    }
     
     
 }
