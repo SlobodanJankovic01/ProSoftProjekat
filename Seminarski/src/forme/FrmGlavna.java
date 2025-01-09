@@ -115,7 +115,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     private void btnKreirajProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajProizvodActionPerformed
         
         FrmKreirajProizvod frmP=new FrmKreirajProizvod();
-        popuniTabelu();
+        
         
     }//GEN-LAST:event_btnKreirajProizvodActionPerformed
 
