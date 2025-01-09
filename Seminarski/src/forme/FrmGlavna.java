@@ -49,6 +49,9 @@ public class FrmGlavna extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProizvodi = new javax.swing.JTable();
         btnKreirajProizvod = new javax.swing.JButton();
+        btnOsvezi = new javax.swing.JButton();
+        btnRadnaSmena = new javax.swing.JButton();
+        btnUrediRadneSmene = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Glavna forma");
@@ -75,6 +78,27 @@ public class FrmGlavna extends javax.swing.JFrame {
             }
         });
 
+        btnOsvezi.setText("Osvezi tabelu");
+        btnOsvezi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsveziActionPerformed(evt);
+            }
+        });
+
+        btnRadnaSmena.setText("Ubaci radnu smenu");
+        btnRadnaSmena.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRadnaSmenaActionPerformed(evt);
+            }
+        });
+
+        btnUrediRadneSmene.setText("Uredi radne smene");
+        btnUrediRadneSmene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUrediRadneSmeneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,9 +112,18 @@ public class FrmGlavna extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(btnKreirajProizvod)
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnKreirajProizvod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(24, 24, 24))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnUrediRadneSmene, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRadnaSmena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,11 +135,18 @@ public class FrmGlavna extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(16, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addComponent(btnKreirajProizvod)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(btnKreirajProizvod)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnOsvezi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRadnaSmena)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUrediRadneSmene)
+                        .addGap(28, 28, 28))))
         );
 
         pack();
@@ -115,9 +155,26 @@ public class FrmGlavna extends javax.swing.JFrame {
     private void btnKreirajProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajProizvodActionPerformed
         
         FrmKreirajProizvod frmP=new FrmKreirajProizvod();
-        
-        
+
     }//GEN-LAST:event_btnKreirajProizvodActionPerformed
+
+    private void btnOsveziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsveziActionPerformed
+
+        popuniTabelu();
+
+    }//GEN-LAST:event_btnOsveziActionPerformed
+
+    private void btnRadnaSmenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadnaSmenaActionPerformed
+
+        FrmUnosRadnaSmena radnaSmena=new FrmUnosRadnaSmena();
+
+    }//GEN-LAST:event_btnRadnaSmenaActionPerformed
+
+    private void btnUrediRadneSmeneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUrediRadneSmeneActionPerformed
+
+        FrmSveRadneSmene radnesmene=new FrmSveRadneSmene();
+
+    }//GEN-LAST:event_btnUrediRadneSmeneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,6 +213,9 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKreirajProizvod;
+    private javax.swing.JButton btnOsvezi;
+    private javax.swing.JButton btnRadnaSmena;
+    private javax.swing.JButton btnUrediRadneSmene;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblKorIme;

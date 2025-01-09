@@ -6,7 +6,9 @@ package kontroler;
 
 import db.DBbroker;
 import domain.Proizvod;
+import domain.RadnaSmena;
 import domain.Radnik;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -14,24 +16,23 @@ import java.util.List;
  * @author Slobodan
  */
 public class Kontroler {
-    
+
     static Kontroler instance;
 
     DBbroker dbb;
-    
+
     public Kontroler() {
-    
-        dbb=new DBbroker();
-        
+
+        dbb = new DBbroker();
+
     }
 
-    
     public static Kontroler getInstance() {
-        
-        if(instance==null){
-            instance=new Kontroler();
+
+        if (instance == null) {
+            instance = new Kontroler();
         }
-        
+
         return instance;
     }
 
@@ -42,8 +43,8 @@ public class Kontroler {
 
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
 
-        dbb.kreirajRadnika(ime,prezime,korIme,pass);
-        
+        dbb.kreirajRadnika(ime, prezime, korIme, pass);
+
     }
 
     public List<Proizvod> vratiListuSviProizvodi() {
@@ -51,13 +52,17 @@ public class Kontroler {
     }
 
     public boolean kreirajProizvod(String naziv, int cena) {
-        
-        return dbb.kreirajProizvod(naziv,cena);
+
+        return dbb.kreirajProizvod(naziv, cena);
 
     }
 
-    
-    
-    
-    
+    public void ubaciRadnuSmenu(String naziv, LocalTime vremeOd, LocalTime vremeDo) {
+        dbb.ubaciRadnuSmenu(naziv, vremeOd, vremeDo);
+    }
+
+    public List<RadnaSmena> vratiListuSviRadnaSmena() {
+        return dbb.vratiListuSviRadnaSmena();
+    }
+
 }

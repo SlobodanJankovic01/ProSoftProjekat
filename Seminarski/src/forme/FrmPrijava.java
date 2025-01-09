@@ -153,6 +153,7 @@ public class FrmPrijava extends javax.swing.JFrame {
             return;
         }
         
+        JOptionPane.showMessageDialog(this, "Korisnicko ime i sifra su ispravni");
         FrmGlavna g=new FrmGlavna(r);
         this.dispose();
         
