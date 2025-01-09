@@ -7,6 +7,7 @@ package forme;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import kontroler.Kontroler;
@@ -38,6 +39,7 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRadneSmene = new javax.swing.JTable();
+        btnObrisi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Obrisi radnu smenu");
@@ -55,6 +57,13 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblRadneSmene);
 
+        btnObrisi.setText("Obrisi");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,18 +71,47 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+
+        int selectedRow = tblRadneSmene.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Nema selektovane radne smene", "Greška", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idRadneSmene = (int) tblRadneSmene.getValueAt(selectedRow, 0);
+
+        
+
+        if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
+            // Ažuriranje tabele nakon brisanja
+            popuniTabelu();
+            JOptionPane.showMessageDialog(null, "Sistem je obrisao radnu smenu");
+        } else {
+            JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise radnu smenu");
+        }
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,10 +161,10 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
         // Postavljanje modela na tabelu
         tblRadneSmene.setModel(dt);
 
-        dt.setColumnCount(3);
+        dt.setColumnCount(4);
         dt.setRowCount(0);
 
-        String[] kolone = {"Naziv", "Vreme od", "Vreme do"};
+        String[] kolone = {"Id", "Naziv", "Vreme od", "Vreme do"};
         dt.setColumnIdentifiers(kolone);
 
         List<RadnaSmena> sveRadneSmene = Kontroler.getInstance().vratiListuSviRadnaSmena();
@@ -140,9 +178,10 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
         for (RadnaSmena radnaSmena : sveRadneSmene) {
             dt.setRowCount(brojac + 1);
 
-            dt.setValueAt(radnaSmena.getNaziv(), brojac, 0);
-            dt.setValueAt(radnaSmena.getVremeOd(), brojac, 1);
-            dt.setValueAt(radnaSmena.getVremeDo(), brojac, 2);
+            dt.setValueAt(radnaSmena.getIdRadnaSmena(), brojac, 0);
+            dt.setValueAt(radnaSmena.getNaziv(), brojac, 1);
+            dt.setValueAt(radnaSmena.getVremeOd(), brojac, 2);
+            dt.setValueAt(radnaSmena.getVremeDo(), brojac, 3);
 
             brojac++;
         }
@@ -154,6 +193,7 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnObrisi;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblRadneSmene;
     // End of variables declaration//GEN-END:variables

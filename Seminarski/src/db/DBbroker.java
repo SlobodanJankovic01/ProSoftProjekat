@@ -11,8 +11,6 @@ import java.util.List;
 import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -179,7 +177,7 @@ public class DBbroker {
                 LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
                 LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
 
-                RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"),rs.getString("naziv"), vremeOd, vremeDo);
+                RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
 
                 radneSmene.add(radnasmena);
             }
@@ -192,6 +190,29 @@ public class DBbroker {
 
             System.out.println(ex.getMessage());
             return null;
+        }
+
+    }
+
+    public boolean obrisiRadnaSmena(int idRadneSmene) {
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM radnasmena  WHERE idRadnaSmena=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, idRadneSmene);
+
+            ps.executeUpdate();
+
+            ps.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            
+            return false;
         }
 
     }

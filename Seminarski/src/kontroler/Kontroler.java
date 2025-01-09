@@ -65,4 +65,8 @@ public class Kontroler {
         return dbb.vratiListuSviRadnaSmena();
     }
 
+    public boolean obrisiRadnaSmena(int idRadneSmene) {
+        return dbb.obrisiRadnaSmena(idRadneSmene);
+    }
+
 }
