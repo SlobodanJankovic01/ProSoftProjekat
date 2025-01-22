@@ -4,17 +4,35 @@
  */
 package server;
 
+import db.DBbroker;
+import domain.Radnik;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import komunikacija.Odgovor;
+import komunikacija.Operacija;
+import komunikacija.Receiver;
+import komunikacija.Sender;
+import komunikacija.Zahtev;
 
 /**
  *
  * @author Slobodan
  */
 public class Server {
+    
+    private DBbroker dbb;
+    private Receiver receiver;
+    private Sender sender;
+    
+    public Server() {
+        dbb=new DBbroker();
+    }
+    
+    
     
     public void startServer(){
         
@@ -24,8 +42,34 @@ public class Server {
             System.out.println("Server pokrenut cekam klijenta");
             
             //Cekanje klijenta
-            Socket socket= serverSoket.accept();
+            Socket soket= serverSoket.accept();
             System.out.println("Server:Klijent se povezao sa serverom");
+            
+            receiver =new Receiver(soket);
+            sender=new Sender(soket);
+            
+            while (true) {
+                try {
+                    //citaj zahtev
+                    Zahtev zahtev=(Zahtev)receiver.receive();
+                    Odgovor odgovor=new Odgovor();
+                    
+                    Operacija operacija=zahtev.getOperacija();
+                    if(operacija==Operacija.LOGIN){
+                        Radnik radnik = (Radnik)zahtev.getArgumenti();
+                        try {
+                            radnik=dbb.getRadnik(radnik);
+                            odgovor.setResult(radnik);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);}
+                    }
+                    //posalji odgovor
+                    sender.send(odgovor);
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             
             
         } catch (IOException ex) {

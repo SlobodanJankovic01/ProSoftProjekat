@@ -21,6 +21,40 @@ public class DBbroker {
 
     public DBbroker() {
     }
+    
+    public Radnik getRadnik(Radnik r) throws SQLException {
+
+        try {
+            Connection k= DBConnection.getInstance().getConnection();
+            
+            String upit="SELECT * FROM radnik WHERE korisnickoIme=? AND lozinka=?";
+            
+            PreparedStatement ps=k.prepareStatement(upit);
+            
+            ps.setString(1, r.getKorIme());
+            ps.setString(2, r.getLoznika());
+            
+            ResultSet rs=ps.executeQuery();
+            
+            if(rs.next()){
+                r.setIme(rs.getString("ime"));
+                r.setPrezime(rs.getString("prezime"));
+            }else{
+                throw new SQLException("Korisnik ne postoji");
+            }
+            
+            rs.close();
+            ps.close();
+            System.out.println("Uspesno ucitavanje Radnika iz baze");
+            return r;
+        } catch (SQLException ex) {
+            System.out.println("Radnik nije pronadjen u bazi");
+            ex.printStackTrace();
+            throw ex;
+        }
+
+
+    }
 
     public List<Radnik> vratiListuSviRadnik() {
 
@@ -217,4 +251,5 @@ public class DBbroker {
 
     }
 
+   
 }
