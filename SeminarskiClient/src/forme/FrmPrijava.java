@@ -8,6 +8,8 @@ import domain.Radnik;
 import java.util.ArrayList;
 import kontroler.Kontroler;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -120,42 +122,60 @@ public class FrmPrijava extends javax.swing.JFrame {
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
         
-        String korIme=txtKorIme.getText();
-        String pass=String.valueOf(txtPass.getPassword());
         
-        List<Radnik> radnici =new ArrayList<>();
-        radnici=Kontroler.getInstance().vratiListuSviRadnik();
-        
-        boolean postoji=false;
-        Radnik r=new Radnik();
-        
-        for (Radnik radnik : radnici) {
+        try {
+            String korIme=txtKorIme.getText();
+            String pass=String.valueOf(txtPass.getPassword());
+            
+            Radnik r=new Radnik();
+            r.setKorIme(korIme);
+            r.setLoznika(pass);
+            
+            r=Kontroler.getInstance().login(r);
+            FrmGlavna g=new FrmGlavna(r);
+            this.dispose();
+            
+            
+            /*String korIme=txtKorIme.getText();
+            String pass=String.valueOf(txtPass.getPassword());
+            
+            List<Radnik> radnici =new ArrayList<>();
+            radnici=Kontroler.getInstance().vratiListuSviRadnik();
+            
+            boolean postoji=false;
+            Radnik r=new Radnik();
+            
+            for (Radnik radnik : radnici) {
             if(radnik.getKorIme().equals(korIme)){
-                postoji=true;
-                r=radnik;
+            postoji=true;
+            r=radnik;
             }
-        }
-        
-        if (!postoji) {
+            }
+            
+            if (!postoji) {
             JOptionPane.showMessageDialog(this, "Radnik sa unetim korisnickim imenom ne postoji!");
             return;
-        }
-
-        postoji=false;
-        
-        for (Radnik radnik : radnici) {
+            }
+            
+            postoji=false;
+            
+            for (Radnik radnik : radnici) {
             if(radnik.getLoznika().equals(pass))
-                postoji=true;
-        }
-        
-        if(!postoji){
+            postoji=true;
+            }
+            
+            if(!postoji){
             JOptionPane.showMessageDialog(this, "Neispravna loznika");
             return;
+            }
+            
+            JOptionPane.showMessageDialog(this, "Korisnicko ime i sifra su ispravni");
+            FrmGlavna g=new FrmGlavna(r);
+            this.dispose();
+            */
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPrijava.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        JOptionPane.showMessageDialog(this, "Korisnicko ime i sifra su ispravni");
-        FrmGlavna g=new FrmGlavna(r);
-        this.dispose();
         
     }//GEN-LAST:event_btnPrijavaActionPerformed
 
