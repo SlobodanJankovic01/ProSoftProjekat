@@ -4,13 +4,14 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author Slobodan
  */
-public class RadnikRadnaSmena {
+public class RadnikRadnaSmena implements Serializable{
     
     private int id;
     private int idRadnik;

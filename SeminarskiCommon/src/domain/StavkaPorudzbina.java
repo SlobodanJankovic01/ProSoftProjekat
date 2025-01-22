@@ -4,11 +4,13 @@
  */
 package domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Slobodan
  */
-public class StavkaPorudzbina {
+public class StavkaPorudzbina implements Serializable{
     
     private int idPorudzbina;
     private int rb;

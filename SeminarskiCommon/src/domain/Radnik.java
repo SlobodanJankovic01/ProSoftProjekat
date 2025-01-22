@@ -4,13 +4,14 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Slobodan
  */
-public class Radnik {
+public class Radnik implements Serializable{
     
     private String ime;
     private String prezime;
