@@ -71,7 +71,18 @@ public class Server {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if(operacija==Operacija.KREIRAJ_PROIZVOD){
+                        
+                        try {
+                            
+                            if(dbb.kreirajProizvod((Proizvod)zahtev.getArgumenti())){
+                                odgovor.setResult(true);
+                            }
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }   
                     }
+                    
                     //posalji odgovor
                     sender.send(odgovor);
 

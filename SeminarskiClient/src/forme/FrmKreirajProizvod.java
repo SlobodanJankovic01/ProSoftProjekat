@@ -4,6 +4,9 @@
  */
 package forme;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 
 /**
@@ -94,8 +97,18 @@ public class FrmKreirajProizvod extends javax.swing.JFrame {
         String naziv=txtNaziv.getText();
         int cena=Integer.parseInt(txtCena.getText());
         
-        if(Kontroler.getInstance().kreirajProizvod(naziv,cena))
+        try {
+            
+            if(Kontroler.getInstance().kreirajProizvod(naziv,cena))
+                JOptionPane.showMessageDialog(this, "Uspesno kreiran proizvod");
+            
             this.dispose();
+                
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Neuspesno kreiranje proizvoda");
+            Logger.getLogger(FrmKreirajProizvod.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

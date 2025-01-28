@@ -83,6 +83,24 @@ public class Kontroler {
         throw new Exception("Neuspelo ucitavanje proizvoda");
         
     }
+    
+    public boolean kreirajProizvod(String naziv, int cena) throws Exception {
+        
+        Proizvod p=new Proizvod();
+        p.setJedinicnaCena(cena);
+        p.setNaziv(naziv);
+        
+        Zahtev zahtev=new Zahtev(Operacija.KREIRAJ_PROIZVOD,p);
+        sender.send(zahtev);
+        
+        Odgovor odgovor=(Odgovor)receiver.receive();
+        if(odgovor.getEx()==null){
+            return true;
+        }
+        
+        throw odgovor.getEx();
+        
+    }
 
     
     public List<Radnik> vratiListuSviRadnik() {        
@@ -98,11 +116,7 @@ public class Kontroler {
     }
 
     
-    public boolean kreirajProizvod(String naziv, int cena) {
-        return false;
-       // return dbb.kreirajProizvod(naziv, cena);
-
-    }
+    
 
     public void ubaciRadnuSmenu(String naziv, LocalTime vremeOd, LocalTime vremeDo) {
        // dbb.ubaciRadnuSmenu(naziv, vremeOd, vremeDo);

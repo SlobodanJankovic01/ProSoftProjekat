@@ -90,6 +90,31 @@ public class DBbroker {
 
     }
     
+    
+    public boolean kreirajProizvod(Proizvod p) throws SQLException {
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO proizvod (naziv,jedinicnaCena) VALUES (?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, p.getNaziv());
+            ps.setInt(2, p.getJedinicnaCena());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+    
 
     public List<Radnik> vratiListuSviRadnik() {
 
@@ -148,30 +173,6 @@ public class DBbroker {
 
     
 
-    public boolean kreirajProizvod(String naziv, int cena) {
-
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            String query = "INSERT INTO proizvod (naziv,jedinicnaCena) VALUES (?,?)";
-            PreparedStatement ps = k.prepareStatement(query);
-
-            ps.setString(1, naziv);
-            ps.setInt(2, cena);
-
-            ps.executeUpdate();
-
-            ps.close();
-
-            JOptionPane.showMessageDialog(null, "Uspesno kreiran proizvod");
-            return true;
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
-
-    }
 
     public void ubaciRadnuSmenu(String naziv, LocalTime vremeOd, LocalTime vremeDo) {
 
