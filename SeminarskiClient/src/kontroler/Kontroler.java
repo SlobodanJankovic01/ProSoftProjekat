@@ -53,7 +53,7 @@ public class Kontroler {
     }
 
     
-    public Radnik login(Radnik r) throws Exception{
+    public Radnik prijaviRadnik(Radnik r) throws Exception{
         
         //posalji zahtev
         Zahtev zahtev=new Zahtev(Operacija.LOGIN, r);
@@ -70,6 +70,20 @@ public class Kontroler {
         throw new Exception(odgovor.getEx().getMessage());
     }
     
+    public List<Proizvod> vratiListuSviProizvodi() throws Exception {
+        
+        Zahtev zahtev=new Zahtev(Operacija.VRATI_PROIZVODE, null);
+        sender.send(zahtev);
+        
+        Odgovor odgovor=(Odgovor)receiver.receive();
+        if(odgovor.getEx()==null){
+            return (List<Proizvod>) odgovor.getResult();
+        } 
+       
+        throw new Exception("Neuspelo ucitavanje proizvoda");
+        
+    }
+
     
     public List<Radnik> vratiListuSviRadnik() {        
         
@@ -83,11 +97,7 @@ public class Kontroler {
        
     }
 
-    public List<Proizvod> vratiListuSviProizvodi() {
-        return null;
-       // return dbb.vratiListuSviProizvodi();
-    }
-
+    
     public boolean kreirajProizvod(String naziv, int cena) {
         return false;
        // return dbb.kreirajProizvod(naziv, cena);

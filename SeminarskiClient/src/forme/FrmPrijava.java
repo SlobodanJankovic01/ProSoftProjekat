@@ -131,7 +131,7 @@ public class FrmPrijava extends javax.swing.JFrame {
             r.setKorIme(korIme);
             r.setLoznika(pass);
             
-            r=Kontroler.getInstance().login(r);
+            r=Kontroler.getInstance().prijaviRadnik(r);
             FrmGlavna g=new FrmGlavna(r);
             this.dispose();
             
@@ -174,6 +174,7 @@ public class FrmPrijava extends javax.swing.JFrame {
             this.dispose();
             */
         } catch (Exception ex) {
+            System.out.println("Neuspesna prijava!");
             Logger.getLogger(FrmPrijava.class.getName()).log(Level.SEVERE, null, ex);
         }
         

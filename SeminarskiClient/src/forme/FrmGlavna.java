@@ -8,6 +8,8 @@ import domain.Proizvod;
 import domain.Radnik;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
 
@@ -241,13 +243,15 @@ public class FrmGlavna extends javax.swing.JFrame {
         String[] kolone = {"Naziv", "Cena"};
         dt.setColumnIdentifiers(kolone);
 
-        List<Proizvod> sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
-        int brojac = 0;
-        
-        if (sviProizvodi == null || sviProizvodi.isEmpty()) {
-            System.out.println("Lista proizvoda je prazna");
+        List<Proizvod> sviProizvodi;
+        try {
+            sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
+        } catch (Exception ex) {
+            System.out.println("Greska pri ucitavanju proizvoda "+ex.getMessage());
+            sviProizvodi=null;
             return;
         }
+        int brojac = 0;
         
         for (Proizvod proizvod : sviProizvodi) {
             dt.setRowCount(brojac + 1);
