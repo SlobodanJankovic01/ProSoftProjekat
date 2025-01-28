@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
+import modeliTabela.TabelProizvodiModel;
 
 /**
  *
@@ -225,25 +226,15 @@ public class FrmGlavna extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
-
-        // DefaultTableModel koji onemogućava uređivanje ćelija
-        DefaultTableModel dt = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
+        
+        String[] kolone = {"Naziv", "Cena"};
+        TabelProizvodiModel dt=new TabelProizvodiModel(kolone);
 
         // Postavljanje modela na tabelu
         tblProizvodi.setModel(dt);
         
-        dt.setColumnCount(2);
-        dt.setRowCount(0);
-        
-        String[] kolone = {"Naziv", "Cena"};
-        dt.setColumnIdentifiers(kolone);
-
         List<Proizvod> sviProizvodi;
+        
         try {
             sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
         } catch (Exception ex) {
