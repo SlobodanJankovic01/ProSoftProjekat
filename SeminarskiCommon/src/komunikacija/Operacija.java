@@ -9,5 +9,5 @@ package komunikacija;
  * @author Slobodan
  */
 public enum Operacija {
-    LOGIN, VRATI_PROIZVODE, KREIRAJ_PROIZVOD
+    LOGIN, VRATI_PROIZVODE, KREIRAJ_PROIZVOD, KREIRAJ_RADNUSMENU
 }

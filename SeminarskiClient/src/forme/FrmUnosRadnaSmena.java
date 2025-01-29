@@ -7,6 +7,8 @@ package forme;
 import domain.RadnaSmena;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 
@@ -149,8 +151,22 @@ public class FrmUnosRadnaSmena extends javax.swing.JFrame {
 
         LocalTime vremeOd = prebaciUVreme(vreOd);
         LocalTime vremeDo = prebaciUVreme(vreDo);
+        
+        RadnaSmena rs=new RadnaSmena();
+        rs.setNaziv(naziv);
+        rs.setVremeDo(vremeDo);
+        rs.setVremeOd(vremeOd);
 
-        Kontroler.getInstance().ubaciRadnuSmenu(naziv, vremeOd, vremeDo);
+        try {
+            if(Kontroler.getInstance().ubaciRadnuSmenu(rs)){
+                JOptionPane.showMessageDialog(null, "Sistem je zapamtio radnu smenu");
+                this.dispose();
+            }
+        } catch (Exception ex) {
+            System.out.println("Greska pri unosu radne smene "+ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti radnu smenu");
+        }
+        
 
         this.dispose();
 

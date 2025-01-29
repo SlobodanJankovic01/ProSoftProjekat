@@ -101,6 +101,26 @@ public class Kontroler {
         throw odgovor.getEx();
         
     }
+    
+    
+    public boolean ubaciRadnuSmenu(RadnaSmena rs) throws Exception {
+        
+        Zahtev zahtev=new Zahtev(Operacija.KREIRAJ_RADNUSMENU, rs);
+        sender.send(zahtev);
+        
+        Odgovor odg=new Odgovor();
+        odg=(Odgovor) receiver.receive();
+        
+        if(odg.getEx()==null){
+            return true;
+        }
+        
+        throw odg.getEx();
+    }
+    
+    
+    
+    
 
     
     public List<Radnik> vratiListuSviRadnik() {        
@@ -118,9 +138,7 @@ public class Kontroler {
     
     
 
-    public void ubaciRadnuSmenu(String naziv, LocalTime vremeOd, LocalTime vremeDo) {
-       // dbb.ubaciRadnuSmenu(naziv, vremeOd, vremeDo);
-    }
+    
 
     public List<RadnaSmena> vratiListuSviRadnaSmena() {
         return null;

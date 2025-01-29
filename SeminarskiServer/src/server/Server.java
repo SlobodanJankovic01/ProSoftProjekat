@@ -6,11 +6,13 @@ package server;
 
 import db.DBbroker;
 import domain.Proizvod;
+import domain.RadnaSmena;
 import domain.Radnik;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +83,19 @@ public class Server {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }   
+                    } else if(operacija==Operacija.KREIRAJ_RADNUSMENU){
+                        
+                        try {
+                            
+                            if(dbb.ubaciRadnuSmenu((RadnaSmena) zahtev.getArgumenti())){
+                                odgovor.setResult(true);
+                            }
+
+                        } catch (Exception e) {
+                            odgovor.setEx(e);
+                        }
+                        
+                        
                     }
                     
                     //posalji odgovor

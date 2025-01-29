@@ -115,6 +115,32 @@ public class DBbroker {
 
     }
     
+    
+    public boolean ubaciRadnuSmenu(RadnaSmena rs) throws SQLException {
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO radnasmena (naziv,vremeOd,vremeDo) VALUES (?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, rs.getNaziv());
+            ps.setTime(2, java.sql.Time.valueOf(rs.getVremeOd()));
+            ps.setTime(3, java.sql.Time.valueOf(rs.getVremeDo()));
+
+            ps.executeUpdate();
+
+            ps.close();
+                
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+    
 
     public List<Radnik> vratiListuSviRadnik() {
 
@@ -174,32 +200,7 @@ public class DBbroker {
     
 
 
-    public void ubaciRadnuSmenu(String naziv, LocalTime vremeOd, LocalTime vremeDo) {
-
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            String query = "INSERT INTO radnasmena (naziv,vremeOd,vremeDo) VALUES (?,?,?)";
-            PreparedStatement ps = k.prepareStatement(query);
-
-            ps.setString(1, naziv);
-            ps.setTime(2, java.sql.Time.valueOf(vremeOd));
-            ps.setTime(3, java.sql.Time.valueOf(vremeDo));
-
-            ps.executeUpdate();
-
-            ps.close();
-
-            JOptionPane.showMessageDialog(null, "Sistem je zapamtio radnu smenu");
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti radnu smenu");
-
-        }
-
-    }
-
+    
     public List<RadnaSmena> vratiListuSviRadnaSmena() {
 
         List<RadnaSmena> radneSmene = new ArrayList<>();
