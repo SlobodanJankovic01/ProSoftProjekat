@@ -7,6 +7,8 @@ package forme;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -102,8 +104,6 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
 
         int idRadneSmene = (int) tblRadneSmene.getValueAt(selectedRow, 0);
 
-        
-
         if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
             // Ažuriranje tabele nakon brisanja
             popuniTabelu();
@@ -167,7 +167,14 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
         String[] kolone = {"Id", "Naziv", "Vreme od", "Vreme do"};
         dt.setColumnIdentifiers(kolone);
 
-        List<RadnaSmena> sveRadneSmene = Kontroler.getInstance().vratiListuSviRadnaSmena();
+        List<RadnaSmena> sveRadneSmene;
+        try {
+            sveRadneSmene = Kontroler.getInstance().vratiListuSviRadnaSmena();
+        } catch (Exception ex) {
+            System.out.println("Greska pri ucitavanju radnih smena " + ex.getMessage());
+            sveRadneSmene = null;
+            return;
+        }
         int brojac = 0;
 
         if (sveRadneSmene == null || sveRadneSmene.isEmpty()) {

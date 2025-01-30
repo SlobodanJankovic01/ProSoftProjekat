@@ -7,8 +7,6 @@ package forme;
 import domain.RadnaSmena;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 

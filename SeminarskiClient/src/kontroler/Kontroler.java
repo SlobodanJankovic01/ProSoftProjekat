@@ -78,11 +78,23 @@ public class Kontroler {
         Odgovor odgovor=(Odgovor)receiver.receive();
         if(odgovor.getEx()==null){
             return (List<Proizvod>) odgovor.getResult();
-        } 
-       
+        }
         throw new Exception("Neuspelo ucitavanje proizvoda");
-        
     }
+    
+    public List<RadnaSmena> vratiListuSviRadnaSmena() throws Exception {
+        
+        Zahtev zahtev=new Zahtev(Operacija.VRATI_RADNESMENE, null);
+        sender.send(zahtev);
+        
+        Odgovor odgovor=(Odgovor)receiver.receive();
+        if(odgovor.getEx()==null){
+            return (List<RadnaSmena>) odgovor.getResult();
+        }
+        throw new Exception("Neuspelo ucitavanje radnih smena");
+    
+    }
+    
     
     public boolean kreirajProizvod(String naziv, int cena) throws Exception {
         
@@ -140,10 +152,7 @@ public class Kontroler {
 
     
 
-    public List<RadnaSmena> vratiListuSviRadnaSmena() {
-        return null;
-        //return dbb.vratiListuSviRadnaSmena();
-    }
+  
 
     public boolean obrisiRadnaSmena(int idRadneSmene) {
         return false;

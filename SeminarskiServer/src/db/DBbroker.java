@@ -91,6 +91,51 @@ public class DBbroker {
     }
     
     
+    public List<RadnaSmena> vratiListuSviRadnaSmena () throws SQLException{
+
+        List<RadnaSmena> radneSmene = new ArrayList<>();
+        boolean ima=true;
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM radnasmena";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                java.sql.Time sqlVremeOd = rs.getTime("vremeOd");
+                java.sql.Time sqlVremeDo = rs.getTime("vremeDo");
+
+                // Konvertovanje u LocalTime
+                LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
+                LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
+
+                RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
+
+                radneSmene.add(radnasmena);
+                ima=true;
+            }
+            
+            if(ima==false){ 
+                throw new SQLException("Neuspelo ucitavanje proizvoda iz baze");
+            }
+                
+            rs.close();
+            s.close();
+
+            return radneSmene;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+    
+    
     public boolean kreirajProizvod(Proizvod p) throws SQLException {
 
         try {
@@ -201,42 +246,7 @@ public class DBbroker {
 
 
     
-    public List<RadnaSmena> vratiListuSviRadnaSmena() {
-
-        List<RadnaSmena> radneSmene = new ArrayList<>();
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            Statement s = k.createStatement();
-
-            String query = "SELECT * FROM radnasmena";
-
-            ResultSet rs = s.executeQuery(query);
-
-            while (rs.next()) {
-                java.sql.Time sqlVremeOd = rs.getTime("vremeOd");
-                java.sql.Time sqlVremeDo = rs.getTime("vremeDo");
-
-                // Konvertovanje u LocalTime
-                LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
-                LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
-
-                RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
-
-                radneSmene.add(radnasmena);
-            }
-
-            s.close();
-
-            return radneSmene;
-
-        } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
-            return null;
-        }
-
-    }
+    
 
     public boolean obrisiRadnaSmena(int idRadneSmene) {
 

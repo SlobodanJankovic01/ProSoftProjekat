@@ -94,9 +94,15 @@ public class Server {
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
+                    }else if (operacija == Operacija.VRATI_RADNESMENE) {
                         
-                        
-                    }
+                        try {
+                            List<RadnaSmena> radneSmene = dbb.vratiListuSviRadnaSmena();
+                            odgovor.setResult(radneSmene);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } 
                     
                     //posalji odgovor
                     sender.send(odgovor);
