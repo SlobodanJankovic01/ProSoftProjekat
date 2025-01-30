@@ -119,7 +119,7 @@ public class DBbroker {
             }
             
             if(ima==false){ 
-                throw new SQLException("Neuspelo ucitavanje proizvoda iz baze");
+                throw new SQLException("Neuspelo ucitavanje radne smene iz baze");
             }
                 
             rs.close();
@@ -186,7 +186,34 @@ public class DBbroker {
 
     }
     
+    public boolean obrisiRadnaSmena(int idRadneSmene) throws SQLException {
 
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM radnasmena  WHERE idRadnaSmena=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, idRadneSmene);
+            
+            
+
+            ps.executeUpdate();
+
+            ps.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+    
+
+    
+    
+    
     public List<Radnik> vratiListuSviRadnik() {
 
         List<Radnik> radnici = new ArrayList<>();
@@ -215,7 +242,8 @@ public class DBbroker {
         }
 
     }
-
+    
+    
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
 
         try {
@@ -241,35 +269,5 @@ public class DBbroker {
         }
 
     }
-
-    
-
-
-    
-    
-
-    public boolean obrisiRadnaSmena(int idRadneSmene) {
-
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            String query = "DELETE FROM radnasmena  WHERE idRadnaSmena=?";
-            PreparedStatement ps = k.prepareStatement(query);
-
-            ps.setInt(1, idRadneSmene);
-
-            ps.executeUpdate();
-
-            ps.close();
-            
-            return true;
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            
-            return false;
-        }
-
-    }
-
    
 }

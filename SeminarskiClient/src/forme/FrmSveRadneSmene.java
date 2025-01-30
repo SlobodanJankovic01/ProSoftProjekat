@@ -104,11 +104,14 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
 
         int idRadneSmene = (int) tblRadneSmene.getValueAt(selectedRow, 0);
 
-        if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
-            // Ažuriranje tabele nakon brisanja
-            popuniTabelu();
-            JOptionPane.showMessageDialog(null, "Sistem je obrisao radnu smenu");
-        } else {
+        try {
+            if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
+                // Ažuriranje tabele nakon brisanja
+                JOptionPane.showMessageDialog(null, "Sistem je obrisao radnu smenu");
+                popuniTabelu();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmSveRadneSmene.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise radnu smenu");
         }
     }//GEN-LAST:event_btnObrisiActionPerformed

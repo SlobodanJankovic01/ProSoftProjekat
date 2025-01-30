@@ -102,7 +102,14 @@ public class Server {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    } 
+                    }else if (operacija == Operacija.OBRISI_RADNUSMENU) {
+                        
+                        try {
+                            odgovor.setResult(dbb.obrisiRadnaSmena((int)zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }  
                     
                     //posalji odgovor
                     sender.send(odgovor);

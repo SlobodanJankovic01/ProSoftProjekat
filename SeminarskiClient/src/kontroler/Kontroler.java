@@ -30,12 +30,11 @@ public class Kontroler {
     private final Socket soket;
     private final Sender sender;
     private final Receiver receiver;
-    
-    
+
     private Kontroler() throws IOException {
-        soket =new Socket("127.0.0.1", 9000);
-        sender=new Sender(soket);
-        receiver=new Receiver(soket);
+        soket = new Socket("127.0.0.1", 9000);
+        sender = new Sender(soket);
+        receiver = new Receiver(soket);
     }
 
     public static Kontroler getInstance() {
@@ -52,111 +51,106 @@ public class Kontroler {
         return instance;
     }
 
-    
-    public Radnik prijaviRadnik(Radnik r) throws Exception{
-        
+    public Radnik prijaviRadnik(Radnik r) throws Exception {
+
         //posalji zahtev
-        Zahtev zahtev=new Zahtev(Operacija.LOGIN, r);
+        Zahtev zahtev = new Zahtev(Operacija.LOGIN, r);
         sender.send(zahtev);
-        
+
         //primi odgovor 
-        Odgovor odgovor=(Odgovor) receiver.receive();
-        if(odgovor.getEx()==null){
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
             JOptionPane.showMessageDialog(null, "Korisnicko ime i sifra su ispravni");
-            return (Radnik)odgovor.getResult();
+            return (Radnik) odgovor.getResult();
         }
-        
+
         JOptionPane.showMessageDialog(null, "Radnik sa unetim korisnickim imenom ne postoji!");
         throw new Exception(odgovor.getEx().getMessage());
     }
-    
+
     public List<Proizvod> vratiListuSviProizvodi() throws Exception {
-        
-        Zahtev zahtev=new Zahtev(Operacija.VRATI_PROIZVODE, null);
+
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_PROIZVODE, null);
         sender.send(zahtev);
-        
-        Odgovor odgovor=(Odgovor)receiver.receive();
-        if(odgovor.getEx()==null){
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
             return (List<Proizvod>) odgovor.getResult();
         }
         throw new Exception("Neuspelo ucitavanje proizvoda");
     }
-    
+
     public List<RadnaSmena> vratiListuSviRadnaSmena() throws Exception {
-        
-        Zahtev zahtev=new Zahtev(Operacija.VRATI_RADNESMENE, null);
+
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_RADNESMENE, null);
         sender.send(zahtev);
-        
-        Odgovor odgovor=(Odgovor)receiver.receive();
-        if(odgovor.getEx()==null){
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
             return (List<RadnaSmena>) odgovor.getResult();
         }
         throw new Exception("Neuspelo ucitavanje radnih smena");
-    
+
     }
-    
-    
+
     public boolean kreirajProizvod(String naziv, int cena) throws Exception {
-        
-        Proizvod p=new Proizvod();
+
+        Proizvod p = new Proizvod();
         p.setJedinicnaCena(cena);
         p.setNaziv(naziv);
-        
-        Zahtev zahtev=new Zahtev(Operacija.KREIRAJ_PROIZVOD,p);
+
+        Zahtev zahtev = new Zahtev(Operacija.KREIRAJ_PROIZVOD, p);
         sender.send(zahtev);
-        
-        Odgovor odgovor=(Odgovor)receiver.receive();
-        if(odgovor.getEx()==null){
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
             return true;
         }
-        
+
         throw odgovor.getEx();
-        
+
     }
-    
-    
+
     public boolean ubaciRadnuSmenu(RadnaSmena rs) throws Exception {
-        
-        Zahtev zahtev=new Zahtev(Operacija.KREIRAJ_RADNUSMENU, rs);
+
+        Zahtev zahtev = new Zahtev(Operacija.KREIRAJ_RADNUSMENU, rs);
         sender.send(zahtev);
-        
-        Odgovor odg=new Odgovor();
-        odg=(Odgovor) receiver.receive();
-        
-        if(odg.getEx()==null){
+
+        Odgovor odg = new Odgovor();
+        odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
             return true;
         }
-        
+
         throw odg.getEx();
     }
-    
-    
-    
-    
 
-    
-    public List<Radnik> vratiListuSviRadnik() {        
-        
+    public boolean obrisiRadnaSmena(int idRadneSmene) throws Exception {
+
+        Zahtev zahtev = new Zahtev(Operacija.OBRISI_RADNUSMENU, idRadneSmene);
+        sender.send(zahtev);
+
+        Odgovor odg = new Odgovor();
+        odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
+            return true;
+
+        }
+        throw odg.getEx();
+
+    }
+
+    public List<Radnik> vratiListuSviRadnik() {
+
         //return dbb.vratiListuSviRadnik();
         return null;
     }
 
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
 
-       // dbb.kreirajRadnika(ime, prezime, korIme, pass);
-       
-    }
-
-    
-    
-
-    
-
-  
-
-    public boolean obrisiRadnaSmena(int idRadneSmene) {
-        return false;
-        //return dbb.obrisiRadnaSmena(idRadneSmene);
+        // dbb.kreirajRadnika(ime, prezime, korIme, pass);
     }
 
 }
