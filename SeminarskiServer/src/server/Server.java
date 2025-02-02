@@ -37,7 +37,7 @@ public class Server {
                 System.out.println("Server:Klijent se povezao sa serverom");
                 
                 Nit nit=new Nit(soket, dbb);
-                nit.run();
+                new Thread(nit).start();
             }
 
         } catch (IOException ex) {
