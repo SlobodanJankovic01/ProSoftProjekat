@@ -26,6 +26,9 @@ public class FrmPrijava extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
+        
+        txtKorIme.setText("admin");
+        txtPass.setText("admin123");
     }
 
     /**

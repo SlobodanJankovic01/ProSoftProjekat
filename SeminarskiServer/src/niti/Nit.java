@@ -5,6 +5,8 @@
 package niti;
 
 import db.DBbroker;
+import domain.Mesto;
+import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
@@ -22,7 +24,7 @@ import komunikacija.Zahtev;
  *
  * @author Slobodan
  */
-public class Nit implements Runnable{
+public class Nit implements Runnable {
 
     private Socket soket;
     private DBbroker dbb;
@@ -35,11 +37,10 @@ public class Nit implements Runnable{
         receiver = new Receiver(soket);
         sender = new Sender(soket);
     }
-    
-    
+
     @Override
     public void run() {
-        
+
         try {
             while (true) {
                 try {
@@ -63,12 +64,37 @@ public class Nit implements Runnable{
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if (operacija == Operacija.VRATI_MESTA) {
+                        try {
+                            List<Mesto> mesta = dbb.vratiListuSviMesto();
+                            odgovor.setResult(mesta);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.KREIRAJ_PROIZVOD) {
                         try {
                             if (dbb.kreirajProizvod((Proizvod) zahtev.getArgumenti())) {
                                 odgovor.setResult(true);
                             }
                         } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.KREIRAJ_MESTO) {
+                        try {
+                            Mesto m = (Mesto) zahtev.getArgumenti();
+                            if (dbb.kreirajMesto(m)) {
+                                odgovor.setResult(true);
+                            }
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.KREIRAJ_MUSTERIJA) {
+                        try {
+                            Musterija m = (Musterija) zahtev.getArgumenti();
+                            if (dbb.kreirajMusterija(m)) {
+                                odgovor.setResult(true);
+                            }
+                        } catch (Exception e) {
                             odgovor.setEx(e);
                         }
                     } else if (operacija == Operacija.KREIRAJ_RADNUSMENU) {
@@ -98,7 +124,7 @@ public class Nit implements Runnable{
                     sender.send(odgovor);
 
                 } catch (Exception ex) {
-                    System.out.println("Greska "+ex.getMessage());
+                    System.out.println("Greska " + ex.getMessage());
                 }
             }
         } finally {
@@ -109,10 +135,6 @@ public class Nit implements Runnable{
             }
         }
 
-
     }
-    
-    
-    
-    
+
 }

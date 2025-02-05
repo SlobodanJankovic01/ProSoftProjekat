@@ -4,6 +4,8 @@
  */
 package db;
 
+import domain.Mesto;
+import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
@@ -21,28 +23,28 @@ public class DBbroker {
 
     public DBbroker() {
     }
-    
+
     public Radnik getRadnik(Radnik r) throws SQLException {
 
         try {
-            Connection k= DBConnection.getInstance().getConnection();
-            
-            String upit="SELECT * FROM radnik WHERE korisnickoIme=? AND lozinka=?";
-            
-            PreparedStatement ps=k.prepareStatement(upit);
-            
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String upit = "SELECT * FROM radnik WHERE korisnickoIme=? AND lozinka=?";
+
+            PreparedStatement ps = k.prepareStatement(upit);
+
             ps.setString(1, r.getKorIme());
             ps.setString(2, r.getLoznika());
-            
-            ResultSet rs=ps.executeQuery();
-            
-            if(rs.next()){
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
                 r.setIme(rs.getString("ime"));
                 r.setPrezime(rs.getString("prezime"));
-            }else{
+            } else {
                 throw new SQLException("Korisnik ne postoji");
             }
-            
+
             rs.close();
             ps.close();
             System.out.println("Uspesno ucitavanje Radnika iz baze");
@@ -53,11 +55,11 @@ public class DBbroker {
             throw ex;
         }
     }
-    
+
     public List<Proizvod> vratiListuSviProizvodi() throws SQLException {
 
         List<Proizvod> proizvodi = new ArrayList<>();
-        boolean ima=true;
+        boolean ima = false;
         try {
             Connection k = DBConnection.getInstance().getConnection();
 
@@ -70,13 +72,13 @@ public class DBbroker {
             while (rs.next()) {
                 Proizvod p = new Proizvod(rs.getInt("idProizvod"), rs.getString("naziv"), rs.getInt("jedinicnaCena"));
                 proizvodi.add(p);
-                ima=true;
+                ima = true;
             }
 
-            if(ima==false){ 
-                throw new SQLException("Neuspelo ucitavanje proizvoda iz baze");
+            if (ima == false) {
+                throw new SQLException("Nema proizvoda u bazi");
             }
-            
+
             rs.close();
             s.close();
 
@@ -89,12 +91,49 @@ public class DBbroker {
         }
 
     }
-    
-    
-    public List<RadnaSmena> vratiListuSviRadnaSmena () throws SQLException{
+
+    public List<Mesto> vratiListuSviMesto() throws SQLException {
+
+        List<Mesto> mesta = new ArrayList<>();
+
+        boolean ima = false;
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM mesto";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                Mesto m = new Mesto(rs.getInt("idMesto"), rs.getString("grad"), rs.getString("adresa"));
+                mesta.add(m);
+                ima = true;
+            }
+
+            if (ima == false) {
+                throw new SQLException("Nema mesta u bazi");
+            }
+
+            rs.close();
+            s.close();
+
+            return mesta;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+
+    public List<RadnaSmena> vratiListuSviRadnaSmena() throws SQLException {
 
         List<RadnaSmena> radneSmene = new ArrayList<>();
-        boolean ima=true;
+        boolean ima = true;
         try {
             Connection k = DBConnection.getInstance().getConnection();
 
@@ -115,13 +154,13 @@ public class DBbroker {
                 RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
 
                 radneSmene.add(radnasmena);
-                ima=true;
+                ima = true;
             }
-            
-            if(ima==false){ 
+
+            if (ima == false) {
                 throw new SQLException("Neuspelo ucitavanje radne smene iz baze");
             }
-                
+
             rs.close();
             s.close();
 
@@ -134,8 +173,7 @@ public class DBbroker {
         }
 
     }
-    
-    
+
     public boolean kreirajProizvod(Proizvod p) throws SQLException {
 
         try {
@@ -157,10 +195,54 @@ public class DBbroker {
             System.out.println(ex.getMessage());
             throw ex;
         }
-
     }
-    
-    
+
+    public boolean kreirajMesto(Mesto m) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO mesto (grad,adresa) VALUES (?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, m.getGrad());
+            ps.setString(2, m.getAdresa());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public boolean kreirajMusterija(Musterija m) throws Exception {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO musterija (ime,prezime,brojTelefona,idMesto) VALUES (?,?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, m.getIme());
+            ps.setString(2, m.getPrezime());
+            ps.setString(3, m.getBrojTelefona());
+            ps.setInt(4, m.getIdMesto());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public boolean ubaciRadnuSmenu(RadnaSmena rs) throws SQLException {
 
         try {
@@ -176,7 +258,7 @@ public class DBbroker {
             ps.executeUpdate();
 
             ps.close();
-                
+
             return true;
 
         } catch (SQLException ex) {
@@ -185,7 +267,7 @@ public class DBbroker {
         }
 
     }
-    
+
     public boolean obrisiRadnaSmena(int idRadneSmene) throws SQLException {
 
         try {
@@ -195,13 +277,11 @@ public class DBbroker {
             PreparedStatement ps = k.prepareStatement(query);
 
             ps.setInt(1, idRadneSmene);
-            
-            
 
             ps.executeUpdate();
 
             ps.close();
-            
+
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -209,11 +289,7 @@ public class DBbroker {
         }
 
     }
-    
 
-    
-    
-    
     public List<Radnik> vratiListuSviRadnik() {
 
         List<Radnik> radnici = new ArrayList<>();
@@ -242,8 +318,7 @@ public class DBbroker {
         }
 
     }
-    
-    
+
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
 
         try {
@@ -269,5 +344,5 @@ public class DBbroker {
         }
 
     }
-   
+
 }

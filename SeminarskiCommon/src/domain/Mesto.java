@@ -51,7 +51,7 @@ public class Mesto implements Serializable{
 
     @Override
     public String toString() {
-        return "Mesto{" + "idMesto=" + idMesto + ", grad=" + grad + ", adresa=" + adresa + '}';
+        return grad+", "+adresa;
     }
 
     @Override

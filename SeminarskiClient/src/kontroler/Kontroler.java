@@ -4,6 +4,8 @@
  */
 package kontroler;
 
+import domain.Mesto;
+import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
@@ -80,6 +82,19 @@ public class Kontroler {
         throw new Exception("Neuspelo ucitavanje proizvoda");
     }
 
+    public List<Mesto> vratiListuSviMesta() throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.VRATI_MESTA, null);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Mesto>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
     public List<RadnaSmena> vratiListuSviRadnaSmena() throws Exception {
 
         Zahtev zahtev = new Zahtev(Operacija.VRATI_RADNESMENE, null);
@@ -109,6 +124,33 @@ public class Kontroler {
 
         throw odgovor.getEx();
 
+    }
+
+    public boolean kreirajMesto(Mesto grad) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.KREIRAJ_MESTO, grad);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
+    public boolean kreirajMusterija(Musterija m) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.KREIRAJ_MUSTERIJA, m);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
     }
 
     public boolean ubaciRadnuSmenu(RadnaSmena rs) throws Exception {

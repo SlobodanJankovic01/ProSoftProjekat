@@ -129,11 +129,21 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuKreMesto.setText("Mesto");
         jMenuKreMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuKreMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreMesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKreMestoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuKreMesto);
 
         jMenuKreMusterija.setText("Musterija");
         jMenuKreMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuKreMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKreMusterijaActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuKreMusterija);
 
         jMenuKreRadnaSmena.setText("Radna smena");
@@ -280,24 +290,22 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOsveziActionPerformed
 
     private void btnObrisiProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiProizvodActionPerformed
-        
-        int red=tblProizvodi.getSelectedRow();
-        
+
+        int red = tblProizvodi.getSelectedRow();
+
         if (red == -1) {
             JOptionPane.showMessageDialog(this, "Nema selektovanog proizvoda", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        
-        
+
 
     }//GEN-LAST:event_btnObrisiProizvodActionPerformed
 
     private void jMenuKreProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreProActionPerformed
-        
-        KreirajProizvod kp=new KreirajProizvod(this, true);
+
+        KreirajProizvod kp = new KreirajProizvod(this, true);
         popuniTabelu();
-        
+
     }//GEN-LAST:event_jMenuKreProActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -305,7 +313,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuKreRadnaSmenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreRadnaSmenaActionPerformed
-        KreirajRadnaSmena krs=new KreirajRadnaSmena(this, true);
+        KreirajRadnaSmena krs = new KreirajRadnaSmena(this, true);
     }//GEN-LAST:event_jMenuKreRadnaSmenaActionPerformed
 
     private void jMenuObrProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrProizvodActionPerformed
@@ -313,8 +321,26 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuObrProizvodActionPerformed
 
     private void jMenuObrRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrRSActionPerformed
-        FrmSveRadneSmene radnesmene=new FrmSveRadneSmene();
+        FrmSveRadneSmene radnesmene = new FrmSveRadneSmene();
     }//GEN-LAST:event_jMenuObrRSActionPerformed
+
+    private void jMenuKreMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMestoActionPerformed
+
+        KreirajMesto km = new KreirajMesto(this, true);
+
+    }//GEN-LAST:event_jMenuKreMestoActionPerformed
+
+    private void jMenuKreMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMusterijaActionPerformed
+
+        try {
+            
+            KreirajMusterija km = new KreirajMusterija(this, false);
+
+        } catch (Exception ex) {
+            Logger.getLogger(FrmGlavna.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuKreMusterijaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,24 +407,24 @@ public class FrmGlavna extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
-        
+
         String[] kolone = {"Naziv", "Cena"};
-        TabelProizvodiModel dt=new TabelProizvodiModel(kolone);
+        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 
         // Postavljanje modela na tabelu
         tblProizvodi.setModel(dt);
-        
+
         List<Proizvod> sviProizvodi;
-        
+
         try {
             sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
         } catch (Exception ex) {
-            System.out.println("Greska pri ucitavanju proizvoda "+ex.getMessage());
-            sviProizvodi=null;
+            System.out.println("Greska pri ucitavanju proizvoda " + ex.getMessage());
+            sviProizvodi = null;
             return;
         }
         int brojac = 0;
-        
+
         for (Proizvod proizvod : sviProizvodi) {
             dt.setRowCount(brojac + 1);
 
@@ -411,11 +437,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProizvodi.setRowSelectionAllowed(true);
         tblProizvodi.setColumnSelectionAllowed(false);
-        
+
     }
-    
-    
-    
-    
-    
+
 }
