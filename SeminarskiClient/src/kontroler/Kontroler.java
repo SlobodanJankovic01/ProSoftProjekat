@@ -183,6 +183,19 @@ public class Kontroler {
         throw odg.getEx();
 
     }
+    
+    public boolean obrisiProizvod(int idProizvoda) throws Exception {
+
+        Zahtev z=new Zahtev(Operacija.OBRISI_PROIZVOD, idProizvoda);
+        sender.send(z);
+        
+        Odgovor odg=(Odgovor)receiver.receive();
+        if(odg.getEx()==null){
+            return true;
+        }
+        
+        throw odg.getEx();
+    }
 
     public List<Radnik> vratiListuSviRadnik() {
 
@@ -194,5 +207,7 @@ public class Kontroler {
 
         // dbb.kreirajRadnika(ime, prezime, korIme, pass);
     }
+
+    
 
 }

@@ -212,6 +212,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuObrMusterija.setText("Musterija");
         jMenuObrMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuObrMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrMusterijaActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuObrMusterija);
 
         jMenuObrMesto.setText("Mesto");
@@ -317,7 +322,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuKreRadnaSmenaActionPerformed
 
     private void jMenuObrProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrProizvodActionPerformed
-        // TODO add your handling code here:
+        ObrisiProizvod op = new ObrisiProizvod(this, false);
     }//GEN-LAST:event_jMenuObrProizvodActionPerformed
 
     private void jMenuObrRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrRSActionPerformed
@@ -333,7 +338,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     private void jMenuKreMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMusterijaActionPerformed
 
         try {
-            
+
             KreirajMusterija km = new KreirajMusterija(this, false);
 
         } catch (Exception ex) {
@@ -341,6 +346,10 @@ public class FrmGlavna extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jMenuKreMusterijaActionPerformed
+
+    private void jMenuObrMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMusterijaActionPerformed
+
+    }//GEN-LAST:event_jMenuObrMusterijaActionPerformed
 
     /**
      * @param args the command line arguments

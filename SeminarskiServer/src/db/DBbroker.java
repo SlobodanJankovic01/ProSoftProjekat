@@ -290,6 +290,28 @@ public class DBbroker {
 
     }
 
+    public Object obrisiProizvod(int i) throws SQLException {
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM proizvod WHERE idProizvod=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+
     public List<Radnik> vratiListuSviRadnik() {
 
         List<Radnik> radnici = new ArrayList<>();

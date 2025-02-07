@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import kontroler.Kontroler;
+import niti.NitPopuniCboxMesta;
 
 /**
  *
@@ -158,6 +159,7 @@ public class KreirajMusterija extends java.awt.Dialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
+        
     }//GEN-LAST:event_closeDialog
 
     private void brnKreirajMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnKreirajMestoActionPerformed
@@ -249,7 +251,7 @@ public class KreirajMusterija extends java.awt.Dialog {
     // End of variables declaration//GEN-END:variables
 
     private void popuniCBoxMesta() {
-        new Thread(() -> {
+        /*new Thread(() -> {
             try {
                 List<Mesto> mesta = Kontroler.getInstance().vratiListuSviMesta();
                 
@@ -264,7 +266,11 @@ public class KreirajMusterija extends java.awt.Dialog {
             } catch (Exception ex) {
                 System.out.println("Greška pri učitavanju mesta: " + ex.getMessage());
             }
-        }).start();
+        }).start();*/
+        
+        new NitPopuniCboxMesta(cboxMesto).start();
+        
+        
     }
 
 }
