@@ -222,6 +222,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuObrMesto.setText("Mesto");
         jMenuObrMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuObrMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrMesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrMestoActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuObrMesto);
 
         jMenuObrRS.setText("Radna smena");
@@ -348,8 +353,16 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuKreMusterijaActionPerformed
 
     private void jMenuObrMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMusterijaActionPerformed
+        
+        ObrisiMusterija om=new ObrisiMusterija(this, false);
 
     }//GEN-LAST:event_jMenuObrMusterijaActionPerformed
+
+    private void jMenuObrMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMestoActionPerformed
+        
+        ObrisiMesto om=new ObrisiMesto(this, false);
+        
+    }//GEN-LAST:event_jMenuObrMestoActionPerformed
 
     /**
      * @param args the command line arguments

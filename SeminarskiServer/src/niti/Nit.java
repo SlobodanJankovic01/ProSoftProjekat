@@ -71,6 +71,13 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if (operacija == Operacija.VRATI_MUSTERIJE) {
+                        try {
+                            List<Musterija> musterije = dbb.vratiListuSviMusterija();
+                            odgovor.setResult(musterije);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.KREIRAJ_PROIZVOD) {
                         try {
                             if (dbb.kreirajProizvod((Proizvod) zahtev.getArgumenti())) {
@@ -118,9 +125,21 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.OBRISI_PROIZVOD) {
+                    } else if (operacija == Operacija.OBRISI_PROIZVOD) {
                         try {
-                            odgovor.setResult(dbb.obrisiProizvod((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.obrisiProizvod((int) zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.OBRISI_MESTO) {
+                        try {
+                            odgovor.setResult(dbb.obrisiMesto((int) zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.OBRISI_MUSTERIJU) {
+                        try {
+                            odgovor.setResult(dbb.obrisiMusteriju((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }

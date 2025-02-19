@@ -108,6 +108,17 @@ public class Kontroler {
 
     }
 
+    public List<Musterija> vratiListuSviMusterija() throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_MUSTERIJE, null);
+        sender.send(zahtev);
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
+            return (List<Musterija>) odgovor.getResult();
+        }
+        throw new Exception("Neuspelo ucitavanje radnih smena");
+    }
+
     public boolean kreirajProizvod(String naziv, int cena) throws Exception {
 
         Proizvod p = new Proizvod();
@@ -183,17 +194,43 @@ public class Kontroler {
         throw odg.getEx();
 
     }
-    
+
     public boolean obrisiProizvod(int idProizvoda) throws Exception {
 
-        Zahtev z=new Zahtev(Operacija.OBRISI_PROIZVOD, idProizvoda);
+        Zahtev z = new Zahtev(Operacija.OBRISI_PROIZVOD, idProizvoda);
         sender.send(z);
-        
-        Odgovor odg=(Odgovor)receiver.receive();
-        if(odg.getEx()==null){
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
             return true;
         }
-        
+
+        throw odg.getEx();
+    }
+
+    public boolean obrisiMesto(int idMesto) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.OBRISI_MESTO, idMesto);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+
+    }
+
+    public boolean obrisiMusterija(int idMusterija) throws Exception {
+        Zahtev z = new Zahtev(Operacija.OBRISI_MUSTERIJU, idMusterija);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
         throw odg.getEx();
     }
 
@@ -207,7 +244,5 @@ public class Kontroler {
 
         // dbb.kreirajRadnika(ime, prezime, korIme, pass);
     }
-
-    
 
 }

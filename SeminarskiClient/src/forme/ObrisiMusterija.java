@@ -4,7 +4,9 @@
  */
 package forme;
 
-import domain.Proizvod;
+import domain.Mesto;
+import domain.Musterija;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,19 +14,18 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
 import modeliTabela.TabelProizvodiModel;
-import modeliTabela.TabelaObrisiProizvod;
 
 /**
  *
  * @author Slobodan
  */
-public class ObrisiProizvod extends java.awt.Dialog {
+public class ObrisiMusterija extends java.awt.Dialog {
 
     /**
-     * Creates new form ObrisiProizvod
+     * Creates new form ObrisiMusterija
      */
-    public ObrisiProizvod(java.awt.Frame parent, boolean modal) {
-        super(parent, "Obrisi proizvod", modal);
+    public ObrisiMusterija(java.awt.Frame parent, boolean modal) {
+        super(parent, "Obrisi musteriju", modal);
         initComponents();
 
         this.setLocationRelativeTo(null);
@@ -32,7 +33,6 @@ public class ObrisiProizvod extends java.awt.Dialog {
         setVisible(true);
 
         popuniTabelu();
-
     }
 
     /**
@@ -44,9 +44,9 @@ public class ObrisiProizvod extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProizvodi = new javax.swing.JTable();
+        tblSveMusterije = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         btnObrisi = new javax.swing.JButton();
         btnOsvezi = new javax.swing.JButton();
 
@@ -56,9 +56,7 @@ public class ObrisiProizvod extends java.awt.Dialog {
             }
         });
 
-        jLabel1.setText("Izaberi proizvod");
-
-        tblProizvodi.setModel(new javax.swing.table.DefaultTableModel(
+        tblSveMusterije.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -69,9 +67,11 @@ public class ObrisiProizvod extends java.awt.Dialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblProizvodi);
+        jScrollPane1.setViewportView(tblSveMusterije);
 
-        btnObrisi.setText("Obrisi");
+        jLabel1.setText("Izaberi musteriju");
+
+        btnObrisi.setText("Obrisi musteriju");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -90,32 +90,35 @@ public class ObrisiProizvod extends java.awt.Dialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(37, 37, 37))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(19, 19, 19))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnOsvezi)
-                        .addGap(103, 103, 103)
-                        .addComponent(btnObrisi)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(99, 99, 99)
+                        .addComponent(btnObrisi))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -137,21 +140,21 @@ public class ObrisiProizvod extends java.awt.Dialog {
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
 
-        if (tblProizvodi.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Nije izabran proizvod iz tabele");
+        if (tblSveMusterije.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana musterija iz tabele");
             return;
         }
 
-        int red = tblProizvodi.getSelectedRow();
-        int idProizvoda = (int) tblProizvodi.getValueAt(red, 0);
+        int red = tblSveMusterije.getSelectedRow();
+        int idMusterija = (int) tblSveMusterije.getValueAt(red, 0);
 
         try {
-            if (Kontroler.getInstance().obrisiProizvod(idProizvoda)) {
-                JOptionPane.showMessageDialog(this, "Proizvod uspesno izbrisan iz baze");
+            if (Kontroler.getInstance().obrisiMusterija(idMusterija)) {
+                JOptionPane.showMessageDialog(this, "Musterija uspesno izbrisana iz baze");
                 popuniTabelu();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Greska kod brisanja proizvoda");
+            JOptionPane.showMessageDialog(this, "Greska kod brisanja musterije");
             System.out.println(ex.getMessage());
         }
 
@@ -163,7 +166,7 @@ public class ObrisiProizvod extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ObrisiProizvod dialog = new ObrisiProizvod(new java.awt.Frame(), true);
+                ObrisiMusterija dialog = new ObrisiMusterija(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -181,41 +184,62 @@ public class ObrisiProizvod extends java.awt.Dialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblProizvodi;
+    private javax.swing.JTable tblSveMusterije;
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
 
-        String[] kolone = {"Id", "Naziv", "Cena"};
+        String[] kolone = {"Id", "Ime", "Prezime", "Br. telefona", "Mesto"};
         TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 
         // Postavljanje modela na tabelu
-        tblProizvodi.setModel(dt);
+        tblSveMusterije.setModel(dt);
 
-        List<Proizvod> sviProizvodi;
+        List<Musterija> sveMusterije;
 
         try {
-            sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
+            sveMusterije = Kontroler.getInstance().vratiListuSviMusterija();
         } catch (Exception ex) {
-            System.out.println("Greska pri ucitavanju proizvoda " + ex.getMessage());
-            sviProizvodi = null;
+            System.out.println("Greska pri ucitavanju musterija " + ex.getMessage());
+            sveMusterije = null;
             return;
         }
         int brojac = 0;
 
-        for (Proizvod proizvod : sviProizvodi) {
+        for (Musterija musterija : sveMusterije) {
             dt.setRowCount(brojac + 1);
 
-            dt.setValueAt(proizvod.getIdProizvod(), brojac, 0);
-            dt.setValueAt(proizvod.getNaziv(), brojac, 1);
-            dt.setValueAt(proizvod.getJedinicnaCena(), brojac, 2);
+            dt.setValueAt(musterija.getIdMusterija(), brojac, 0);
+            dt.setValueAt(musterija.getIme(), brojac, 1);
+            dt.setValueAt(musterija.getPrezime(), brojac, 2);
+            dt.setValueAt(musterija.getBrojTelefona(), brojac, 3);
+            dt.setValueAt(vratiMesto(musterija.getIdMesto()), brojac, 4);
 
             brojac++;
         }
 
-        tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblProizvodi.setRowSelectionAllowed(true);
-        tblProizvodi.setColumnSelectionAllowed(false);
+        tblSveMusterije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblSveMusterije.setRowSelectionAllowed(true);
+        tblSveMusterije.setColumnSelectionAllowed(false);
 
     }
+
+    private String vratiMesto(int idMesto) {
+
+        List<Mesto> svaMesta = new ArrayList<>();
+
+        try {
+            svaMesta = Kontroler.getInstance().vratiListuSviMesta();
+        } catch (Exception ex) {
+            System.out.println("Greska pri ucitavanju mesta" + ex.getMessage());
+        }
+
+        for (Mesto mesto : svaMesta) {
+            if (mesto.getIdMesto() == idMesto) {
+                return mesto.getGrad() + ", " + mesto.getAdresa();
+            }
+        }
+        return null;
+    }
+
 }

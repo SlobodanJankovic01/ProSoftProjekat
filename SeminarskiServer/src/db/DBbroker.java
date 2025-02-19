@@ -130,6 +130,43 @@ public class DBbroker {
 
     }
 
+    public List<Musterija> vratiListuSviMusterija() throws SQLException {
+        List<Musterija> musterije = new ArrayList<>();
+
+        boolean ima = false;
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM musterija";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                Musterija m = new Musterija(rs.getInt("idMusterija"), rs.getString("ime"), rs.getString("prezime"),
+                        rs.getString("brojTelefona"), rs.getInt("idMesto"));
+                musterije.add(m);
+                ima = true;
+            }
+
+            if (ima == false) {
+                throw new SQLException("Nema musterija u bazi");
+            }
+
+            rs.close();
+            s.close();
+
+            return musterije;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public List<RadnaSmena> vratiListuSviRadnaSmena() throws SQLException {
 
         List<RadnaSmena> radneSmene = new ArrayList<>();
@@ -309,7 +346,46 @@ public class DBbroker {
             System.out.println(ex.getMessage());
             throw ex;
         }
+    }
 
+    public Object obrisiMesto(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM mesto WHERE idMesto=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Object obrisiMusteriju(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM musterija WHERE idMusterija=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
     }
 
     public List<Radnik> vratiListuSviRadnik() {
