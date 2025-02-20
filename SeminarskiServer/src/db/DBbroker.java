@@ -388,6 +388,50 @@ public class DBbroker {
         }
     }
 
+    public Object promeniProizvod(Proizvod proizvod) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE proizvod SET naziv = ?, jedinicnaCena = ? WHERE idProizvod=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, proizvod.getNaziv());
+            ps.setInt(2, proizvod.getJedinicnaCena());
+            ps.setInt(3, proizvod.getIdProizvod());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Object promeniMesto(Mesto mesto) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE mesto SET grad = ?, adresa= ? WHERE idMesto=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, mesto.getGrad());
+            ps.setString(2, mesto.getAdresa());
+            ps.setInt(3, mesto.getIdMesto());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public List<Radnik> vratiListuSviRadnik() {
 
         List<Radnik> radnici = new ArrayList<>();

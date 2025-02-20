@@ -234,6 +234,33 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public boolean promeniProizvod(Proizvod proizvod) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.PROMENI_PROIZVOD, proizvod);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+
+    }
+
+    public boolean promeniMesto(Mesto m) throws Exception {
+        
+        Zahtev z = new Zahtev(Operacija.PROMENI_MESTO, m);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
     public List<Radnik> vratiListuSviRadnik() {
 
         //return dbb.vratiListuSviRadnik();
