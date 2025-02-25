@@ -116,7 +116,19 @@ public class Kontroler {
         if (odgovor.getEx() == null) {
             return (List<Musterija>) odgovor.getResult();
         }
-        throw new Exception("Neuspelo ucitavanje radnih smena");
+        throw new Exception("Neuspelo ucitavanje musterija");
+    }
+
+    public List<Radnik> vratiListuSviRadnik() throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_RADNIKE, null);
+        sender.send(zahtev);
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
+            return (List<Radnik>) odgovor.getResult();
+        }
+        throw new Exception("Neuspelo ucitavanje radnika");
+
     }
 
     public boolean kreirajProizvod(String naziv, int cena) throws Exception {
@@ -281,16 +293,22 @@ public class Kontroler {
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
-            return ;
+            return;
         }
 
         throw odg.getEx();
     }
 
-    public List<Radnik> vratiListuSviRadnik() {
+    public void promeniRadnika(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PROMENI_RADNIKA, r);
+        sender.send(z);
 
-        //return dbb.vratiListuSviRadnik();
-        return null;
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return;
+        }
+
+        throw odg.getEx();
     }
 
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {

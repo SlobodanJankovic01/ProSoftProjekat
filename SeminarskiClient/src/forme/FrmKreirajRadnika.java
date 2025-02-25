@@ -8,6 +8,8 @@ package forme;
 import domain.Radnik;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 /**
@@ -127,8 +129,11 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
         String pass=String.valueOf(txtpassLoznika.getPassword());
         
         List<Radnik> sviRadnici=new ArrayList<>();
-        //Vracanje liste radnika da bi proverili da li vec postoji uneto korisnicko ime
-        sviRadnici=Kontroler.getInstance().vratiListuSviRadnik();
+        try {
+            sviRadnici=Kontroler.getInstance().vratiListuSviRadnik();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         
         //ako je lista prazna samo ce nastaviti sa ubacivanjem korisnika u bazu
         if (!sviRadnici.isEmpty()) {

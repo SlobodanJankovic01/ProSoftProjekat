@@ -18,12 +18,12 @@ import kontroler.Kontroler;
  *
  * @author Slobodan
  */
-public class FrmSveRadneSmene extends javax.swing.JFrame {
+public class ObrisiRadnaSmena extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmSveRadneSmene
      */
-    public FrmSveRadneSmene() {
+    public ObrisiRadnaSmena() {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
@@ -111,7 +111,7 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
                 popuniTabelu();
             }
         } catch (Exception ex) {
-            Logger.getLogger(FrmSveRadneSmene.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise radnu smenu");
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
@@ -133,20 +133,21 @@ public class FrmSveRadneSmene extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmSveRadneSmene.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmSveRadneSmene.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmSveRadneSmene.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmSveRadneSmene.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmSveRadneSmene().setVisible(true);
+                new ObrisiRadnaSmena().setVisible(true);
             }
         });
     }

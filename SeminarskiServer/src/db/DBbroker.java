@@ -167,6 +167,43 @@ public class DBbroker {
         }
     }
 
+    public List<Radnik> vratiListuSviRadnik() throws SQLException {
+
+        List<Radnik> radnici = new ArrayList<>();
+        boolean ima = false;
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM radnik";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                Radnik r = new Radnik(rs.getInt("idRadnik"), rs.getString("ime"), rs.getString("prezime"),
+                        rs.getString("korisnickoIme"), rs.getString("lozinka"));
+                radnici.add(r);
+                ima = true;
+            }
+
+            if (ima == false) {
+                throw new SQLException("Nema radnika u bazi");
+            }
+
+            rs.close();
+            s.close();
+
+            return radnici;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+    }
+
     public List<RadnaSmena> vratiListuSviRadnaSmena() throws SQLException {
 
         List<RadnaSmena> radneSmene = new ArrayList<>();
@@ -465,7 +502,7 @@ public class DBbroker {
             ps.setString(1, m.getIme());
             ps.setString(2, m.getPrezime());
             ps.setString(3, m.getBrojTelefona());
-            ps.setInt(4, m.getIdMesto());            
+            ps.setInt(4, m.getIdMesto());
             ps.setInt(5, m.getIdMusterija());
 
             ps.executeUpdate();
@@ -479,33 +516,28 @@ public class DBbroker {
         }
     }
 
-    public List<Radnik> vratiListuSviRadnik() {
-
-        List<Radnik> radnici = new ArrayList<>();
+    public Object promeniRadnika(Radnik r) throws SQLException {
         try {
             Connection k = DBConnection.getInstance().getConnection();
 
-            Statement s = k.createStatement();
+            String query = "UPDATE radnik SET ime = ?, prezime= ?, korisnickoIme=?, lozinka=? WHERE idRadnik=?";
+            PreparedStatement ps = k.prepareStatement(query);
 
-            String query = "SELECT * FROM radnik";
+            ps.setString(1, r.getIme());
+            ps.setString(2, r.getPrezime());
+            ps.setString(3, r.getKorIme());
+            ps.setString(4, r.getLoznika());
+            ps.setInt(5, r.getIdRadnik());
 
-            ResultSet rs = s.executeQuery(query);
+            ps.executeUpdate();
 
-            while (rs.next()) {
-                Radnik r = new Radnik(rs.getString("ime"), rs.getString("prezime"), rs.getString("korisnickoIme"), rs.getString("lozinka"));
-                radnici.add(r);
-            }
+            ps.close();
 
-            s.close();
-
-            return radnici;
-
+            return true;
         } catch (SQLException ex) {
-
             System.out.println(ex.getMessage());
-            return null;
+            throw ex;
         }
-
     }
 
     public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {

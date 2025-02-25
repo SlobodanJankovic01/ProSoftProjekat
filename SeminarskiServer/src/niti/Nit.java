@@ -78,6 +78,20 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    }else if (operacija == Operacija.VRATI_RADNESMENE) {
+                        try {
+                            List<RadnaSmena> radneSmene = dbb.vratiListuSviRadnaSmena();
+                            odgovor.setResult(radneSmene);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.VRATI_RADNIKE) {
+                        try {
+                            List<Radnik> radnici = dbb.vratiListuSviRadnik();
+                            odgovor.setResult(radnici);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.KREIRAJ_PROIZVOD) {
                         try {
                             if (dbb.kreirajProizvod((Proizvod) zahtev.getArgumenti())) {
@@ -112,14 +126,7 @@ public class Nit implements Runnable {
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    } else if (operacija == Operacija.VRATI_RADNESMENE) {
-                        try {
-                            List<RadnaSmena> radneSmene = dbb.vratiListuSviRadnaSmena();
-                            odgovor.setResult(radneSmene);
-                        } catch (SQLException e) {
-                            odgovor.setEx(e);
-                        }
-                    } else if (operacija == Operacija.OBRISI_RADNUSMENU) {
+                    }  else if (operacija == Operacija.OBRISI_RADNUSMENU) {
                         try {
                             odgovor.setResult(dbb.obrisiRadnaSmena((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
@@ -164,6 +171,12 @@ public class Nit implements Runnable {
                     }else if (operacija == Operacija.PROMENI_MUSTERIJU) {
                         try {
                             odgovor.setResult(dbb.promeniMusteriju((Musterija)zahtev.getArgumenti()));
+                        } catch (Exception e) {
+                            odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.PROMENI_RADNIKA) {
+                        try {
+                            odgovor.setResult(dbb.promeniRadnika((Radnik)zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }

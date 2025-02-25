@@ -198,6 +198,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuUrediRadnik.setText("Radnik");
         jMenuUrediRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuUrediRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuUrediRadnik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUrediRadnikActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuUrediRadnik);
 
         jMenuUrediRS.setText("Radna smena");
@@ -351,7 +356,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuObrProizvodActionPerformed
 
     private void jMenuObrRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrRSActionPerformed
-        FrmSveRadneSmene radnesmene = new FrmSveRadneSmene();
+        ObrisiRadnaSmena radnesmene = new ObrisiRadnaSmena();
     }//GEN-LAST:event_jMenuObrRSActionPerformed
 
     private void jMenuKreMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMestoActionPerformed
@@ -407,6 +412,12 @@ public class FrmGlavna extends javax.swing.JFrame {
         UrediMusterija um=new UrediMusterija();
         
     }//GEN-LAST:event_jMenuUrediMusterijaActionPerformed
+
+    private void jMenuUrediRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediRadnikActionPerformed
+        
+        UrediRadnik ur=new UrediRadnik();
+        
+    }//GEN-LAST:event_jMenuUrediRadnikActionPerformed
 
     /**
      * @param args the command line arguments

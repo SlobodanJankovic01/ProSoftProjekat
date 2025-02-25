@@ -11,8 +11,9 @@ import java.util.Objects;
  *
  * @author Slobodan
  */
-public class Radnik implements Serializable{
-    
+public class Radnik implements Serializable {
+
+    private int idRadnik;
     private String ime;
     private String prezime;
     private String korIme;
@@ -21,11 +22,20 @@ public class Radnik implements Serializable{
     public Radnik() {
     }
 
-    public Radnik(String ime, String prezime, String korIme, String loznika) {
+    public Radnik(int idRadnik, String ime, String prezime, String korIme, String loznika) {
+        this.idRadnik = idRadnik;
         this.ime = ime;
         this.prezime = prezime;
         this.korIme = korIme;
         this.loznika = loznika;
+    }
+
+    public int getIdRadnik() {
+        return idRadnik;
+    }
+
+    public void setIdRadnik(int idRadnik) {
+        this.idRadnik = idRadnik;
     }
 
     public String getIme() {
@@ -83,13 +93,12 @@ public class Radnik implements Serializable{
             return false;
         }
         final Radnik other = (Radnik) obj;
-        if (!Objects.equals(this.korIme, other.korIme)) {
+        if (this.idRadnik != other.idRadnik) {
             return false;
         }
         return Objects.equals(this.loznika, other.loznika);
     }
+
     
-    
-    
-    
+
 }
