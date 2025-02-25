@@ -155,6 +155,18 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    }else if (operacija == Operacija.PROMENI_RADNU_SMENU) {
+                        try {
+                            odgovor.setResult(dbb.promeniRadnuSmenu((RadnaSmena)zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.PROMENI_MUSTERIJU) {
+                        try {
+                            odgovor.setResult(dbb.promeniMusteriju((Musterija)zahtev.getArgumenti()));
+                        } catch (Exception e) {
+                            odgovor.setEx(e);
+                        }
                     }
 
                     // Pošalji odgovor klijentu

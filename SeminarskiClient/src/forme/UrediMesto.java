@@ -155,7 +155,7 @@ public class UrediMesto extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addComponent(btnIzmeniMesto)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnIzaberiMesto)
                     .addComponent(jButton1))
                 .addContainerGap(17, Short.MAX_VALUE))

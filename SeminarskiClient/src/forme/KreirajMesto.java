@@ -130,13 +130,13 @@ public class KreirajMesto extends java.awt.Dialog {
 
         try {
             if (Kontroler.getInstance().kreirajMesto(m)) {
-                JOptionPane.showMessageDialog(null, "Uspesno sacuvano mesto");
+                JOptionPane.showMessageDialog(this, "Uspesno sacuvano mesto");
             }
 
             this.dispose();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Neuspelo cuvanje mesta");
+            JOptionPane.showMessageDialog(this, "Neuspelo cuvanje mesta");
         }
 
 

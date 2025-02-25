@@ -249,13 +249,39 @@ public class Kontroler {
     }
 
     public boolean promeniMesto(Mesto m) throws Exception {
-        
+
         Zahtev z = new Zahtev(Operacija.PROMENI_MESTO, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
             return true;
+        }
+
+        throw odg.getEx();
+    }
+
+    public boolean promeniRadnuSmenu(RadnaSmena rs) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.PROMENI_RADNU_SMENU, rs);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+
+    }
+
+    public void promeniMusterija(Musterija m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PROMENI_MUSTERIJU, m);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return ;
         }
 
         throw odg.getEx();

@@ -432,6 +432,53 @@ public class DBbroker {
         }
     }
 
+    public Object promeniRadnuSmenu(RadnaSmena rs) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE radnasmena SET naziv = ?, vremeOd= ?, vremeDo=? WHERE idRadnaSmena=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, rs.getNaziv());
+            ps.setTime(2, java.sql.Time.valueOf(rs.getVremeOd()));
+            ps.setTime(3, java.sql.Time.valueOf(rs.getVremeDo()));
+            ps.setInt(4, rs.getIdRadnaSmena());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Object promeniMusteriju(Musterija m) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE musterija SET ime = ?, prezime= ?, brojTelefona=?, idMesto=? WHERE idMusterija=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, m.getIme());
+            ps.setString(2, m.getPrezime());
+            ps.setString(3, m.getBrojTelefona());
+            ps.setInt(4, m.getIdMesto());            
+            ps.setInt(5, m.getIdMusterija());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public List<Radnik> vratiListuSviRadnik() {
 
         List<Radnik> radnici = new ArrayList<>();
