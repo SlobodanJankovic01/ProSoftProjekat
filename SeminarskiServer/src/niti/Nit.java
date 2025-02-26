@@ -109,6 +109,15 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if (operacija == Operacija.KREIRAJ_RADNIKA) {
+                        try {
+                            Radnik r = (Radnik) zahtev.getArgumenti();
+                            if (dbb.kreirajRadnik(r)) {
+                                odgovor.setResult(true);
+                            }
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.KREIRAJ_MUSTERIJA) {
                         try {
                             Musterija m = (Musterija) zahtev.getArgumenti();
@@ -147,6 +156,12 @@ public class Nit implements Runnable {
                     }else if (operacija == Operacija.OBRISI_MUSTERIJU) {
                         try {
                             odgovor.setResult(dbb.obrisiMusteriju((int) zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.OBRISI_RADNIKA) {
+                        try {
+                            odgovor.setResult(dbb.obrisiRadnik((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }

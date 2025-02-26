@@ -35,6 +35,13 @@ public class FrmGlavna extends javax.swing.JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         lblKorIme.setText(radnik.getKorIme());
+
+        Radnik admin = new Radnik(3, "Slobodan", "Jankovic", "Admin", "admin123");
+
+        if (!radnik.equals(admin)) {
+            blokirajOpcije();
+        }
+
         popuniTabelu();
 
     }
@@ -60,6 +67,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuKreMesto = new javax.swing.JMenuItem();
         jMenuKreMusterija = new javax.swing.JMenuItem();
         jMenuKreRadnaSmena = new javax.swing.JMenuItem();
+        jMenuKreRadnika = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuUrediPorudz = new javax.swing.JMenuItem();
         jMenuUrediProizvo = new javax.swing.JMenuItem();
@@ -155,6 +163,16 @@ public class FrmGlavna extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuKreRadnaSmena);
+
+        jMenuKreRadnika.setText("Radnik");
+        jMenuKreRadnika.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuKreRadnika.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreRadnika.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKreRadnikaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuKreRadnika);
 
         jMenuBar.add(jMenu1);
 
@@ -267,6 +285,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuObrRadnik.setText("Radnik");
         jMenuObrRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuObrRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrRadnik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrRadnikActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuObrRadnik);
 
         jMenuBar.add(jMenu3);
@@ -326,13 +349,7 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     private void btnObrisiProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiProizvodActionPerformed
 
-        int red = tblProizvodi.getSelectedRow();
-
-        if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Nema selektovanog proizvoda", "Greška", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
+        
 
     }//GEN-LAST:event_btnObrisiProizvodActionPerformed
 
@@ -378,46 +395,58 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuKreMusterijaActionPerformed
 
     private void jMenuObrMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMusterijaActionPerformed
-        
-        ObrisiMusterija om=new ObrisiMusterija(this, false);
+
+        ObrisiMusterija om = new ObrisiMusterija(this, false);
 
     }//GEN-LAST:event_jMenuObrMusterijaActionPerformed
 
     private void jMenuObrMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMestoActionPerformed
-        
-        ObrisiMesto om=new ObrisiMesto(this, false);
-        
+
+        ObrisiMesto om = new ObrisiMesto(this, false);
+
     }//GEN-LAST:event_jMenuObrMestoActionPerformed
 
     private void jMenuUrediProizvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediProizvoActionPerformed
 
-        UrediProizvode up=new UrediProizvode();
-        
+        UrediProizvode up = new UrediProizvode();
+
     }//GEN-LAST:event_jMenuUrediProizvoActionPerformed
 
     private void jMenuUrediMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediMestoActionPerformed
-        
-        UrediMesto um=new UrediMesto();
-        
+
+        UrediMesto um = new UrediMesto();
+
     }//GEN-LAST:event_jMenuUrediMestoActionPerformed
 
     private void jMenuUrediRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediRSActionPerformed
-        
-        UrediRadnaSmena urs=new UrediRadnaSmena();
-        
+
+        UrediRadnaSmena urs = new UrediRadnaSmena();
+
     }//GEN-LAST:event_jMenuUrediRSActionPerformed
 
     private void jMenuUrediMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediMusterijaActionPerformed
-        
-        UrediMusterija um=new UrediMusterija();
-        
+
+        UrediMusterija um = new UrediMusterija();
+
     }//GEN-LAST:event_jMenuUrediMusterijaActionPerformed
 
     private void jMenuUrediRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediRadnikActionPerformed
-        
-        UrediRadnik ur=new UrediRadnik();
-        
+
+        UrediRadnik ur = new UrediRadnik();
+
     }//GEN-LAST:event_jMenuUrediRadnikActionPerformed
+
+    private void jMenuKreRadnikaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreRadnikaActionPerformed
+        
+        FrmKreirajRadnika f=new FrmKreirajRadnika();
+        
+    }//GEN-LAST:event_jMenuKreRadnikaActionPerformed
+
+    private void jMenuObrRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrRadnikActionPerformed
+        
+        ObrisiRadnik or=new ObrisiRadnik();
+        
+    }//GEN-LAST:event_jMenuObrRadnikActionPerformed
 
     /**
      * @param args the command line arguments
@@ -466,6 +495,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuKreMusterija;
     private javax.swing.JMenuItem jMenuKrePro;
     private javax.swing.JMenuItem jMenuKreRadnaSmena;
+    private javax.swing.JMenuItem jMenuKreRadnika;
     private javax.swing.JMenuItem jMenuObrMesto;
     private javax.swing.JMenuItem jMenuObrMusterija;
     private javax.swing.JMenuItem jMenuObrPorudz;
@@ -514,6 +544,13 @@ public class FrmGlavna extends javax.swing.JFrame {
         tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProizvodi.setRowSelectionAllowed(true);
         tblProizvodi.setColumnSelectionAllowed(false);
+
+    }
+
+    private void blokirajOpcije() {
+
+        jMenu3.setEnabled(false);
+        jMenu2.setEnabled(false);
 
     }
 

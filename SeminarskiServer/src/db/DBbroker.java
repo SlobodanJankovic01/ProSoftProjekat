@@ -39,6 +39,7 @@ public class DBbroker {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                r.setIdRadnik(rs.getInt("idRadnik"));
                 r.setIme(rs.getString("ime"));
                 r.setPrezime(rs.getString("prezime"));
             } else {
@@ -293,6 +294,29 @@ public class DBbroker {
         }
     }
 
+    public boolean kreirajRadnik(Radnik r) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO radnik (ime,prezime,korisnickoIme,lozinka) VALUES (?,?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, r.getIme());
+            ps.setString(2, r.getPrezime());
+            ps.setString(3, r.getKorIme());
+            ps.setString(4, r.getLoznika());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public boolean kreirajMusterija(Musterija m) throws Exception {
         try {
             Connection k = DBConnection.getInstance().getConnection();
@@ -425,6 +449,26 @@ public class DBbroker {
         }
     }
 
+    public Object obrisiRadnik(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM radnik WHERE idRadnik=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public Object promeniProizvod(Proizvod proizvod) throws SQLException {
         try {
             Connection k = DBConnection.getInstance().getConnection();
@@ -538,32 +582,6 @@ public class DBbroker {
             System.out.println(ex.getMessage());
             throw ex;
         }
-    }
-
-    public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
-
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            String query = "INSERT INTO radnik (ime,prezime,korisnickoIme,lozinka) VALUES (?,?,?,?)";
-            PreparedStatement ps = k.prepareStatement(query);
-
-            ps.setString(1, ime);
-            ps.setString(2, prezime);
-            ps.setString(3, korIme);
-            ps.setString(4, pass);
-
-            ps.executeUpdate();
-
-            ps.close();
-
-            JOptionPane.showMessageDialog(null, "Uspesno kreiran radnik");
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-
-        }
-
     }
 
 }

@@ -163,6 +163,19 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public boolean kreirajRadnika(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.KREIRAJ_RADNIKA, r);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
     public boolean kreirajMusterija(Musterija m) throws Exception {
 
         Zahtev z = new Zahtev(Operacija.KREIRAJ_MUSTERIJA, m);
@@ -246,6 +259,18 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public boolean obrisiRadnik(int idRadnika) throws Exception {
+        Zahtev z = new Zahtev(Operacija.OBRISI_RADNIKA, idRadnika);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
     public boolean promeniProizvod(Proizvod proizvod) throws Exception {
 
         Zahtev z = new Zahtev(Operacija.PROMENI_PROIZVOD, proizvod);
@@ -309,11 +334,6 @@ public class Kontroler {
         }
 
         throw odg.getEx();
-    }
-
-    public void kreirajRadnika(String ime, String prezime, String korIme, String pass) {
-
-        // dbb.kreirajRadnika(ime, prezime, korIme, pass);
     }
 
 }

@@ -219,6 +219,10 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
 
     private void btnIzmeniRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniRSActionPerformed
 
+        if (lblID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana radna smena");
+            return;
+        }
         RadnaSmena rs = new RadnaSmena(Integer.parseInt(lblID.getText()), txtNaziv.getText(),
                 prebaciUVreme(txtVremeOd.getText()), prebaciUVreme(txtVremeDo.getText()));
 

@@ -158,7 +158,7 @@ public class UrediProizvode extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addComponent(btnIzmeniProzivod)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnIzaberiProizvod)
                     .addComponent(jButton1))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -206,6 +206,11 @@ public class UrediProizvode extends javax.swing.JFrame {
 
     private void btnIzmeniProzivodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniProzivodActionPerformed
 
+        if (lblID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nije izabran proizvod");
+            return;
+        }
+        
         Proizvod proizvod = new Proizvod(Integer.parseInt(lblID.getText()), txtNaziv.getText(), Integer.parseInt(txtCena.getText()));
 
         try {

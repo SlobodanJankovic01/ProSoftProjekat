@@ -204,13 +204,18 @@ public class UrediMusterija extends javax.swing.JFrame {
     private void btnIzmeniMusterijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniMusterijuActionPerformed
 
         try {
-            Mesto mesto=(Mesto)cboxMesto.getSelectedItem();
-            
-            Musterija m=new Musterija(Integer.valueOf(lblID.getText()), txtIme.getText(), txtPrezime.getText(),
+
+            if (lblID.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Nije izabrana musterija");
+                return;
+            }
+            Mesto mesto = (Mesto) cboxMesto.getSelectedItem();
+
+            Musterija m = new Musterija(Integer.valueOf(lblID.getText()), txtIme.getText(), txtPrezime.getText(),
                     txtBrTelefona.getText(), mesto.getIdMesto());
-            
+
             Kontroler.getInstance().promeniMusterija(m);
-            
+
             JOptionPane.showMessageDialog(this, "Uspesno izmenjena musterija");
 
             popuniTabelu();
@@ -220,9 +225,9 @@ public class UrediMusterija extends javax.swing.JFrame {
             txtPrezime.setText("");
             txtBrTelefona.setText("");
             cboxMesto.removeAllItems();
-            
+
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Neuspela promena smene");
+            JOptionPane.showMessageDialog(this, "Neuspela promena musterije");
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniMusterijuActionPerformed

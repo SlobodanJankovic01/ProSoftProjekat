@@ -4,11 +4,9 @@
  */
 package forme;
 
-import domain.Proizvod;
 import domain.RadnaSmena;
+import domain.Radnik;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -18,15 +16,19 @@ import kontroler.Kontroler;
  *
  * @author Slobodan
  */
-public class ObrisiRadnaSmena extends javax.swing.JFrame {
+public class ObrisiRadnik extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmSveRadneSmene
+     * Creates new form ObrisiRadnik
      */
-    public ObrisiRadnaSmena() {
+    public ObrisiRadnik() {
+
         initComponents();
+
         setVisible(true);
+
         setLocationRelativeTo(null);
+
         popuniTabelu();
     }
 
@@ -39,15 +41,22 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblRadneSmene = new javax.swing.JTable();
-        btnObrisi = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblRadnici = new javax.swing.JTable();
+        btnObrisi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Obrisi radnu smenu");
+        setTitle("Obrisi radnika");
 
-        tblRadneSmene.setModel(new javax.swing.table.DefaultTableModel(
+        jButton1.setText("Osvezi tabelu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        tblRadnici.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,19 +67,12 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblRadneSmene);
+        jScrollPane1.setViewportView(tblRadnici);
 
         btnObrisi.setText("Obrisi");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Osvezi tabelu");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
             }
         });
 
@@ -81,7 +83,7 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -90,7 +92,7 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -103,32 +105,31 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-
-        int selectedRow = tblRadneSmene.getSelectedRow();
-
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Nema selektovane radne smene", "Greška", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int idRadneSmene = (int) tblRadneSmene.getValueAt(selectedRow, 0);
-
-        try {
-            if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
-                // Ažuriranje tabele nakon brisanja
-                JOptionPane.showMessageDialog(null, "Sistem je obrisao radnu smenu");
-                popuniTabelu();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise radnu smenu");
-        }
-    }//GEN-LAST:event_btnObrisiActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         popuniTabelu();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+
+        int selectedRow = tblRadnici.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Nijedan radnik nije selektovan", "Greška", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idRadnika = (int) tblRadnici.getValueAt(selectedRow, 0);
+
+        try {
+            if (Kontroler.getInstance().obrisiRadnik(idRadnika)) {
+                JOptionPane.showMessageDialog(this, "Sistem je obrisao radnika");
+                popuniTabelu();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise radnika");
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,28 +148,25 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ObrisiRadnik.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ObrisiRadnaSmena().setVisible(true);
+                new ObrisiRadnik().setVisible(true);
             }
         });
     }
 
     private void popuniTabelu() {
-
-        // DefaultTableModel koji onemogućava uređivanje ćelija
         DefaultTableModel dt = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -177,50 +175,49 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
         };
 
         // Postavljanje modela na tabelu
-        tblRadneSmene.setModel(dt);
+        tblRadnici.setModel(dt);
 
         dt.setColumnCount(4);
         dt.setRowCount(0);
 
-        String[] kolone = {"Id", "Naziv", "Vreme od", "Vreme do"};
+        String[] kolone = {"Id", "Ime", "Prezime", "Korisnicko ime"};
         dt.setColumnIdentifiers(kolone);
 
-        List<RadnaSmena> sveRadneSmene;
+        List<Radnik> sviRadnici;
         try {
-            sveRadneSmene = Kontroler.getInstance().vratiListuSviRadnaSmena();
+            sviRadnici = Kontroler.getInstance().vratiListuSviRadnik();
         } catch (Exception ex) {
-            System.out.println("Greska pri ucitavanju radnih smena " + ex.getMessage());
-            sveRadneSmene = null;
+            System.out.println("Greska pri ucitavanju radnika" + ex.getMessage());
+            sviRadnici = null;
             return;
         }
         int brojac = 0;
 
-        if (sveRadneSmene == null || sveRadneSmene.isEmpty()) {
-            System.out.println("Lista radnih smena je prazna");
+        if (sviRadnici == null || sviRadnici.isEmpty()) {
+            System.out.println("Lista radnika je prazna");
             return;
         }
 
-        for (RadnaSmena radnaSmena : sveRadneSmene) {
+        for (Radnik r : sviRadnici) {
             dt.setRowCount(brojac + 1);
 
-            dt.setValueAt(radnaSmena.getIdRadnaSmena(), brojac, 0);
-            dt.setValueAt(radnaSmena.getNaziv(), brojac, 1);
-            dt.setValueAt(radnaSmena.getVremeOd(), brojac, 2);
-            dt.setValueAt(radnaSmena.getVremeDo(), brojac, 3);
+            dt.setValueAt(r.getIdRadnik(), brojac, 0);
+            dt.setValueAt(r.getIme(), brojac, 1);
+            dt.setValueAt(r.getPrezime(), brojac, 2);
+            dt.setValueAt(r.getKorIme(), brojac, 3);
 
             brojac++;
         }
 
-        tblRadneSmene.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblRadneSmene.setRowSelectionAllowed(true);
-        tblRadneSmene.setColumnSelectionAllowed(false);
-
+        tblRadnici.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblRadnici.setRowSelectionAllowed(true);
+        tblRadnici.setColumnSelectionAllowed(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblRadneSmene;
+    private javax.swing.JTable tblRadnici;
     // End of variables declaration//GEN-END:variables
 }

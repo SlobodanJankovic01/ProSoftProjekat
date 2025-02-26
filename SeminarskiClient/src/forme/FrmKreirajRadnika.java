@@ -4,7 +4,6 @@
  */
 package forme;
 
-
 import domain.Radnik;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
+
 /**
  *
  * @author Slobodan
@@ -122,19 +122,21 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
-        
-        String ime=txtIme.getText();
-        String prezime=txtPrezime.getText();
-        String korIme=txtKorIme.getText();
-        String pass=String.valueOf(txtpassLoznika.getPassword());
-        
-        List<Radnik> sviRadnici=new ArrayList<>();
+
+        String ime = txtIme.getText();
+        String prezime = txtPrezime.getText();
+        String korIme = txtKorIme.getText();
+        String pass = String.valueOf(txtpassLoznika.getPassword());
+
+        Radnik r = new Radnik(0, ime, prezime, korIme, pass);
+
+        List<Radnik> sviRadnici = new ArrayList<>();
         try {
-            sviRadnici=Kontroler.getInstance().vratiListuSviRadnik();
+            sviRadnici = Kontroler.getInstance().vratiListuSviRadnik();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         //ako je lista prazna samo ce nastaviti sa ubacivanjem korisnika u bazu
         if (!sviRadnici.isEmpty()) {
             for (Radnik radnik : sviRadnici) {
@@ -145,9 +147,18 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
             }
         }
 
-        Kontroler.getInstance().kreirajRadnika(ime, prezime, korIme, pass);
-        this.dispose();
-        
+        try {
+            if (Kontroler.getInstance().kreirajRadnika(r)) {
+                JOptionPane.showMessageDialog(this, "Uspesno kreiran radnik");
+            }
+            this.dispose();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Neuspesno kreiranje radnika");
+            System.out.println(ex.getMessage());
+        }
+
+
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     /**

@@ -202,6 +202,11 @@ public class UrediMesto extends javax.swing.JFrame {
 
     private void btnIzmeniMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniMestoActionPerformed
 
+        if (lblID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nije izabrano mesto");
+            return;
+        }
+        
         Mesto m = new Mesto(Integer.parseInt(lblID.getText()), txtGrad.getText() , txtUlica.getText());
 
         try {

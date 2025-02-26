@@ -27,7 +27,7 @@ public class FrmPrijava extends javax.swing.JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         
-        txtKorIme.setText("admin");
+        txtKorIme.setText("Admin");
         txtPass.setText("admin123");
     }
 
@@ -44,8 +44,6 @@ public class FrmPrijava extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtKorIme = new javax.swing.JTextField();
         btnPrijava = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        btnKreiraj = new javax.swing.JButton();
         txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,15 +57,6 @@ public class FrmPrijava extends javax.swing.JFrame {
         btnPrijava.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrijavaActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Kreiraj nalog");
-
-        btnKreiraj.setText("Kreiraj");
-        btnKreiraj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKreirajActionPerformed(evt);
             }
         });
 
@@ -90,15 +79,8 @@ public class FrmPrijava extends javax.swing.JFrame {
                 .addContainerGap(122, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnKreiraj)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnPrijava)
-                        .addGap(163, 163, 163))))
+                .addComponent(btnPrijava)
+                .addGap(163, 163, 163))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,11 +95,7 @@ public class FrmPrijava extends javax.swing.JFrame {
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addComponent(btnPrijava)
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(btnKreiraj))
-                .addGap(17, 17, 17))
+                .addGap(82, 82, 82))
         );
 
         pack();
@@ -183,12 +161,6 @@ public class FrmPrijava extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnPrijavaActionPerformed
 
-    private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
-        
-        FrmKreirajRadnika f=new FrmKreirajRadnika();
-        
-    }//GEN-LAST:event_btnKreirajActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -225,11 +197,9 @@ public class FrmPrijava extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnKreiraj;
     private javax.swing.JButton btnPrijava;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtKorIme;
     private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables

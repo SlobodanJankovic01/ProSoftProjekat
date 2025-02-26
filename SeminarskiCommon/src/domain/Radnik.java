@@ -96,8 +96,13 @@ public class Radnik implements Serializable {
         if (this.idRadnik != other.idRadnik) {
             return false;
         }
+        if (!Objects.equals(this.korIme, other.korIme)) {
+            return false;
+        }
         return Objects.equals(this.loznika, other.loznika);
     }
+
+    
 
     
 
