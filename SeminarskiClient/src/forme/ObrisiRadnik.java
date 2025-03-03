@@ -4,13 +4,16 @@
  */
 package forme;
 
+import domain.Mesto;
 import domain.RadnaSmena;
 import domain.Radnik;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import kontroler.Kontroler;
+import modeliTabela.TabelProizvodiModel;
 
 /**
  *
@@ -45,6 +48,10 @@ public class ObrisiRadnik extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRadnici = new javax.swing.JTable();
         btnObrisi = new javax.swing.JButton();
+        btnPretraga = new javax.swing.JButton();
+        lblPretraga = new javax.swing.JLabel();
+        txtIdRadnik = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Obrisi radnika");
@@ -76,30 +83,61 @@ public class ObrisiRadnik extends javax.swing.JFrame {
             }
         });
 
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblPretraga.setBackground(new java.awt.Color(255, 0, 0));
+        lblPretraga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel2.setText("Unesi id radnika");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdRadnik, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnPretraga)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtIdRadnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretraga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(110, 110, 110)
                         .addComponent(btnObrisi))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,6 +168,22 @@ public class ObrisiRadnik extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
+
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        if (txtIdRadnik.getText() == "" || !txtIdRadnik.getText().matches("^\\d+$")) {
+            lblPretraga.setText("Unesi neki broj");
+            lblPretraga.setForeground(Color.RED);
+            return;
+        }
+
+        lblPretraga.setText("");
+
+        int idRadnik = Integer.parseInt(txtIdRadnik.getText());
+
+        System.out.println(idRadnik);
+        popuniTabelu(idRadnik);
+    }//GEN-LAST:event_btnPretragaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,8 +270,42 @@ public class ObrisiRadnik extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPretraga;
     private javax.swing.JTable tblRadnici;
+    private javax.swing.JTextField txtIdRadnik;
     // End of variables declaration//GEN-END:variables
+
+    private void popuniTabelu(int idRadnik) {
+        try {
+            Radnik r = Kontroler.getInstance().pretraziRadnik(idRadnik);
+
+            if (r.getKorIme() == null) {
+                JOptionPane.showMessageDialog(this, "Ne postoji radnik sa unetim id-ijem, probaj opet");
+                return;
+            }
+
+            String[] kolone = {"Id", "Ime", "Prezime", "Korisnicko ime"};
+            TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+            tblRadnici.setModel(dt);
+
+            dt.setRowCount(1);
+
+            dt.setValueAt(r.getIdRadnik(), 0, 0);
+            dt.setValueAt(r.getIme(), 0, 1);
+            dt.setValueAt(r.getPrezime(), 0, 2);
+            dt.setValueAt(r.getKorIme(), 0, 3);
+
+            tblRadnici.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tblRadnici.setRowSelectionAllowed(true);
+            tblRadnici.setColumnSelectionAllowed(false);
+
+        } catch (Exception ex) {
+            System.out.println("Neuspela pretraga radnika po idiju" + ex.getMessage());
+        }
+    }
 }

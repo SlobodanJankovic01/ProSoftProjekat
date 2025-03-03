@@ -372,4 +372,28 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public RadnaSmena pretraziRadnaSmena(int idRadnaSmena) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIH_SMENA, (int) idRadnaSmena);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (RadnaSmena) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
+    public Radnik pretraziRadnik(int idRadnik) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIKA, (int) idRadnik);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (Radnik) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }

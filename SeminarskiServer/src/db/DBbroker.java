@@ -673,4 +673,70 @@ public class DBbroker {
         }
     }
 
+    public RadnaSmena pretraziRadnaSmena(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM radnasmena WHERE idRadnaSmena=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            RadnaSmena r = new RadnaSmena();
+
+            if (rs.next()) {
+                java.sql.Time sqlVremeOd = rs.getTime("vremeOd");
+                java.sql.Time sqlVremeDo = rs.getTime("vremeDo");
+
+                LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
+                LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
+
+                r.setIdRadnaSmena(rs.getInt("idRadnaSmena"));
+                r.setNaziv(rs.getString("naziv"));
+                r.setVremeOd(vremeOd);
+                r.setVremeDo(vremeDo);
+            }
+
+            rs.close();
+            ps.close();
+
+            return r;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Radnik pretraziRadnik(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM radnik WHERE idRadnik=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            Radnik r = new Radnik();
+
+            if (rs.next()) {
+                r.setIdRadnik(rs.getInt("idRadnik"));
+                r.setIme(rs.getString("ime"));
+                r.setPrezime(rs.getString("prezime"));
+                r.setKorIme(rs.getString("korisnickoIme"));
+            }
+
+            rs.close();
+            ps.close();
+
+            return r;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }

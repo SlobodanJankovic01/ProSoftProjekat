@@ -4,8 +4,9 @@
  */
 package forme;
 
-import domain.Proizvod;
+import domain.Mesto;
 import domain.RadnaSmena;
+import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import kontroler.Kontroler;
+import modeliTabela.TabelProizvodiModel;
 
 /**
  *
@@ -43,6 +45,10 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
         tblRadneSmene = new javax.swing.JTable();
         btnObrisi = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        btnPretraga = new javax.swing.JButton();
+        lblPretraga = new javax.swing.JLabel();
+        txtIdRadnoMesto = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Obrisi radnu smenu");
@@ -74,30 +80,61 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
             }
         });
 
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblPretraga.setBackground(new java.awt.Color(255, 0, 0));
+        lblPretraga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel2.setText("Unesi id radne smene");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdRadnoMesto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnPretraga)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtIdRadnoMesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretraga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(110, 110, 110)
+                        .addGap(91, 91, 91)
                         .addComponent(btnObrisi))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -129,6 +166,22 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         popuniTabelu();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        if (txtIdRadnoMesto.getText() == "" || !txtIdRadnoMesto.getText().matches("^\\d+$")) {
+            lblPretraga.setText("Unesi neki broj");
+            lblPretraga.setForeground(Color.RED);
+            return;
+        }
+
+        lblPretraga.setText("");
+
+        int idRadnaSmena = Integer.parseInt(txtIdRadnoMesto.getText());
+
+        System.out.println(idRadnaSmena);
+        popuniTabelu(idRadnaSmena);
+    }//GEN-LAST:event_btnPretragaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,8 +272,42 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPretraga;
     private javax.swing.JTable tblRadneSmene;
+    private javax.swing.JTextField txtIdRadnoMesto;
     // End of variables declaration//GEN-END:variables
+
+    private void popuniTabelu(int idRadnaSmena) {
+        try {
+            RadnaSmena rs = Kontroler.getInstance().pretraziRadnaSmena(idRadnaSmena);
+
+            if (rs.getNaziv() == null) {
+                JOptionPane.showMessageDialog(this, "Ne postoji radna smena sa unetim id-ijem, probaj opet");
+                return;
+            }
+
+            String[] kolone = {"Id", "Naziv", "Vreme od", "Vreme do"};
+            TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+            tblRadneSmene.setModel(dt);
+
+            dt.setRowCount(1);
+
+            dt.setValueAt(rs.getIdRadnaSmena(), 0, 0);
+            dt.setValueAt(rs.getNaziv(), 0, 1);
+            dt.setValueAt(rs.getVremeOd(), 0, 2);
+            dt.setValueAt(rs.getVremeDo(), 0, 3);
+
+            tblRadneSmene.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tblRadneSmene.setRowSelectionAllowed(true);
+            tblRadneSmene.setColumnSelectionAllowed(false);
+
+        } catch (Exception ex) {
+            System.out.println("Neuspela pretraga radnih smena po idiju" + ex.getMessage());
+        }
+    }
 }
