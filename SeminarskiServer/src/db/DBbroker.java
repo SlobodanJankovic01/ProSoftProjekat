@@ -591,25 +591,82 @@ public class DBbroker {
             String query = "SELECT * FROM proizvod WHERE idProizvod=?";
             PreparedStatement ps = k.prepareStatement(query);
 
-            
             ps.setInt(1, id);
-            
 
-            ResultSet rs=ps.executeQuery();
-            
-            Proizvod p=new Proizvod();
-            
-            if(rs.next()){
+            ResultSet rs = ps.executeQuery();
+
+            Proizvod p = new Proizvod();
+
+            if (rs.next()) {
                 p.setIdProizvod(rs.getInt("idProizvod"));
                 p.setNaziv(rs.getString("naziv"));
                 p.setJedinicnaCena(rs.getInt("jedinicnaCena"));
             }
-            
 
             rs.close();
             ps.close();
 
             return p;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Mesto pretraziMesto(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM mesto WHERE idMesto=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            Mesto m = new Mesto();
+
+            if (rs.next()) {
+                m.setIdMesto(rs.getInt("idMesto"));
+                m.setGrad(rs.getString("grad"));
+                m.setAdresa(rs.getString("adresa"));
+            }
+
+            rs.close();
+            ps.close();
+
+            return m;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Musterija pretraziMusterija(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM musterija WHERE idMusterija=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            Musterija m = new Musterija();
+
+            if (rs.next()) {
+                m.setIdMusterija(rs.getInt("idMusterija"));
+                m.setIme(rs.getString("ime"));
+                m.setPrezime(rs.getString("prezime"));
+                m.setBrojTelefona(rs.getString("brojTelefona"));
+                m.setIdMesto(rs.getInt("idMesto"));
+            }
+
+            rs.close();
+            ps.close();
+
+            return m;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw ex;

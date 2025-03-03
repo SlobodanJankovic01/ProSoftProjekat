@@ -337,12 +337,36 @@ public class Kontroler {
     }
 
     public Proizvod pretraziProizvod(int idProizvoda) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_PROIZVODA, (int)idProizvoda);
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_PROIZVODA, (int) idProizvoda);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
-            return (Proizvod)odg.getResult();
+            return (Proizvod) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
+    public Mesto pretraziMesta(int idMesta) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_MESTA, (int) idMesta);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (Mesto) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
+    public Musterija pretraziMusterija(int idMusterije) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_MUSTERIJA, (int) idMusterije);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (Musterija) odg.getResult();
         }
 
         throw odg.getEx();

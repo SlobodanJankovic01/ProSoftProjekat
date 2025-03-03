@@ -6,6 +6,7 @@ package forme;
 
 import domain.Mesto;
 import domain.Musterija;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,6 +50,10 @@ public class ObrisiMusterija extends java.awt.Dialog {
         jLabel1 = new javax.swing.JLabel();
         btnObrisi = new javax.swing.JButton();
         btnOsvezi = new javax.swing.JButton();
+        btnPretraga = new javax.swing.JButton();
+        lblPretraga = new javax.swing.JLabel();
+        txtIdMusterije = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,6 +90,18 @@ public class ObrisiMusterija extends java.awt.Dialog {
             }
         });
 
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblPretraga.setBackground(new java.awt.Color(255, 0, 0));
+        lblPretraga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel2.setText("Unesi id musterije");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -103,11 +120,28 @@ public class ObrisiMusterija extends java.awt.Dialog {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(19, 19, 19))))
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdMusterije, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnPretraga)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtIdMusterije, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretraga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -118,10 +152,10 @@ public class ObrisiMusterija extends java.awt.Dialog {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -160,6 +194,22 @@ public class ObrisiMusterija extends java.awt.Dialog {
 
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        if (txtIdMusterije.getText() == "" || !txtIdMusterije.getText().matches("^\\d+$")) {
+            lblPretraga.setText("Unesi neki broj");
+            lblPretraga.setForeground(Color.RED);
+            return;
+        }
+
+        lblPretraga.setText("");
+
+        int idMusterije = Integer.parseInt(txtIdMusterije.getText());
+
+        System.out.println(idMusterije);
+        popuniTabelu(idMusterije);
+    }//GEN-LAST:event_btnPretragaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,10 +231,14 @@ public class ObrisiMusterija extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnOsvezi;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPretraga;
     private javax.swing.JTable tblSveMusterije;
+    private javax.swing.JTextField txtIdMusterije;
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
@@ -240,6 +294,37 @@ public class ObrisiMusterija extends java.awt.Dialog {
             }
         }
         return null;
+    }
+
+    private void popuniTabelu(int idMusterije) {
+        try {
+            Musterija m = Kontroler.getInstance().pretraziMusterija(idMusterije);
+
+            if (m.getIme() == null) {
+                JOptionPane.showMessageDialog(this, "Ne postoji musterija sa unetim id-ijem, probaj opet");
+                return;
+            }
+
+            String[] kolone = {"Id", "Ime", "Prezime", "Br. telefona", "Mesto"};
+            TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+            tblSveMusterije.setModel(dt);
+
+            dt.setRowCount(1);
+
+            dt.setValueAt(m.getIdMusterija(), 0, 0);
+            dt.setValueAt(m.getIme(), 0, 1);
+            dt.setValueAt(m.getPrezime(), 0, 2);
+            dt.setValueAt(m.getBrojTelefona(), 0, 3);
+            dt.setValueAt(vratiMesto(m.getIdMesto()), 0, 4);
+
+            tblSveMusterije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tblSveMusterije.setRowSelectionAllowed(true);
+            tblSveMusterije.setColumnSelectionAllowed(false);
+
+        } catch (Exception ex) {
+            System.out.println("Neuspela pretraga musterija po idiju" + ex.getMessage());
+        }
     }
 
 }
