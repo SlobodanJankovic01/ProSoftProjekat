@@ -5,6 +5,7 @@
 package forme;
 
 import domain.Proizvod;
+import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,10 @@ public class ObrisiProizvod extends java.awt.Dialog {
         tblProizvodi = new javax.swing.JTable();
         btnObrisi = new javax.swing.JButton();
         btnOsvezi = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtIdProizvoda = new javax.swing.JTextField();
+        btnPretraga = new javax.swing.JButton();
+        lblPretraga = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,37 +90,66 @@ public class ObrisiProizvod extends java.awt.Dialog {
             }
         });
 
+        jLabel2.setText("Unesi id proizvoda");
+
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblPretraga.setBackground(new java.awt.Color(255, 0, 0));
+        lblPretraga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(37, 37, 37))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(166, 166, 166))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIdProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnPretraga))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnObrisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(btnOsvezi)
-                        .addGap(103, 103, 103)
-                        .addComponent(btnObrisi)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(68, 68, 68)
+                        .addComponent(btnObrisi))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtIdProizvoda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPretraga))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -157,6 +191,23 @@ public class ObrisiProizvod extends java.awt.Dialog {
 
     }//GEN-LAST:event_btnObrisiActionPerformed
 
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        if (txtIdProizvoda.getText() == "" || !txtIdProizvoda.getText().matches("^\\d+$")) {
+            lblPretraga.setText("Unesi neki broj");
+            lblPretraga.setForeground(Color.red);
+            return;
+        }
+
+        lblPretraga.setText("");
+        
+        int idProizvoda = Integer.parseInt(txtIdProizvoda.getText());
+
+        System.out.println(idProizvoda);
+        popuniTabelu(idProizvoda);
+
+    }//GEN-LAST:event_btnPretragaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -178,10 +229,14 @@ public class ObrisiProizvod extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnOsvezi;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPretraga;
     private javax.swing.JTable tblProizvodi;
+    private javax.swing.JTextField txtIdProizvoda;
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
@@ -216,6 +271,38 @@ public class ObrisiProizvod extends java.awt.Dialog {
         tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblProizvodi.setRowSelectionAllowed(true);
         tblProizvodi.setColumnSelectionAllowed(false);
+
+    }
+
+    private void popuniTabelu(int idProizvoda) {
+
+        try {
+            Proizvod p = Kontroler.getInstance().pretraziProizvod(idProizvoda);
+
+            System.out.println(p);
+            if(p.getNaziv()==null){
+                JOptionPane.showMessageDialog(this,"Ne postoji proizvod sa unetim id-ijem, probaj opet");
+                return;
+            }
+            
+            String[] kolone = {"Id", "Naziv", "Cena"};
+            TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+            tblProizvodi.setModel(dt);
+
+            dt.setRowCount(1);
+
+            dt.setValueAt(p.getIdProizvod(), 0, 0);
+            dt.setValueAt(p.getNaziv(), 0, 1);
+            dt.setValueAt(p.getJedinicnaCena(), 0, 2);
+
+            tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tblProizvodi.setRowSelectionAllowed(true);
+            tblProizvodi.setColumnSelectionAllowed(false);
+
+        } catch (Exception ex) {
+            System.out.println("Neuspela pretraga proizvoda po idiju"+ex.getMessage());
+        }
 
     }
 }

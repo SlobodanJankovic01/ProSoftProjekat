@@ -336,4 +336,16 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public Proizvod pretraziProizvod(int idProizvoda) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_PROIZVODA, (int)idProizvoda);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (Proizvod)odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }

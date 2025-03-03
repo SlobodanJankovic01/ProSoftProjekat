@@ -584,4 +584,36 @@ public class DBbroker {
         }
     }
 
+    public Proizvod pretraziProizvod(int id) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM proizvod WHERE idProizvod=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            
+            ps.setInt(1, id);
+            
+
+            ResultSet rs=ps.executeQuery();
+            
+            Proizvod p=new Proizvod();
+            
+            if(rs.next()){
+                p.setIdProizvod(rs.getInt("idProizvod"));
+                p.setNaziv(rs.getString("naziv"));
+                p.setJedinicnaCena(rs.getInt("jedinicnaCena"));
+            }
+            
+
+            rs.close();
+            ps.close();
+
+            return p;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }
