@@ -8,6 +8,8 @@ import domain.Mesto;
 import domain.Proizvod;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
@@ -52,6 +54,11 @@ public class UrediMesto extends javax.swing.JFrame {
         txtUlica = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnIzmeniMesto = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtPretraga = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnPretraga = new javax.swing.JButton();
+        lblGreska = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uredi mesto");
@@ -98,18 +105,41 @@ public class UrediMesto extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Pretraga po gradu");
+
+        jLabel5.setText("Unesi naziv grada:");
+
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblGreska.setForeground(new java.awt.Color(255, 0, 0));
+        lblGreska.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnIzaberiMesto))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnPretraga))
+                    .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -123,24 +153,26 @@ public class UrediMesto extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(txtGrad, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtUlica, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(32, 32, 32))
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(btnPretraga))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
+                        .addGap(119, 119, 119)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,12 +185,18 @@ public class UrediMesto extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(txtUlica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(59, 59, 59)
-                        .addComponent(btnIzmeniMesto)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIzaberiMesto)
-                    .addComponent(jButton1))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addComponent(btnIzmeniMesto)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIzaberiMesto)
+                            .addComponent(jButton1))
+                        .addContainerGap())))
         );
 
         pack();
@@ -185,7 +223,7 @@ public class UrediMesto extends javax.swing.JFrame {
         Mesto izabranoMesto = null;
 
         for (Mesto m : svaMesta) {
-            if (m.getIdMesto()== idMesto) {
+            if (m.getIdMesto() == idMesto) {
                 izabranoMesto = m;
             }
         }
@@ -206,8 +244,8 @@ public class UrediMesto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nije izabrano mesto");
             return;
         }
-        
-        Mesto m = new Mesto(Integer.parseInt(lblID.getText()), txtGrad.getText() , txtUlica.getText());
+
+        Mesto m = new Mesto(Integer.parseInt(lblID.getText()), txtGrad.getText(), txtUlica.getText());
 
         try {
 
@@ -225,6 +263,24 @@ public class UrediMesto extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniMestoActionPerformed
+
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        String pretraga = txtPretraga.getText();
+
+        List<Mesto> mesta = new ArrayList<>();
+        try {
+            mesta = Kontroler.getInstance().vratiListuMesto(pretraga);
+            lblGreska.setText("");
+            popuniTabelu(mesta);
+        } catch (Exception ex) {
+            lblGreska.setText("Nema mesta za uneti kriterijum");
+            System.out.println("Greska kod vracanja mesta sa zadatim vrednostima" + ex.getMessage());
+        }
+
+        txtPretraga.setText("");
+
+    }//GEN-LAST:event_btnPretragaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,14 +320,19 @@ public class UrediMesto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzaberiMesto;
     private javax.swing.JButton btnIzmeniMesto;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGreska;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tblMesta;
     private javax.swing.JTextField txtGrad;
+    private javax.swing.JTextField txtPretraga;
     private javax.swing.JTextField txtUlica;
     // End of variables declaration//GEN-END:variables
 
@@ -306,5 +367,30 @@ public class UrediMesto extends javax.swing.JFrame {
         tblMesta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblMesta.setRowSelectionAllowed(true);
         tblMesta.setColumnSelectionAllowed(false);
+    }
+
+    private void popuniTabelu(List<Mesto> mesta) {
+        String[] kolone = {"Id", "Grad", "Adresa"};
+        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+        // Postavljanje modela na tabelu
+        tblMesta.setModel(dt);
+
+        int brojac = 0;
+
+        for (Mesto mesto : mesta) {
+            dt.setRowCount(brojac + 1);
+
+            dt.setValueAt(mesto.getIdMesto(), brojac, 0);
+            dt.setValueAt(mesto.getGrad(), brojac, 1);
+            dt.setValueAt(mesto.getAdresa(), brojac, 2);
+
+            brojac++;
+        }
+
+        tblMesta.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblMesta.setRowSelectionAllowed(true);
+        tblMesta.setColumnSelectionAllowed(false);
+
     }
 }

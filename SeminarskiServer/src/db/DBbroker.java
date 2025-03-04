@@ -739,4 +739,35 @@ public class DBbroker {
         }
     }
 
+    public List<Mesto> vratiListuMesto(String argument) throws SQLException {
+        List<Mesto> mesta = new ArrayList<>();
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT * FROM mesto WHERE grad LIKE ?";
+            PreparedStatement ps = k.prepareStatement(query);
+            ps.setString(1, "%" + argument + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Mesto m = new Mesto(rs.getInt("idMesto"), rs.getString("grad"), rs.getString("adresa"));
+                mesta.add(m);
+            }
+
+            if (mesta.isEmpty()) {
+                throw new SQLException("Nema mesta u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return mesta;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }

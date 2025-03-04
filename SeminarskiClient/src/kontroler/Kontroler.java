@@ -396,4 +396,17 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public List<Mesto> vratiListuMesto(String pretraga) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_MESTA_PO_GRADU, pretraga);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Mesto>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
+
 }
