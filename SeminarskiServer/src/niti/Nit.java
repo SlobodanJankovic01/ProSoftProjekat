@@ -232,7 +232,14 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    } 
+                    }else if (operacija == Operacija.VRATI_MUSTERIJU_PO_IMENU) {
+                        try {
+                            List<Musterija> musterije = dbb.vratiListuMusterija((String)zahtev.getArgumenti());
+                            odgovor.setResult(musterije);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    }
 
                     // Pošalji odgovor klijentu
                     sender.send(odgovor);
