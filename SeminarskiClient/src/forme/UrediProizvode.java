@@ -55,6 +55,11 @@ public class UrediProizvode extends javax.swing.JFrame {
         txtCena = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnIzmeniProzivod = new javax.swing.JButton();
+        btnPretraga = new javax.swing.JButton();
+        lblGreska = new javax.swing.JLabel();
+        txtPretraga = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uredi proizvod");
@@ -101,49 +106,84 @@ public class UrediProizvode extends javax.swing.JFrame {
             }
         });
 
+        btnPretraga.setText("Pretraga");
+        btnPretraga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretragaActionPerformed(evt);
+            }
+        });
+
+        lblGreska.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGreska.setForeground(new java.awt.Color(255, 0, 0));
+        lblGreska.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel7.setText("Unesi naziv:");
+
+        jLabel6.setText("Pretraga po nazivu");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnIzaberiProizvod))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btnIzmeniProzivod)
-                        .addGap(34, 34, 34))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIzaberiProizvod))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCena, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(32, 32, 32))
+                                .addGap(26, 26, 26)
+                                .addComponent(btnIzmeniProzivod)
+                                .addGap(34, 34, 34))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtCena, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(33, 33, 33))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addGap(58, 58, 58)
+                                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnPretraga))
+                                .addComponent(lblGreska, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(btnPretraga))
+                .addGap(8, 8, 8)
+                .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
+                        .addGap(107, 107, 107)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -161,7 +201,7 @@ public class UrediProizvode extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnIzaberiProizvod)
                     .addComponent(jButton1))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -210,26 +250,43 @@ public class UrediProizvode extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Nije izabran proizvod");
             return;
         }
-        
+
         Proizvod proizvod = new Proizvod(Integer.parseInt(lblID.getText()), txtNaziv.getText(), Integer.parseInt(txtCena.getText()));
 
         try {
 
-            Kontroler.getInstance().promeniProizvod(proizvod); 
+            Kontroler.getInstance().promeniProizvod(proizvod);
             popuniTabelu();
-            
+
             JOptionPane.showMessageDialog(this, "Uspesno izmenjen proizvod");
-            
+
             lblID.setText("");
             txtNaziv.setText("");
             txtCena.setText("");
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Neuspela promena proizvoda");
             System.out.println(ex.getMessage());
         }
 
     }//GEN-LAST:event_btnIzmeniProzivodActionPerformed
+
+    private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
+
+        String pretraga = txtPretraga.getText();
+
+        List<Proizvod> proizvodi = new ArrayList<>();
+        try {
+            proizvodi = Kontroler.getInstance().vratiListuProizvod(pretraga);
+            lblGreska.setText("");
+            popuniTabelu(proizvodi);
+        } catch (Exception ex) {
+            lblGreska.setText("Nema proizvoda za uneti kriterijum");
+            System.out.println("Greska kod vracanja proizvoda sa zadatim vrednostima" + ex.getMessage());
+        }
+
+        txtPretraga.setText("");
+    }//GEN-LAST:event_btnPretragaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,15 +326,20 @@ public class UrediProizvode extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzaberiProizvod;
     private javax.swing.JButton btnIzmeniProzivod;
+    private javax.swing.JButton btnPretraga;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGreska;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tblProizvodi;
     private javax.swing.JTextField txtCena;
     private javax.swing.JTextField txtNaziv;
+    private javax.swing.JTextField txtPretraga;
     // End of variables declaration//GEN-END:variables
 
     private void popuniTabelu() {
@@ -300,6 +362,30 @@ public class UrediProizvode extends javax.swing.JFrame {
         int brojac = 0;
 
         for (Proizvod proizvod : sviProizvodi) {
+            dt.setRowCount(brojac + 1);
+
+            dt.setValueAt(proizvod.getIdProizvod(), brojac, 0);
+            dt.setValueAt(proizvod.getNaziv(), brojac, 1);
+            dt.setValueAt(proizvod.getJedinicnaCena(), brojac, 2);
+
+            brojac++;
+        }
+
+        tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblProizvodi.setRowSelectionAllowed(true);
+        tblProizvodi.setColumnSelectionAllowed(false);
+
+    }
+
+    private void popuniTabelu(List<Proizvod> proizvodi) {
+        String[] kolone = {"Id", "Naziv", "Cena"};
+        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+        tblProizvodi.setModel(dt);
+
+        int brojac = 0;
+
+        for (Proizvod proizvod : proizvodi) {
             dt.setRowCount(brojac + 1);
 
             dt.setValueAt(proizvod.getIdProizvod(), brojac, 0);

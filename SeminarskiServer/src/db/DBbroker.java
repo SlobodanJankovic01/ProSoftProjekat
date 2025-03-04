@@ -776,9 +776,9 @@ public class DBbroker {
         try {
             Connection k = DBConnection.getInstance().getConnection();
             String query = "SELECT * FROM musterija WHERE ime LIKE ?";
-            
+
             PreparedStatement ps = k.prepareStatement(query);
-            
+
             ps.setString(1, "%" + argument + "%");
 
             ResultSet rs = ps.executeQuery();
@@ -797,6 +797,40 @@ public class DBbroker {
             ps.close();
 
             return musterije;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public List<Proizvod> vratiListuProizvod(String argument) throws SQLException {
+
+        List<Proizvod> proizvodi = new ArrayList<>();
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT * FROM proizvod WHERE naziv LIKE ?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, "%" + argument + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Proizvod p = new Proizvod(rs.getInt("idProizvod"), rs.getString("naziv"), rs.getInt("jedinicnaCena"));
+                proizvodi.add(p);
+            }
+
+            if (proizvodi.isEmpty()) {
+                throw new SQLException("Nema proizvoda u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return proizvodi;
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
