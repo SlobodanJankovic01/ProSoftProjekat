@@ -13,6 +13,8 @@ import java.util.List;
 import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -831,6 +833,42 @@ public class DBbroker {
             ps.close();
 
             return proizvodi;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public List<Radnik> vratiListuRadnik(String ime) throws SQLException {
+
+        try {
+
+            List<Radnik> radnici = new ArrayList<>();
+
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT * FROM radnik WHERE ime LIKE ?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, "%" + ime + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Radnik r = new Radnik(rs.getInt("idRadnik"), rs.getString("ime"), rs.getString("prezime"),
+                        rs.getString("korisnickoIme"), rs.getString("lozinka"));
+                radnici.add(r);
+            }
+
+            if (radnici.isEmpty()) {
+                throw new SQLException("Nema radnika u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return radnici;
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
