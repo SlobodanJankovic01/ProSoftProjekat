@@ -1,9 +1,9 @@
 # ProSoftProject
 
-# Fast Food Order System
+# Food Order System
 
 ## Project Overview  
-This is a Java-based software system for managing orders in a fast-food restaurant. The project was developed as part of the Project in Software Engineering course at the Faculty of Organizational Sciences.  
+This is a Java-based software system for managing orders in a restaurants. The project was developed as part of the Project in Software Engineering course at the Faculty of Organizational Sciences.  
 The system enables restaurant staff to create, search, update, and delete orders, as well as manage customers, employees, products, locations, and work shifts(Admin).  
 
 ## Features  
