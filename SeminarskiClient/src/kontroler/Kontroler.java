@@ -245,6 +245,17 @@ public class Kontroler {
 
     }
 
+    public boolean obrisiRadnikRadnaSmena(int idRrs) throws Exception {
+        Zahtev zahtev = new Zahtev(Operacija.OBRISI_RADNIK_RADNA_SMENA, idRrs);
+        sender.send(zahtev);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+        throw odg.getEx();
+    }
+
     public boolean obrisiProizvod(int idProizvoda) throws Exception {
 
         Zahtev z = new Zahtev(Operacija.OBRISI_PROIZVOD, idProizvoda);

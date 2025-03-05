@@ -57,6 +57,8 @@ public class FrmRaspored extends javax.swing.JFrame {
         btnUbaci = new javax.swing.JButton();
         jKalendar = new com.toedter.calendar.JDateChooser();
         lblGreska = new javax.swing.JLabel();
+        btnOsvezi = new javax.swing.JButton();
+        btnObrisi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Raspored");
@@ -93,6 +95,20 @@ public class FrmRaspored extends javax.swing.JFrame {
         lblGreska.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblGreska.setText("jLabel5");
 
+        btnOsvezi.setText("Osvezi tabelu");
+        btnOsvezi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsveziActionPerformed(evt);
+            }
+        });
+
+        btnObrisi.setText("Obrisi smenu");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,7 +117,6 @@ public class FrmRaspored extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblGreska, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -119,7 +134,13 @@ public class FrmRaspored extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnUbaci, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                .addComponent(jKalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(jKalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnOsvezi)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnObrisi))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -145,7 +166,11 @@ public class FrmRaspored extends javax.swing.JFrame {
                 .addComponent(lblGreska)
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOsvezi)
+                    .addComponent(btnObrisi))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,6 +206,35 @@ public class FrmRaspored extends javax.swing.JFrame {
         lblGreska.setText("");
 
     }//GEN-LAST:event_btnUbaciActionPerformed
+
+    private void btnOsveziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsveziActionPerformed
+        
+        popuniTabelu();
+
+    }//GEN-LAST:event_btnOsveziActionPerformed
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+
+        if (tblRaspored.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana smena iz tabele");
+            return;
+        }
+
+        int red = tblRaspored.getSelectedRow();
+        int idRrs = (int) tblRaspored.getValueAt(red, 0);
+
+        try {
+            if (Kontroler.getInstance().obrisiRadnikRadnaSmena(idRrs)) {
+                JOptionPane.showMessageDialog(this, "Smena uspesno izbrisana");
+                popuniTabelu();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Greska kod brisanja smene");
+            System.out.println(ex.getMessage());
+        }
+        
+        
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,6 +272,8 @@ public class FrmRaspored extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnObrisi;
+    private javax.swing.JButton btnOsvezi;
     private javax.swing.JButton btnUbaci;
     private javax.swing.JComboBox<Radnik> cboxRadnici;
     private javax.swing.JComboBox<RadnaSmena> cboxSmene;

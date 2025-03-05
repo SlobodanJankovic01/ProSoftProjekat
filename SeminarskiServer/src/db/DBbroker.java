@@ -537,6 +537,26 @@ public class DBbroker {
         }
     }
 
+    public Object obrisiRadnikRadnaSmena(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM rrs WHERE id=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public Object promeniProizvod(Proizvod proizvod) throws SQLException {
         try {
             Connection k = DBConnection.getInstance().getConnection();
