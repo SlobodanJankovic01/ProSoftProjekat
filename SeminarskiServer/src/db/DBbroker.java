@@ -876,4 +876,47 @@ public class DBbroker {
         }
     }
 
+    public List<RadnaSmena> vratiListuRadnaSmena(String naziv) throws SQLException {
+        try {
+
+            List<RadnaSmena> radneSmene = new ArrayList<>();
+
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT * FROM radnasmena WHERE naziv LIKE ?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, "%" + naziv + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                java.sql.Time sqlVremeOd = rs.getTime("vremeOd");
+                java.sql.Time sqlVremeDo = rs.getTime("vremeDo");
+
+                // Konvertovanje u LocalTime
+                LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
+                LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
+
+                RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
+
+                radneSmene.add(radnasmena);
+            }
+
+            if (radneSmene.isEmpty()) {
+                throw new SQLException("Nema radnih smena u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return radneSmene;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+
 }

@@ -55,6 +55,11 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
         txtVremeOd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtVremeDo = new javax.swing.JTextField();
+        btnPretraga2 = new javax.swing.JButton();
+        txtPretraga = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblGreska = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uredi radnu smenu");
@@ -103,53 +108,88 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
 
         jLabel4.setText("Vreme do (HH:mm):");
 
+        btnPretraga2.setText("Pretraga");
+        btnPretraga2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretraga2ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Unesi naziv:");
+
+        jLabel8.setText("Pretraga po nazivu");
+
+        lblGreska.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnIzaberiRS))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIzaberiRS))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(btnIzmeniRS)
-                                .addGap(34, 34, 34))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtVremeOd, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addComponent(btnIzmeniRS)
+                                        .addGap(34, 34, 34))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtVremeOd, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVremeDo)))
+                        .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtVremeDo)))
-                .addGap(41, 41, 41))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblGreska, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(58, 58, 58)
+                                .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnPretraga2)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(btnPretraga2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -166,12 +206,13 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(txtVremeDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(25, 25, 25)
-                        .addComponent(btnIzmeniRS)))
+                        .addComponent(btnIzmeniRS)
+                        .addGap(74, 74, 74)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnIzaberiRS)
                     .addComponent(jButton1))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -282,6 +323,23 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnIzaberiRSActionPerformed
 
+    private void btnPretraga2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraga2ActionPerformed
+
+        String pretraga = txtPretraga.getText();
+
+        List<RadnaSmena> radneSmene = new ArrayList<>();
+        try {
+            radneSmene = Kontroler.getInstance().vratiListuRadnaSmena(pretraga);
+            lblGreska.setText("");
+            popuniTabelu(radneSmene);
+        } catch (Exception ex) {
+            lblGreska.setText("Nema radnih smena za uneti kriterijum");
+            System.out.println("Greska kod vracanja radnih smena sa zadatim vrednostima" + ex.getMessage());
+        }
+
+        txtPretraga.setText("");
+    }//GEN-LAST:event_btnPretraga2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,15 +378,22 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIzaberiRS;
     private javax.swing.JButton btnIzmeniRS;
+    private javax.swing.JButton btnPretraga;
+    private javax.swing.JButton btnPretraga1;
+    private javax.swing.JButton btnPretraga2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGreska;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tblRadneSmene;
     private javax.swing.JTextField txtNaziv;
+    private javax.swing.JTextField txtPretraga;
     private javax.swing.JTextField txtVremeDo;
     private javax.swing.JTextField txtVremeOd;
     // End of variables declaration//GEN-END:variables
@@ -366,6 +431,40 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
         }
 
         for (RadnaSmena radnaSmena : sveRadneSmene) {
+            dt.setRowCount(brojac + 1);
+
+            dt.setValueAt(radnaSmena.getIdRadnaSmena(), brojac, 0);
+            dt.setValueAt(radnaSmena.getNaziv(), brojac, 1);
+            dt.setValueAt(radnaSmena.getVremeOd(), brojac, 2);
+            dt.setValueAt(radnaSmena.getVremeDo(), brojac, 3);
+
+            brojac++;
+        }
+
+        tblRadneSmene.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblRadneSmene.setRowSelectionAllowed(true);
+        tblRadneSmene.setColumnSelectionAllowed(false);
+    }
+
+    private void popuniTabelu(List<RadnaSmena> radneSmene) {
+        DefaultTableModel dt = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tblRadneSmene.setModel(dt);
+
+        dt.setColumnCount(4);
+        dt.setRowCount(0);
+
+        String[] kolone = {"Id", "Naziv", "Vreme od", "Vreme do"};
+        dt.setColumnIdentifiers(kolone);
+
+        int brojac = 0;
+
+        for (RadnaSmena radnaSmena : radneSmene) {
             dt.setRowCount(brojac + 1);
 
             dt.setValueAt(radnaSmena.getIdRadnaSmena(), brojac, 0);

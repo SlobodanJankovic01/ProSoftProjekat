@@ -444,4 +444,16 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public List<RadnaSmena> vratiListuRadnaSmena(String pretraga) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_RADNE_SMENE_PO_NAZIVU, pretraga);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<RadnaSmena>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }
