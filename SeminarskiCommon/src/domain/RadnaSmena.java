@@ -61,7 +61,7 @@ public class RadnaSmena implements Serializable{
 
     @Override
     public String toString() {
-        return "RadnaSmena{" + "idRadnaSmena=" + idRadnaSmena + ", naziv=" + naziv + ", vremeOd=" + vremeOd + ", vremeDo=" + vremeDo + '}';
+        return naziv;
     }
 
     @Override

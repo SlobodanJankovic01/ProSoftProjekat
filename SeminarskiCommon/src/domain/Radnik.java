@@ -72,7 +72,7 @@ public class Radnik implements Serializable {
 
     @Override
     public String toString() {
-        return "Radnik{" + "ime=" + ime + ", prezime=" + prezime + ", korIme=" + korIme + ", loznika=" + loznika + '}';
+        return ime + " " + prezime;
     }
 
     @Override

@@ -9,8 +9,10 @@ import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
+import domain.RadnikRadnaSmena;
 import java.util.List;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -251,6 +253,48 @@ public class DBbroker {
 
     }
 
+    public List<RadnikRadnaSmena> vratiListuSviRadnikRadnaSmena() throws SQLException {
+
+        List<RadnikRadnaSmena> raspored = new ArrayList<>();
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM rrs";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idRadnika = rs.getInt("idRadnik");
+                int idRadneSmene = rs.getInt("idRadnaSmena");
+
+                java.sql.Date sqlDate = rs.getDate("datum");
+                LocalDate datum = sqlDate != null ? sqlDate.toLocalDate() : null;
+
+                RadnikRadnaSmena rrs = new RadnikRadnaSmena(id, idRadnika, idRadneSmene, datum);
+                raspored.add(rrs);
+            }
+
+            if (raspored.isEmpty()) {
+                throw new SQLException("Baza raspoerda je prazna");
+            }
+
+            rs.close();
+            s.close();
+
+            return raspored;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+
     public boolean kreirajProizvod(Proizvod p) throws SQLException {
 
         try {
@@ -307,6 +351,28 @@ public class DBbroker {
             ps.setString(2, r.getPrezime());
             ps.setString(3, r.getKorIme());
             ps.setString(4, r.getLoznika());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public boolean kreirajRadnikRadnaSmena(RadnikRadnaSmena rrs) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO rrs (idRadnik,idRadnaSmena,datum) VALUES (?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, rrs.getIdRadnik());
+            ps.setInt(2, rrs.getIdRadnaSmena());
+            ps.setDate(3, java.sql.Date.valueOf(rrs.getDatum()));
 
             ps.executeUpdate();
 

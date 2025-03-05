@@ -10,6 +10,7 @@ import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
+import domain.RadnikRadnaSmena;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -78,17 +79,24 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_RADNESMENE) {
+                    } else if (operacija == Operacija.VRATI_RADNESMENE) {
                         try {
                             List<RadnaSmena> radneSmene = dbb.vratiListuSviRadnaSmena();
                             odgovor.setResult(radneSmene);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_RADNIKE) {
+                    } else if (operacija == Operacija.VRATI_RADNIKE) {
                         try {
                             List<Radnik> radnici = dbb.vratiListuSviRadnik();
                             odgovor.setResult(radnici);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.VRATI_RADNIK_RADNA_SMENA) {
+                        try {
+                            List<RadnikRadnaSmena> raspored = dbb.vratiListuSviRadnikRadnaSmena();
+                            odgovor.setResult(raspored);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
@@ -118,6 +126,15 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if (operacija == Operacija.KREIRAJ_RADNIK_RADNA_SMENA) {
+                        try {
+                            RadnikRadnaSmena rrs = (RadnikRadnaSmena) zahtev.getArgumenti();
+                            if (dbb.kreirajRadnikRadnaSmena(rrs)) {
+                                odgovor.setResult(true);
+                            }
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.KREIRAJ_MUSTERIJA) {
                         try {
                             Musterija m = (Musterija) zahtev.getArgumenti();
@@ -135,7 +152,7 @@ public class Nit implements Runnable {
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }  else if (operacija == Operacija.OBRISI_RADNUSMENU) {
+                    } else if (operacija == Operacija.OBRISI_RADNUSMENU) {
                         try {
                             odgovor.setResult(dbb.obrisiRadnaSmena((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
@@ -153,109 +170,109 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.OBRISI_MUSTERIJU) {
+                    } else if (operacija == Operacija.OBRISI_MUSTERIJU) {
                         try {
                             odgovor.setResult(dbb.obrisiMusteriju((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.OBRISI_RADNIKA) {
+                    } else if (operacija == Operacija.OBRISI_RADNIKA) {
                         try {
                             odgovor.setResult(dbb.obrisiRadnik((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PROMENI_PROIZVOD) {
+                    } else if (operacija == Operacija.PROMENI_PROIZVOD) {
                         try {
-                            odgovor.setResult(dbb.promeniProizvod((Proizvod)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.promeniProizvod((Proizvod) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PROMENI_MESTO) {
+                    } else if (operacija == Operacija.PROMENI_MESTO) {
                         try {
-                            odgovor.setResult(dbb.promeniMesto((Mesto)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.promeniMesto((Mesto) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PROMENI_RADNU_SMENU) {
+                    } else if (operacija == Operacija.PROMENI_RADNU_SMENU) {
                         try {
-                            odgovor.setResult(dbb.promeniRadnuSmenu((RadnaSmena)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.promeniRadnuSmenu((RadnaSmena) zahtev.getArgumenti()));
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PROMENI_MUSTERIJU) {
+                    } else if (operacija == Operacija.PROMENI_MUSTERIJU) {
                         try {
-                            odgovor.setResult(dbb.promeniMusteriju((Musterija)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.promeniMusteriju((Musterija) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PROMENI_RADNIKA) {
+                    } else if (operacija == Operacija.PROMENI_RADNIKA) {
                         try {
-                            odgovor.setResult(dbb.promeniRadnika((Radnik)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.promeniRadnika((Radnik) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PRETRAGA_PROIZVODA) {
+                    } else if (operacija == Operacija.PRETRAGA_PROIZVODA) {
                         try {
-                            odgovor.setResult(dbb.pretraziProizvod((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.pretraziProizvod((int) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PRETRAGA_MESTA) {
+                    } else if (operacija == Operacija.PRETRAGA_MESTA) {
                         try {
-                            odgovor.setResult(dbb.pretraziMesto((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.pretraziMesto((int) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PRETRAGA_MUSTERIJA) {
+                    } else if (operacija == Operacija.PRETRAGA_MUSTERIJA) {
                         try {
-                            odgovor.setResult(dbb.pretraziMusterija((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.pretraziMusterija((int) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PRETRAGA_RADNIH_SMENA) {
+                    } else if (operacija == Operacija.PRETRAGA_RADNIH_SMENA) {
                         try {
-                            odgovor.setResult(dbb.pretraziRadnaSmena((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.pretraziRadnaSmena((int) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.PRETRAGA_RADNIKA) {
+                    } else if (operacija == Operacija.PRETRAGA_RADNIKA) {
                         try {
-                            odgovor.setResult(dbb.pretraziRadnik((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.pretraziRadnik((int) zahtev.getArgumenti()));
                         } catch (Exception e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_MESTA_PO_GRADU) {
+                    } else if (operacija == Operacija.VRATI_MESTA_PO_GRADU) {
                         try {
-                            List<Mesto> mesta = dbb.vratiListuMesto((String)zahtev.getArgumenti());
+                            List<Mesto> mesta = dbb.vratiListuMesto((String) zahtev.getArgumenti());
                             odgovor.setResult(mesta);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_MUSTERIJU_PO_IMENU) {
+                    } else if (operacija == Operacija.VRATI_MUSTERIJU_PO_IMENU) {
                         try {
-                            List<Musterija> musterije = dbb.vratiListuMusterija((String)zahtev.getArgumenti());
+                            List<Musterija> musterije = dbb.vratiListuMusterija((String) zahtev.getArgumenti());
                             odgovor.setResult(musterije);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_PROIZVOD_PO_NAZIVU) {
+                    } else if (operacija == Operacija.VRATI_PROIZVOD_PO_NAZIVU) {
                         try {
-                            List<Proizvod> proizvodi = dbb.vratiListuProizvod((String)zahtev.getArgumenti());
+                            List<Proizvod> proizvodi = dbb.vratiListuProizvod((String) zahtev.getArgumenti());
                             odgovor.setResult(proizvodi);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_RADNIKE_PO_IMENU) {
+                    } else if (operacija == Operacija.VRATI_RADNIKE_PO_IMENU) {
                         try {
-                            List<Radnik> radnici = dbb.vratiListuRadnik((String)zahtev.getArgumenti());
+                            List<Radnik> radnici = dbb.vratiListuRadnik((String) zahtev.getArgumenti());
                             odgovor.setResult(radnici);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_RADNE_SMENE_PO_NAZIVU) {
+                    } else if (operacija == Operacija.VRATI_RADNE_SMENE_PO_NAZIVU) {
                         try {
-                            List<RadnaSmena> radneSmene = dbb.vratiListuRadnaSmena((String)zahtev.getArgumenti());
+                            List<RadnaSmena> radneSmene = dbb.vratiListuRadnaSmena((String) zahtev.getArgumenti());
                             odgovor.setResult(radneSmene);
                         } catch (SQLException e) {
                             odgovor.setEx(e);

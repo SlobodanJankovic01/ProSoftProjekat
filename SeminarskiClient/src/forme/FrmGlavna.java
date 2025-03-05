@@ -82,6 +82,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuObrMesto = new javax.swing.JMenuItem();
         jMenuObrRS = new javax.swing.JMenuItem();
         jMenuObrRadnik = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Glavna forma");
@@ -294,6 +296,18 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jMenuBar.add(jMenu3);
 
+        jMenu5.setText("Raspored");
+
+        jMenuItem1.setText("Uredjivanje");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem1);
+
+        jMenuBar.add(jMenu5);
+
         setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -448,6 +462,10 @@ public class FrmGlavna extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuObrRadnikActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FrmRaspored raspored=new FrmRaspored();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,7 +508,9 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuKreMesto;
     private javax.swing.JMenuItem jMenuKreMusterija;
     private javax.swing.JMenuItem jMenuKrePro;

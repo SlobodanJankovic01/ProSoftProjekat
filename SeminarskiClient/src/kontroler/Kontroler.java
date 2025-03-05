@@ -9,9 +9,9 @@ import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
+import domain.RadnikRadnaSmena;
 import java.io.IOException;
 import java.net.Socket;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -131,6 +131,18 @@ public class Kontroler {
 
     }
 
+    public List<RadnikRadnaSmena> vratiListuSviRadnikRadnaSmena() throws Exception {
+
+        Zahtev zahtev = new Zahtev(Operacija.VRATI_RADNIK_RADNA_SMENA, null);
+        sender.send(zahtev);
+
+        Odgovor odgovor = (Odgovor) receiver.receive();
+        if (odgovor.getEx() == null) {
+            return (List<RadnikRadnaSmena>) odgovor.getResult();
+        }
+        throw new Exception("Neuspelo ucitavanje rasporeda");
+    }
+
     public boolean kreirajProizvod(String naziv, int cena) throws Exception {
 
         Proizvod p = new Proizvod();
@@ -165,6 +177,19 @@ public class Kontroler {
 
     public boolean kreirajRadnika(Radnik r) throws Exception {
         Zahtev z = new Zahtev(Operacija.KREIRAJ_RADNIKA, r);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
+    public boolean kreirajRadnikRadnaSmena(RadnikRadnaSmena rrs) throws Exception {
+        Zahtev z = new Zahtev(Operacija.KREIRAJ_RADNIK_RADNA_SMENA, rrs);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
