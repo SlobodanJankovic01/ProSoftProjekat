@@ -348,6 +348,18 @@ public class Kontroler {
 
     }
 
+    public boolean promeniRadnikRadnaSmena(RadnikRadnaSmena rrs) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PROMENI_RADNIK_RADNA_SMENA, rrs);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return true;
+        }
+
+        throw odg.getEx();
+    }
+
     public void promeniMusterija(Musterija m) throws Exception {
         Zahtev z = new Zahtev(Operacija.PROMENI_MUSTERIJU, m);
         sender.send(z);

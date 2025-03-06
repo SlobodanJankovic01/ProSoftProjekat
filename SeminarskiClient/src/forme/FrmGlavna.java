@@ -571,6 +571,7 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jMenu3.setEnabled(false);
         jMenu2.setEnabled(false);
+        jMenu5.setEnabled(false);
 
     }
 

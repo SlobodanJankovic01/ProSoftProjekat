@@ -623,6 +623,29 @@ public class DBbroker {
             throw ex;
         }
     }
+    
+    public Object promeniRadnikRadnaSmena(RadnikRadnaSmena rrs) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE rrs SET idRadnik= ?, idRadnaSmena=?, datum=? WHERE id=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, rrs.getIdRadnik());
+            ps.setInt(2, rrs.getIdRadnaSmena());
+            ps.setDate(3, java.sql.Date.valueOf(rrs.getDatum()));
+            ps.setInt(4, rrs.getId());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
 
     public Object promeniMusteriju(Musterija m) throws SQLException {
         try {
@@ -1004,5 +1027,7 @@ public class DBbroker {
         }
 
     }
+
+    
 
 }

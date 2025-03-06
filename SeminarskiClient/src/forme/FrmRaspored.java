@@ -25,6 +25,10 @@ public class FrmRaspored extends javax.swing.JFrame {
     /**
      * Creates new form FrmRaspored
      */
+    List<RadnikRadnaSmena> raspored;
+    List<Radnik> sviRadnici;
+    List<RadnaSmena> radneSmene;
+
     public FrmRaspored() {
         initComponents();
 
@@ -59,6 +63,7 @@ public class FrmRaspored extends javax.swing.JFrame {
         lblGreska = new javax.swing.JLabel();
         btnOsvezi = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
+        btnIzmeni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Raspored");
@@ -109,6 +114,13 @@ public class FrmRaspored extends javax.swing.JFrame {
             }
         });
 
+        btnIzmeni.setText("Izmeni smenu");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,16 +132,14 @@ public class FrmRaspored extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblGreska, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cboxSmene, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cboxRadnici, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(46, 46, 46)
+                                .addComponent(cboxSmene, 0, 132, Short.MAX_VALUE)
+                                .addComponent(cboxRadnici, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -138,6 +148,8 @@ public class FrmRaspored extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnOsvezi)
+                            .addGap(70, 70, 70)
+                            .addComponent(btnIzmeni, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnObrisi))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -169,7 +181,8 @@ public class FrmRaspored extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOsvezi)
-                    .addComponent(btnObrisi))
+                    .addComponent(btnObrisi)
+                    .addComponent(btnIzmeni))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -208,7 +221,7 @@ public class FrmRaspored extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUbaciActionPerformed
 
     private void btnOsveziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsveziActionPerformed
-        
+
         popuniTabelu();
 
     }//GEN-LAST:event_btnOsveziActionPerformed
@@ -232,9 +245,34 @@ public class FrmRaspored extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Greska kod brisanja smene");
             System.out.println(ex.getMessage());
         }
-        
-        
+
+
     }//GEN-LAST:event_btnObrisiActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+
+        if (tblRaspored.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana smena iz tabele");
+            return;
+        }
+
+        int red = tblRaspored.getSelectedRow();
+        int idRrs = (int) tblRaspored.getValueAt(red, 0);
+
+        RadnikRadnaSmena rrs = null;
+        
+        for (RadnikRadnaSmena radnikRadnaSmena : raspored) {
+            if(idRrs==radnikRadnaSmena.getId()){
+                rrs=radnikRadnaSmena;
+                break;
+            }
+        }
+
+        UrediSmenu us = new UrediSmenu(this, false, rrs);
+        
+        popuniTabelu();
+
+    }//GEN-LAST:event_btnIzmeniActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,6 +310,7 @@ public class FrmRaspored extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnOsvezi;
     private javax.swing.JButton btnUbaci;
@@ -320,10 +359,6 @@ public class FrmRaspored extends javax.swing.JFrame {
         // Postavljanje modela na tabelu
         tblRaspored.setModel(dt);
 
-        List<RadnikRadnaSmena> raspored;
-        List<Radnik> sviRadnici;
-        List<RadnaSmena> radneSmene;
-
         try {
             raspored = Kontroler.getInstance().vratiListuSviRadnikRadnaSmena();
             sviRadnici = Kontroler.getInstance().vratiListuSviRadnik();
@@ -355,7 +390,7 @@ public class FrmRaspored extends javax.swing.JFrame {
                 }
             }
 
-            DateTimeFormatter format=DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
             dt.setValueAt(rrs.getDatum().format(format), brojac, 3);
 
             brojac++;
