@@ -208,7 +208,7 @@ public class FrmRaspored extends javax.swing.JFrame {
         try {
 
             Kontroler.getInstance().kreirajRadnikRadnaSmena(rrs);
-            JOptionPane.showMessageDialog(this, "Uspesno ubaceno u radpored");
+            JOptionPane.showMessageDialog(this, "Uspesno ubaceno u raspored");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Greska kod ubacivanja u raspored");

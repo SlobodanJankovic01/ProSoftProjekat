@@ -23,24 +23,30 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmGlavna
+     * 
      */
+    
+    Radnik radnik;
+    
     public FrmGlavna() {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
     }
 
-    FrmGlavna(Radnik radnik) {
+    FrmGlavna(Radnik r) {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
-        lblKorIme.setText(radnik.getKorIme());
+        lblKorIme.setText(r.getKorIme());
 
         Radnik admin = new Radnik(3, "Slobodan", "Jankovic", "Admin", "admin123");
 
-        if (!radnik.equals(admin)) {
+        if (!r.equals(admin)) {
             blokirajOpcije();
         }
+        
+        radnik=r;
 
         //popuniTabelu();
     }
@@ -405,7 +411,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     private void btnKreirajPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajPoruActionPerformed
         Porudzbina p = new Porudzbina(0, "", 0, LocalDateTime.now(), "", 3, 1);
         try {
-            FrmKreirajPorudzbinu porudzbina = new FrmKreirajPorudzbinu(Kontroler.getInstance().kreirajPorudzbina(p));
+            FrmKreirajPorudzbinu porudzbina = new FrmKreirajPorudzbinu(Kontroler.getInstance().kreirajPorudzbina(p),radnik);
         } catch (Exception ex) {
             System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
         }

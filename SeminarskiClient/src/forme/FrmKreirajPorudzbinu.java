@@ -5,8 +5,17 @@
 package forme;
 
 import domain.Proizvod;
+import domain.Musterija;
+import domain.Porudzbina;
+import domain.Radnik;
 import domain.StavkaPorudzbina;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
@@ -24,22 +33,25 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
     int idPorudzbine;
     int redniBroj = 1;
     int ukupnaCena = 0;
+    Radnik radnik;
     List<Proizvod> sviProizvodi;
 
     public FrmKreirajPorudzbinu() {
         initComponents();
     }
 
-    public FrmKreirajPorudzbinu(int id) {
+    public FrmKreirajPorudzbinu(int id, Radnik r) {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
 
         idPorudzbine = id;
+        radnik = r;
         lblId.setText("" + id);
 
         popuniTabelu();
         // popuniStavke();
+        popuniMusterije();
     }
 
     /**
@@ -60,7 +72,6 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         txtKolicina = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         btnDodajStavku = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -70,11 +81,23 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         jRadioDostava = new javax.swing.JRadioButton();
         jRadioPreuzimanje = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jVreme = new javax.swing.JSpinner();
+        jDatum = new com.toedter.calendar.JDateChooser();
+        btnZavrsiPorudzbinu = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtNapomena = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        cboxMusterije = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Kreiraj porudzbinu");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("ID porudzbine");
+
+        lblId.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
 
         tblProizvodi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblProizvodi.setModel(new javax.swing.table.DefaultTableModel(
@@ -90,6 +113,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblProizvodi);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Kolicina:");
 
         txtKolicina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -108,13 +132,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("0.5");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
+        btnDodajStavku.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnDodajStavku.setText("Dodaj stavku");
         btnDodajStavku.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +140,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Proizvodi");
 
         tblStavke.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -138,19 +157,52 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblStavke);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setText("Stavke porudzbine");
 
-        txtUkupnaCena.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUkupnaCena.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         txtUkupnaCena.setForeground(new java.awt.Color(255, 0, 51));
         txtUkupnaCena.setText("Ukupna cena:");
 
         buttonGroup.add(jRadioDostava);
+        jRadioDostava.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioDostava.setText("Dostava");
 
         buttonGroup.add(jRadioPreuzimanje);
+        jRadioPreuzimanje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioPreuzimanje.setText("Preuzimanje");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("Nacin isporuke");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel6.setText("Datum i vreme");
+
+        jVreme.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jVreme.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.HOUR));
+        jVreme.setEditor(new javax.swing.JSpinner.DateEditor(jVreme, "HH:mm"));
+
+        jDatum.setDate(new Date());
+
+        btnZavrsiPorudzbinu.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        btnZavrsiPorudzbinu.setText("Zavrsi porudzbinu");
+        btnZavrsiPorudzbinu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZavrsiPorudzbinuActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel7.setText("Napomena");
+
+        txtNapomena.setColumns(20);
+        txtNapomena.setRows(5);
+        jScrollPane3.setViewportView(txtNapomena);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel8.setText("Musterija");
+
+        cboxMusterije.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,41 +211,49 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(58, 58, 58)
-                                .addComponent(btnDodajStavku))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(2, 2, 2)
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)))
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jRadioDostava, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jRadioPreuzimanje, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDodajStavku))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtUkupnaCena))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel5)
+                        .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(cboxMusterije, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jVreme, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRadioDostava, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioPreuzimanje, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtUkupnaCena)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnZavrsiPorudzbinu)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -202,49 +262,60 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioDostava)
-                        .addGap(2, 2, 2)
-                        .addComponent(jRadioPreuzimanje)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioDostava)
+                            .addComponent(jRadioPreuzimanje))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jVreme, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cboxMusterije, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtUkupnaCena)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtKolicina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton1)
+                                    .addComponent(jButton2))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtUkupnaCena)))
+                        .addGap(0, 4, Short.MAX_VALUE))
+                    .addComponent(btnZavrsiPorudzbinu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDodajStavku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
-        txtKolicina.setText("0.5");
-
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         txtKolicina.setText("1");
@@ -284,17 +355,48 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
             System.out.println("Neuspelo kreiranje stavke porudzbine" + ex.getMessage());
         }
 
+
+    }//GEN-LAST:event_btnDodajStavkuActionPerformed
+
+    private void btnZavrsiPorudzbinuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZavrsiPorudzbinuActionPerformed
+
+        int id = idPorudzbine;
+        int idRadnik = radnik.getIdRadnik();
+        String nacinIsporuke = "";
+
         if (!jRadioDostava.isSelected() && !jRadioPreuzimanje.isSelected()) {
-            System.out.println("Moras izabrati nacin isporuke!");
+            JOptionPane.showMessageDialog(this, "Moras izabrati nacin isporuke!");
+            return;
         }
 
         if (jRadioDostava.isSelected()) {
-            System.out.println(jRadioDostava.getText());
+            nacinIsporuke = jRadioDostava.getText();
         } else if (jRadioPreuzimanje.isSelected()) {
-            System.out.println(jRadioPreuzimanje.getText());
+            nacinIsporuke = jRadioPreuzimanje.getText();
         }
 
-    }//GEN-LAST:event_btnDodajStavkuActionPerformed
+        String napomena = txtNapomena.getText();
+        int ukCena = ukupnaCena;
+
+        Musterija m = (Musterija) cboxMusterije.getSelectedItem();
+        int idMusterije = m.getIdMusterija();
+
+        LocalDateTime datumVreme = vratiDatumVreme();
+
+        Porudzbina p = new Porudzbina(id, nacinIsporuke, ukCena, datumVreme, napomena, idRadnik, idMusterije);
+
+        try {
+            Kontroler.getInstance().promeniPorudzbina(p);
+            
+            JOptionPane.showMessageDialog(this, "Uspesno zavrsena porudzbina");
+            
+            this.dispose();
+        } catch (Exception ex) {
+            System.out.println("Neuspelo kreiranje porudzbine"+ex.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnZavrsiPorudzbinuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,23 +435,31 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajStavku;
+    private javax.swing.JButton btnZavrsiPorudzbinu;
     private javax.swing.ButtonGroup buttonGroup;
+    private javax.swing.JComboBox<Musterija> cboxMusterije;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private com.toedter.calendar.JDateChooser jDatum;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioDostava;
     private javax.swing.JRadioButton jRadioPreuzimanje;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jVreme;
     private javax.swing.JLabel lblId;
     private javax.swing.JTable tblProizvodi;
     private javax.swing.JTable tblStavke;
     private javax.swing.JTextField txtKolicina;
+    private javax.swing.JTextArea txtNapomena;
     private javax.swing.JLabel txtUkupnaCena;
     // End of variables declaration//GEN-END:variables
 
@@ -432,5 +542,36 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         tblStavke.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblStavke.setRowSelectionAllowed(true);
         tblStavke.setColumnSelectionAllowed(false);
+    }
+
+    private void popuniMusterije() {
+
+        try {
+
+            List<Musterija> musterije = Kontroler.getInstance().vratiListuSviMusterija();
+
+            for (Musterija musterija : musterije) {
+                cboxMusterije.addItem(musterija);
+            }
+
+            cboxMusterije.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Greska pri popunjavanju comboboxa musuterija" + ex.getMessage());
+        }
+
+    }
+
+    private LocalDateTime vratiDatumVreme() {
+        Date izabranDatum = jDatum.getDate();
+        LocalDate localDate = izabranDatum.toInstant().atZone(java.time.ZoneId.systemDefault())
+                .toLocalDate();
+
+        Date izabranoVreme = (Date) jVreme.getValue();
+        LocalTime localTime = izabranoVreme.toInstant().atZone(java.time.ZoneId.systemDefault())
+                .toLocalTime();
+        
+        LocalDateTime datumVreme=LocalDateTime.of(localDate, localTime);
+        return datumVreme;
     }
 }

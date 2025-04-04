@@ -15,7 +15,6 @@ import domain.StavkaPorudzbina;
 import java.util.List;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -1065,6 +1064,34 @@ public class DBbroker {
             throw ex;
         }
 
+    }
+
+    public boolean promeniPorudzbina(Porudzbina p) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "UPDATE porudzbina SET nacinIsporuke = ?, ukupnaCena= ?, datumVreme=?, napomena=?, idRadnik=?, idMusterija=?"
+                    + " WHERE idPorudzbina=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, p.getNacinIsporuke());
+            ps.setInt(2, p.getUkupnaCena());
+            ps.setTimestamp(3, Timestamp.valueOf(p.getDatumVreme()));
+            ps.setString(4, p.getNapomena());
+            ps.setInt(5, p.getIdRadnik());
+            ps.setInt(6, p.getIdMusterija());
+            
+            ps.setInt(7, p.getIdPorudzbina());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
     }
 
     public boolean kreirajStavkuPorudzbina(StavkaPorudzbina sp) throws SQLException {

@@ -72,7 +72,7 @@ public class Musterija implements Serializable{
 
     @Override
     public String toString() {
-        return "Musterija{" + "idMusterija=" + idMusterija + ", ime=" + ime + ", prezime=" + prezime + ", brojTelefona=" + brojTelefona + ", idMesto=" + idMesto + '}';
+        return ime + " " + prezime;
     }
 
     @Override

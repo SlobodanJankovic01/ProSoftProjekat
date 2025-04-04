@@ -7,6 +7,7 @@ package niti;
 import db.DBbroker;
 import domain.Mesto;
 import domain.Musterija;
+import domain.Porudzbina;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
@@ -296,6 +297,12 @@ public class Nit implements Runnable {
                             odgovor.setResult(idPorudzbine);
                         } catch (SQLException e) {
                             odgovor.setEx(e); 
+                        }
+                    } else if (operacija == Operacija.PROMENI_PORUDZBINA) {
+                        try {
+                            odgovor.setResult(dbb.promeniPorudzbina((Porudzbina) zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
                         }
                     }else if (operacija == Operacija.KREIRAJ_STAVKU_PORUDZBINE) {
                         try {
