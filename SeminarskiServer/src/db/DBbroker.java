@@ -6,13 +6,16 @@ package db;
 
 import domain.Mesto;
 import domain.Musterija;
+import domain.Porudzbina;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
+import domain.StavkaPorudzbina;
 import java.util.List;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -623,7 +626,7 @@ public class DBbroker {
             throw ex;
         }
     }
-    
+
     public Object promeniRadnikRadnaSmena(RadnikRadnaSmena rrs) throws SQLException {
         try {
             Connection k = DBConnection.getInstance().getConnection();
@@ -1028,6 +1031,96 @@ public class DBbroker {
 
     }
 
-    
+    public int kreirajPorudzbina(Object argumenti) throws SQLException {
+        Porudzbina p = (Porudzbina) argumenti;
+        int id = -1;
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO porudzbina (nacinIsporuke,ukupnaCena,datumVreme,napomena,idRadnik,idMusterija) VALUES (?,?,?,?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, p.getNacinIsporuke());
+            ps.setInt(2, p.getUkupnaCena());
+            ps.setTimestamp(3, Timestamp.valueOf(p.getDatumVreme()));
+            ps.setString(4, p.getNapomena());
+            ps.setInt(5, p.getIdRadnik());
+            ps.setInt(6, p.getIdMusterija());
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                }
+                rs.close();
+            }
+
+            ps.close();
+
+            return id;
+        } catch (SQLException ex) {
+            System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
+            throw ex;
+        }
+
+    }
+
+    public boolean kreirajStavkuPorudzbina(StavkaPorudzbina sp) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "INSERT INTO stavkaporudzbine (idPorudzbina,rb,kolicina,cena,idProizvod) VALUES (?,?,?,?,?)";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, sp.getIdPorudzbina());
+            ps.setInt(2, sp.getRb());
+            ps.setInt(3, sp.getKolicina());
+            ps.setInt(4, sp.getCena());
+            ps.setInt(5, sp.getIdProizvod());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println("Neuspelo kreiranje stavke porudzbine" + ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public List<StavkaPorudzbina> vratiListuStavkePorudzbine(int id) throws SQLException {
+        List<StavkaPorudzbina> stavke = new ArrayList<>();
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM stavkaporudzbine WHERE idPorudzbina=?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                StavkaPorudzbina sp = new StavkaPorudzbina(rs.getInt("idPorudzbina"), rs.getInt("rb"), rs.getInt("kolicina"),
+                        rs.getInt("cena"), rs.getInt("idProizvod"));
+                stavke.add(sp);
+            }
+
+            rs.close();
+            ps.close();
+
+            return stavke;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
 
 }

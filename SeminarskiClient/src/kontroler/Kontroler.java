@@ -6,10 +6,12 @@ package kontroler;
 
 import domain.Mesto;
 import domain.Musterija;
+import domain.Porudzbina;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
+import domain.StavkaPorudzbina;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
@@ -502,6 +504,52 @@ public class Kontroler {
         }
 
         throw odg.getEx();
+    }
+
+
+    public int kreirajPorudzbina(Porudzbina p) throws Exception {
+
+        Zahtev z=new Zahtev(Operacija.KREIRAJ_PORUDZBINU, p);
+        sender.send(z);
+        
+        Odgovor odg= (Odgovor) receiver.receive();
+        
+        if (odg.getEx() == null) {
+            return (int)odg.getResult();
+        }
+
+        throw odg.getEx();
+
+    }
+
+    public void kreirajStavkaPorudzbina(StavkaPorudzbina sp) throws Exception {
+
+        Zahtev z=new Zahtev(Operacija.KREIRAJ_STAVKU_PORUDZBINE, sp);
+        sender.send(z);
+        
+        Odgovor odg= (Odgovor) receiver.receive();
+        
+        if (odg.getEx() == null) {
+            return ;
+        }
+
+        throw odg.getEx();
+
+    }
+
+    public List<StavkaPorudzbina> vratiListuSviStavkePorudzbine(int idPorudzbine) throws Exception {
+
+        Zahtev z=new Zahtev(Operacija.VRATI_LISTU_STAVKE_PORUDZBINE, idPorudzbine);
+        sender.send(z);
+        
+        Odgovor odg= (Odgovor) receiver.receive();
+        
+        if (odg.getEx() == null) {
+            return (List<StavkaPorudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+
     }
 
 }

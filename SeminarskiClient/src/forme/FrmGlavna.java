@@ -4,13 +4,13 @@
  */
 package forme;
 
+import domain.Porudzbina;
 import domain.Proizvod;
 import domain.Radnik;
-import javax.swing.table.DefaultTableModel;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
 import modeliTabela.TabelProizvodiModel;
@@ -42,8 +42,7 @@ public class FrmGlavna extends javax.swing.JFrame {
             blokirajOpcije();
         }
 
-        popuniTabelu();
-
+        //popuniTabelu();
     }
 
     /**
@@ -55,12 +54,10 @@ public class FrmGlavna extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         lblKorIme = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblProizvodi = new javax.swing.JTable();
-        btnOsvezi = new javax.swing.JButton();
-        btnObrisiProizvod = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnPregledPoru = new javax.swing.JButton();
+        btnKreirajPoru = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuKrePro = new javax.swing.JMenuItem();
@@ -86,34 +83,16 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Glavna forma");
+        setTitle("Kreiraj porudzbinu");
 
         jLabel1.setText("Radnik:");
 
-        tblProizvodi.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblProizvodi);
+        btnPregledPoru.setText("Pregled porudzbina");
 
-        btnOsvezi.setText("Osvezi tabelu");
-        btnOsvezi.addActionListener(new java.awt.event.ActionListener() {
+        btnKreirajPoru.setText("Kreiraj porudzbinu");
+        btnKreirajPoru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOsveziActionPerformed(evt);
-            }
-        });
-
-        btnObrisiProizvod.setText("Obrisi proizvod");
-        btnObrisiProizvod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnObrisiProizvodActionPerformed(evt);
+                btnKreirajPoruActionPerformed(evt);
             }
         });
 
@@ -315,62 +294,39 @@ public class FrmGlavna extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnObrisiProizvod, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .addComponent(btnOsvezi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(335, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnKreirajPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPregledPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(315, 315, 315))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(btnObrisiProizvod)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnOsvezi)
-                        .addGap(166, 166, 166))))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addComponent(btnKreirajPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnPregledPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOsveziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsveziActionPerformed
-
-        popuniTabelu();
-
-    }//GEN-LAST:event_btnOsveziActionPerformed
-
-    private void btnObrisiProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiProizvodActionPerformed
-
-        
-
-    }//GEN-LAST:event_btnObrisiProizvodActionPerformed
-
     private void jMenuKreProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreProActionPerformed
 
         KreirajProizvod kp = new KreirajProizvod(this, true);
-        popuniTabelu();
+        //popuniTabelu();
 
     }//GEN-LAST:event_jMenuKreProActionPerformed
 
@@ -391,9 +347,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuObrRSActionPerformed
 
     private void jMenuKreMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMestoActionPerformed
-
         KreirajMesto km = new KreirajMesto(this, true);
-
     }//GEN-LAST:event_jMenuKreMestoActionPerformed
 
     private void jMenuKreMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreMusterijaActionPerformed
@@ -409,62 +363,53 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuKreMusterijaActionPerformed
 
     private void jMenuObrMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMusterijaActionPerformed
-
         ObrisiMusterija om = new ObrisiMusterija(this, false);
-
     }//GEN-LAST:event_jMenuObrMusterijaActionPerformed
 
     private void jMenuObrMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrMestoActionPerformed
-
         ObrisiMesto om = new ObrisiMesto(this, false);
-
     }//GEN-LAST:event_jMenuObrMestoActionPerformed
 
     private void jMenuUrediProizvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediProizvoActionPerformed
-
         UrediProizvode up = new UrediProizvode();
-
     }//GEN-LAST:event_jMenuUrediProizvoActionPerformed
 
     private void jMenuUrediMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediMestoActionPerformed
-
         UrediMesto um = new UrediMesto();
-
     }//GEN-LAST:event_jMenuUrediMestoActionPerformed
 
     private void jMenuUrediRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediRSActionPerformed
-
         UrediRadnaSmena urs = new UrediRadnaSmena();
-
     }//GEN-LAST:event_jMenuUrediRSActionPerformed
 
     private void jMenuUrediMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediMusterijaActionPerformed
-
         UrediMusterija um = new UrediMusterija();
-
     }//GEN-LAST:event_jMenuUrediMusterijaActionPerformed
 
     private void jMenuUrediRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUrediRadnikActionPerformed
-
         UrediRadnik ur = new UrediRadnik();
-
     }//GEN-LAST:event_jMenuUrediRadnikActionPerformed
 
     private void jMenuKreRadnikaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreRadnikaActionPerformed
-        
-        FrmKreirajRadnika f=new FrmKreirajRadnika();
-        
+        FrmKreirajRadnika f = new FrmKreirajRadnika();
     }//GEN-LAST:event_jMenuKreRadnikaActionPerformed
 
     private void jMenuObrRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuObrRadnikActionPerformed
-        
-        ObrisiRadnik or=new ObrisiRadnik();
-        
+        ObrisiRadnik or = new ObrisiRadnik();
     }//GEN-LAST:event_jMenuObrRadnikActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        FrmRaspored raspored=new FrmRaspored();
+        FrmRaspored raspored = new FrmRaspored();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnKreirajPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajPoruActionPerformed
+        Porudzbina p = new Porudzbina(0, "", 0, LocalDateTime.now(), "", 3, 1);
+        try {
+            FrmKreirajPorudzbinu porudzbina = new FrmKreirajPorudzbinu(Kontroler.getInstance().kreirajPorudzbina(p));
+        } catch (Exception ex) {
+            System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnKreirajPoruActionPerformed
 
     /**
      * @param args the command line arguments
@@ -502,8 +447,8 @@ public class FrmGlavna extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnObrisiProizvod;
-    private javax.swing.JButton btnOsvezi;
+    private javax.swing.JButton btnKreirajPoru;
+    private javax.swing.JButton btnPregledPoru;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -528,45 +473,10 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuUrediProizvo;
     private javax.swing.JMenuItem jMenuUrediRS;
     private javax.swing.JMenuItem jMenuUrediRadnik;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblKorIme;
-    private javax.swing.JTable tblProizvodi;
     // End of variables declaration//GEN-END:variables
 
-    private void popuniTabelu() {
-
-        String[] kolone = {"Naziv", "Cena"};
-        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
-
-        // Postavljanje modela na tabelu
-        tblProizvodi.setModel(dt);
-
-        List<Proizvod> sviProizvodi;
-
-        try {
-            sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
-        } catch (Exception ex) {
-            System.out.println("Greska pri ucitavanju proizvoda " + ex.getMessage());
-            sviProizvodi = null;
-            return;
-        }
-        int brojac = 0;
-
-        for (Proizvod proizvod : sviProizvodi) {
-            dt.setRowCount(brojac + 1);
-
-            dt.setValueAt(proizvod.getNaziv(), brojac, 0);
-            dt.setValueAt(proizvod.getJedinicnaCena(), brojac, 1);
-
-            brojac++;
-        }
-
-        tblProizvodi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblProizvodi.setRowSelectionAllowed(true);
-        tblProizvodi.setColumnSelectionAllowed(false);
-
-    }
-
+//   
     private void blokirajOpcije() {
 
         jMenu3.setEnabled(false);

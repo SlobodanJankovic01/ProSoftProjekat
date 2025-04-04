@@ -11,6 +11,7 @@ import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
+import domain.StavkaPorudzbina;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -288,6 +289,25 @@ public class Nit implements Runnable {
                             odgovor.setResult(radneSmene);
                         } catch (SQLException e) {
                             odgovor.setEx(e);
+                        }
+                    }else if (operacija == Operacija.KREIRAJ_PORUDZBINU) {
+                        try {
+                            int idPorudzbine = dbb.kreirajPorudzbina(zahtev.getArgumenti());
+                            odgovor.setResult(idPorudzbine);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e); 
+                        }
+                    }else if (operacija == Operacija.KREIRAJ_STAVKU_PORUDZBINE) {
+                        try {
+                            odgovor.setResult(dbb.kreirajStavkuPorudzbina((StavkaPorudzbina)zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e); 
+                        }
+                    }else if (operacija == Operacija.VRATI_LISTU_STAVKE_PORUDZBINE) {
+                        try {
+                            odgovor.setResult(dbb.vratiListuStavkePorudzbine((int)zahtev.getArgumenti()));
+                        } catch (SQLException e) {
+                            odgovor.setEx(e); 
                         }
                     }
 
