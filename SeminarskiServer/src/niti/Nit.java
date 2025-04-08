@@ -52,7 +52,7 @@ public class Nit implements Runnable {
                     Odgovor odgovor = new Odgovor();
 
                     Operacija operacija = zahtev.getOperacija();
-                    if (operacija == Operacija.LOGIN) {
+                     if (operacija == Operacija.LOGIN) {
                         Radnik radnik = (Radnik) zahtev.getArgumenti();
                         try {
                             radnik = dbb.getRadnik(radnik);
@@ -188,6 +188,12 @@ public class Nit implements Runnable {
                         try {
                             odgovor.setResult(dbb.obrisiRadnikRadnaSmena((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.OBRISI_STAVKA_PORUDZBINE) {
+                        try {
+                            odgovor.setResult(dbb.obrisiStavkaPorudzbine((StavkaPorudzbina) zahtev.getArgumenti()));
+                        } catch (Exception e) {
                             odgovor.setEx(e);
                         }
                     } else if (operacija == Operacija.PROMENI_PROIZVOD) {

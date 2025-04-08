@@ -527,7 +527,7 @@ public class Kontroler {
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
-            return ;
+            return;
         }
 
         throw odg.getEx();
@@ -546,6 +546,18 @@ public class Kontroler {
 
         throw odg.getEx();
 
+    }
+
+    public void obrisiStavkaPorudzbine(StavkaPorudzbina stavka) throws Exception {
+        Zahtev z = new Zahtev(Operacija.OBRISI_STAVKA_PORUDZBINE, stavka);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return ;
+        }
+
+        throw odg.getEx();
     }
 
     public List<StavkaPorudzbina> vratiListuSviStavkePorudzbine(int idPorudzbine) throws Exception {

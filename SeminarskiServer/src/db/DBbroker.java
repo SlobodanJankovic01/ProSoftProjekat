@@ -1080,7 +1080,7 @@ public class DBbroker {
             ps.setString(4, p.getNapomena());
             ps.setInt(5, p.getIdRadnik());
             ps.setInt(6, p.getIdMusterija());
-            
+
             ps.setInt(7, p.getIdPorudzbina());
 
             ps.executeUpdate();
@@ -1145,6 +1145,28 @@ public class DBbroker {
 
         } catch (SQLException ex) {
 
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Object obrisiStavkaPorudzbine(StavkaPorudzbina sp) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM stavkaporudzbine WHERE idPorudzbina=? AND rb=? AND idProizvod=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, sp.getIdPorudzbina());
+            ps.setInt(2, sp.getRb());
+            ps.setInt(3, sp.getIdProizvod());
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw ex;
         }
