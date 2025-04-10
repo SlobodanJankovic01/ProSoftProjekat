@@ -554,7 +554,7 @@ public class Kontroler {
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
-            return ;
+            return;
         }
 
         throw odg.getEx();
@@ -574,5 +574,20 @@ public class Kontroler {
         throw odg.getEx();
 
     }
+
+    public List<Porudzbina> vratiListuSviPorudzbina() throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_SVE_PORUDZBINE, null);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+
+        if (odg.getEx() == null) {
+            return (List<Porudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 
 }

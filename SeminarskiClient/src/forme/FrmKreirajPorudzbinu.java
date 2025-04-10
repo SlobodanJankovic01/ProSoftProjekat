@@ -49,7 +49,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         lblId.setText("" + id);
 
         popuniTabelu();
-        // popuniStavke();
+        popuniStavke();
         popuniMusterije();
     }
 
@@ -556,7 +556,6 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
         try {
             sveStavkePorudzbine = Kontroler.getInstance().vratiListuSviStavkePorudzbine(idPorudzbine);
-
         } catch (Exception ex) {
             System.out.println("Greska pri ucitavanju stavki porudzbine" + ex.getMessage());
             sveStavkePorudzbine = null;
@@ -565,22 +564,24 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         int brojac = 0;
         ukupnaCena = 0;
 
-        for (StavkaPorudzbina sp : sveStavkePorudzbine) {
-            String naziv = "";
-            for (Proizvod p : sviProizvodi) {
-                if (p.getIdProizvod() == sp.getIdProizvod()) {
-                    naziv = p.getNaziv();
+        if (!sveStavkePorudzbine.isEmpty()) {
+            for (StavkaPorudzbina sp : sveStavkePorudzbine) {
+                String naziv = "";
+                for (Proizvod p : sviProizvodi) {
+                    if (p.getIdProizvod() == sp.getIdProizvod()) {
+                        naziv = p.getNaziv();
+                    }
                 }
+                dt.setRowCount(brojac + 1);
+
+                dt.setValueAt(sp.getRb(), brojac, 0);
+                dt.setValueAt(naziv, brojac, 1);
+                dt.setValueAt(sp.getKolicina(), brojac, 2);
+                dt.setValueAt(sp.getCena(), brojac, 3);
+
+                ukupnaCena += sp.getCena();
+                brojac++;
             }
-            dt.setRowCount(brojac + 1);
-
-            dt.setValueAt(sp.getRb(), brojac, 0);
-            dt.setValueAt(naziv, brojac, 1);
-            dt.setValueAt(sp.getKolicina(), brojac, 2);
-            dt.setValueAt(sp.getCena(), brojac, 3);
-
-            ukupnaCena += sp.getCena();
-            brojac++;
         }
 
         txtUkupnaCena.setText("Ukupna cena: " + ukupnaCena);

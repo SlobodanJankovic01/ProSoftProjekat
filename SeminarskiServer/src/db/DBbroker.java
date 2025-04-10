@@ -1172,4 +1172,37 @@ public class DBbroker {
         }
     }
 
+    public List<Porudzbina> vratiListuSviPorudzbina() throws SQLException {
+        
+        List<Porudzbina> porudzbine = new ArrayList<>();
+        
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            Statement s = k.createStatement();
+
+            String query = "SELECT * FROM porudzbina";
+
+            ResultSet rs = s.executeQuery(query);
+
+            while (rs.next()) {
+                Porudzbina p=new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                        rs.getTimestamp("datumVreme").toLocalDateTime(),rs.getString("napomena"),
+                        rs.getInt("idRadnik"), rs.getInt("idMusterija"));
+                porudzbine.add(p);
+            }
+
+            rs.close();
+            s.close();
+
+            return porudzbine;
+
+        } catch (SQLException ex) {
+
+            System.out.println("Neuspelo ucitavanje list porudzbina"+ex.getMessage());
+            throw ex;
+        }
+
+    }
+
 }

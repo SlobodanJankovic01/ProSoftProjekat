@@ -94,6 +94,11 @@ public class FrmGlavna extends javax.swing.JFrame {
         jLabel1.setText("Radnik:");
 
         btnPregledPoru.setText("Pregled porudzbina");
+        btnPregledPoru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPregledPoruActionPerformed(evt);
+            }
+        });
 
         btnKreirajPoru.setText("Kreiraj porudzbinu");
         btnKreirajPoru.addActionListener(new java.awt.event.ActionListener() {
@@ -416,6 +421,10 @@ public class FrmGlavna extends javax.swing.JFrame {
             System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
         }
     }//GEN-LAST:event_btnKreirajPoruActionPerformed
+
+    private void btnPregledPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregledPoruActionPerformed
+        FrmListaPorudzbina lista=new FrmListaPorudzbina();
+    }//GEN-LAST:event_btnPregledPoruActionPerformed
 
     /**
      * @param args the command line arguments
