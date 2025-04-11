@@ -589,5 +589,18 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public void obrisiPorudzbina(int idPor) throws Exception {
+
+        Zahtev z = new Zahtev(Operacija.OBRISI_PORUDZBINA, idPor);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return ;
+        }
+
+        throw odg.getEx();
+
+    }
 
 }

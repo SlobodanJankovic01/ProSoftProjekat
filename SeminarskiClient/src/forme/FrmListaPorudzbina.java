@@ -4,6 +4,7 @@
  */
 package forme;
 
+import domain.Mesto;
 import domain.Musterija;
 import domain.Porudzbina;
 import domain.Proizvod;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
 import modeliTabela.TabelProizvodiModel;
@@ -43,6 +45,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         }
 
         popuniTabeluPorudzbina();
+        osveziTabeluStavke();
 
     }
 
@@ -65,6 +68,8 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblStavke = new javax.swing.JTable();
         lblIsporuka = new javax.swing.JLabel();
+        lblMesto = new javax.swing.JLabel();
+        btnObrisiPorudzbinu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Spisak porudzbina");
@@ -118,7 +123,18 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tblStavke);
 
         lblIsporuka.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblIsporuka.setText("NacinIsporuke: ");
+        lblIsporuka.setText("Nacin isporuke: ");
+
+        lblMesto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblMesto.setText("Lokacija:");
+
+        btnObrisiPorudzbinu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnObrisiPorudzbinu.setText("Obrisi porudzbinu");
+        btnObrisiPorudzbinu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiPorudzbinuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,16 +143,20 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnObrisiPorudzbinu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                     .addComponent(lblIsporuka, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(33, 33, 33))
+                    .addComponent(lblCena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,10 +174,15 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblCena)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                        .addComponent(lblMesto)
+                        .addGap(13, 13, 13)
+                        .addComponent(lblCena))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(btnObrisiPorudzbinu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -172,25 +197,78 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         }
 
         int idPorudzbine = (int) tblPorudzbine.getValueAt(red, 0);
+        int idMusterija = 0;
         String napomena = "";
         int cena = 0;
-        String isporuka="";
+        String isporuka = "";
 
         for (Porudzbina p : svePorudzbine) {
             if (idPorudzbine == p.getIdPorudzbina()) {
                 napomena = p.getNapomena();
                 cena = p.getUkupnaCena();
-                isporuka=p.getNacinIsporuke();
+                isporuka = p.getNacinIsporuke();
+                idMusterija = p.getIdMusterija();
             }
         }
 
         lblCena.setText("Ukupna cena: " + cena);
         txtNapomena.setText(napomena);
-        lblIsporuka.setText("Nacin isporuke: "+isporuka);
+        lblIsporuka.setText("Nacin isporuke: " + isporuka);
+
+        if (isporuka.equals("Dostava")) {
+            Musterija m = vratiMusteriju(idMusterija);
+            Mesto mesto = vratiMesto(m.getIdMesto());
+            lblMesto.setText("Lokacija: " + mesto);
+        } else {
+            lblMesto.setText("Lokacija: /");
+        }
 
         popuniStavke(idPorudzbine);
 
     }//GEN-LAST:event_tblPorudzbineMouseClicked
+
+    private void btnObrisiPorudzbinuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiPorudzbinuActionPerformed
+
+        int red = tblPorudzbine.getSelectedRow();
+
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana porudzbina!");
+            return;
+        }
+
+        int idPor = (int) tblPorudzbine.getValueAt(red, 0);
+
+        int odgovor = JOptionPane.showConfirmDialog(
+                null,
+                "Brisanjem porudžbine biće obrisane i sve njene stavke.\nDa li ste sigurni da želite da nastavite?",
+                "Potvrda brisanja",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (odgovor == JOptionPane.YES_OPTION) {
+
+            try {
+                Kontroler.getInstance().obrisiPorudzbina(idPor);
+            } catch (Exception ex) {
+                System.out.println("Greska pri brisanju porudzbine!" + ex.getMessage());
+            }
+
+            JOptionPane.showMessageDialog(this, "Uspesno obrisana porudzbina!");
+            popuniTabeluPorudzbina();
+            osveziTabeluStavke();
+            
+            lblIsporuka.setText("Nacin isporuke:");
+            txtNapomena.setText("");
+            lblMesto.setText("Lokacija:");
+            lblCena.setText("Ukupna cena:");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Brisanje otkazano");
+        }
+
+
+    }//GEN-LAST:event_btnObrisiPorudzbinuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +306,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnObrisiPorudzbinu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -235,6 +314,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCena;
     private javax.swing.JLabel lblIsporuka;
+    private javax.swing.JLabel lblMesto;
     private javax.swing.JTable tblPorudzbine;
     private javax.swing.JTable tblStavke;
     private javax.swing.JTextArea txtNapomena;
@@ -339,6 +419,29 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
         return null;
 
+    }
+
+    private Mesto vratiMesto(int idMesto) {
+
+        try {
+            return Kontroler.getInstance().pretraziMesta(idMesto);
+        } catch (Exception ex) {
+            System.out.println("Greska pri ucitavnju mesta" + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    private void osveziTabeluStavke() {
+        String[] kolone = {"Rb", "Proizvod", "Kolicina", "Cena"};
+        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+        tblStavke.setModel(dt);
+        
+        int brojac = 0;
+
+        dt.setRowCount(0);
+        
     }
 
 }

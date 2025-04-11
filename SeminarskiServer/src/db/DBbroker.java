@@ -1205,4 +1205,24 @@ public class DBbroker {
 
     }
 
+    public Object obrisiPorudzbina(int id) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "DELETE FROM porudzbina WHERE idPorudzbina=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }
