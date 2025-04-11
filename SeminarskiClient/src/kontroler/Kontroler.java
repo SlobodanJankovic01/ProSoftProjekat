@@ -603,4 +603,16 @@ public class Kontroler {
 
     }
 
+    public Porudzbina pretraziPorudzbina(int idPor) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_PORUDZBINA, (int) idPor);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (Porudzbina) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }

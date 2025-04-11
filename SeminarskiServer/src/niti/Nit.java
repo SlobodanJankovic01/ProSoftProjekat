@@ -52,7 +52,7 @@ public class Nit implements Runnable {
                     Odgovor odgovor = new Odgovor();
 
                     Operacija operacija = zahtev.getOperacija();
-                     if (operacija == Operacija.LOGIN) {
+                    if (operacija == Operacija.LOGIN) {
                         Radnik radnik = (Radnik) zahtev.getArgumenti();
                         try {
                             radnik = dbb.getRadnik(radnik);
@@ -297,12 +297,12 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.KREIRAJ_PORUDZBINU) {
+                    } else if (operacija == Operacija.KREIRAJ_PORUDZBINU) {
                         try {
                             int idPorudzbine = dbb.kreirajPorudzbina(zahtev.getArgumenti());
                             odgovor.setResult(idPorudzbine);
                         } catch (SQLException e) {
-                            odgovor.setEx(e); 
+                            odgovor.setEx(e);
                         }
                     } else if (operacija == Operacija.PROMENI_PORUDZBINA) {
                         try {
@@ -310,17 +310,17 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.KREIRAJ_STAVKU_PORUDZBINE) {
+                    } else if (operacija == Operacija.KREIRAJ_STAVKU_PORUDZBINE) {
                         try {
-                            odgovor.setResult(dbb.kreirajStavkuPorudzbina((StavkaPorudzbina)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.kreirajStavkuPorudzbina((StavkaPorudzbina) zahtev.getArgumenti()));
                         } catch (SQLException e) {
-                            odgovor.setEx(e); 
+                            odgovor.setEx(e);
                         }
-                    }else if (operacija == Operacija.VRATI_LISTU_STAVKE_PORUDZBINE) {
+                    } else if (operacija == Operacija.VRATI_LISTU_STAVKE_PORUDZBINE) {
                         try {
-                            odgovor.setResult(dbb.vratiListuStavkePorudzbine((int)zahtev.getArgumenti()));
+                            odgovor.setResult(dbb.vratiListuStavkePorudzbine((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
-                            odgovor.setEx(e); 
+                            odgovor.setEx(e);
                         }
                     } else if (operacija == Operacija.VRATI_LISTU_SVE_PORUDZBINE) {
                         try {
@@ -333,6 +333,12 @@ public class Nit implements Runnable {
                         try {
                             odgovor.setResult(dbb.obrisiPorudzbina((int) zahtev.getArgumenti()));
                         } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.PRETRAGA_PORUDZBINA) {
+                        try {
+                            odgovor.setResult(dbb.pretraziPorudzbina((int) zahtev.getArgumenti()));
+                        } catch (Exception e) {
                             odgovor.setEx(e);
                         }
                     }

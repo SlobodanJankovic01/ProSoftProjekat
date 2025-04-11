@@ -203,7 +203,7 @@ public class ObrisiMesto extends java.awt.Dialog {
 
         int idMesta = Integer.parseInt(txtIdMesta.getText());
 
-        System.out.println(idMesta);
+        //System.out.println(idMesta);
         popuniTabelu(idMesta);
     }//GEN-LAST:event_btnPretragaActionPerformed
 

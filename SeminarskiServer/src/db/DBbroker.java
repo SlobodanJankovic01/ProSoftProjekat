@@ -1173,9 +1173,9 @@ public class DBbroker {
     }
 
     public List<Porudzbina> vratiListuSviPorudzbina() throws SQLException {
-        
+
         List<Porudzbina> porudzbine = new ArrayList<>();
-        
+
         try {
             Connection k = DBConnection.getInstance().getConnection();
 
@@ -1186,8 +1186,8 @@ public class DBbroker {
             ResultSet rs = s.executeQuery(query);
 
             while (rs.next()) {
-                Porudzbina p=new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
-                        rs.getTimestamp("datumVreme").toLocalDateTime(),rs.getString("napomena"),
+                Porudzbina p = new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                        rs.getTimestamp("datumVreme").toLocalDateTime(), rs.getString("napomena"),
                         rs.getInt("idRadnik"), rs.getInt("idMusterija"));
                 porudzbine.add(p);
             }
@@ -1199,7 +1199,7 @@ public class DBbroker {
 
         } catch (SQLException ex) {
 
-            System.out.println("Neuspelo ucitavanje list porudzbina"+ex.getMessage());
+            System.out.println("Neuspelo ucitavanje list porudzbina" + ex.getMessage());
             throw ex;
         }
 
@@ -1219,6 +1219,39 @@ public class DBbroker {
             ps.close();
 
             return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
+    public Porudzbina pretraziPorudzbina(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM porudzbina WHERE idPorudzbina=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            Porudzbina p = new Porudzbina();
+
+            if (rs.next()) {
+                p.setIdPorudzbina(rs.getInt("idPorudzbina"));
+                p.setNacinIsporuke(rs.getString("nacinIsporuke"));
+                p.setUkupnaCena(rs.getInt("ukupnaCena"));
+                p.setDatumVreme(rs.getTimestamp("datumVreme").toLocalDateTime());
+                p.setNapomena(rs.getString("napomena"));
+                p.setIdRadnik(rs.getInt("idRadnik"));
+                p.setIdMusterija(rs.getInt("idMusterija"));
+            }
+
+            rs.close();
+            ps.close();
+
+            return p;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw ex;

@@ -72,7 +72,6 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuKreRadnaSmena = new javax.swing.JMenuItem();
         jMenuKreRadnika = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuUrediPorudz = new javax.swing.JMenuItem();
         jMenuUrediProizvo = new javax.swing.JMenuItem();
         jMenuUrediMusterija = new javax.swing.JMenuItem();
         jMenuUrediMesto = new javax.swing.JMenuItem();
@@ -80,7 +79,6 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuUrediRS = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuObrProizvod = new javax.swing.JMenuItem();
-        jMenuObrPorudz = new javax.swing.JMenuItem();
         jMenuObrMusterija = new javax.swing.JMenuItem();
         jMenuObrMesto = new javax.swing.JMenuItem();
         jMenuObrRS = new javax.swing.JMenuItem();
@@ -170,11 +168,6 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         jMenu2.setText("Uredi");
 
-        jMenuUrediPorudz.setText("Porudzbina");
-        jMenuUrediPorudz.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuUrediPorudz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenu2.add(jMenuUrediPorudz);
-
         jMenuUrediProizvo.setText("Proizvod");
         jMenuUrediProizvo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuUrediProizvo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -238,11 +231,6 @@ public class FrmGlavna extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuObrProizvod);
-
-        jMenuObrPorudz.setText("Porudzbina");
-        jMenuObrPorudz.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuObrPorudz.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenu3.add(jMenuObrPorudz);
 
         jMenuObrMusterija.setText("Musterija");
         jMenuObrMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -478,13 +466,11 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuKreRadnika;
     private javax.swing.JMenuItem jMenuObrMesto;
     private javax.swing.JMenuItem jMenuObrMusterija;
-    private javax.swing.JMenuItem jMenuObrPorudz;
     private javax.swing.JMenuItem jMenuObrProizvod;
     private javax.swing.JMenuItem jMenuObrRS;
     private javax.swing.JMenuItem jMenuObrRadnik;
     private javax.swing.JMenuItem jMenuUrediMesto;
     private javax.swing.JMenuItem jMenuUrediMusterija;
-    private javax.swing.JMenuItem jMenuUrediPorudz;
     private javax.swing.JMenuItem jMenuUrediProizvo;
     private javax.swing.JMenuItem jMenuUrediRS;
     private javax.swing.JMenuItem jMenuUrediRadnik;
