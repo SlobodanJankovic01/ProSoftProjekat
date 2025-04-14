@@ -12,8 +12,6 @@ import domain.Radnik;
 import domain.StavkaPorudzbina;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
@@ -86,6 +84,9 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnPrtgMusterija = new javax.swing.JButton();
         cBoxMusterija = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        cBoxRadnik = new javax.swing.JComboBox<>();
+        btnPrtgRadnik = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Spisak porudzbina");
@@ -192,6 +193,17 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Radnik");
+
+        btnPrtgRadnik.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        btnPrtgRadnik.setText("Pretrazi");
+        btnPrtgRadnik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrtgRadnikActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +244,13 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cBoxMusterija, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPrtgMusterija)))
+                                .addComponent(btnPrtgMusterija)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cBoxRadnik, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPrtgRadnik)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -247,7 +265,11 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(btnPrtgMusterija)
-                        .addComponent(cBoxMusterija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cBoxMusterija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(btnPrtgRadnik)
+                            .addComponent(cBoxRadnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -422,6 +444,29 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnPrtgMusterijaActionPerformed
 
+    private void btnPrtgRadnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrtgRadnikActionPerformed
+
+        try {
+
+            Radnik r = (Radnik) cBoxRadnik.getSelectedItem();
+
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(r);
+
+            if (porudzbine.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nema porudzbina za izabranog radnika");
+                return;
+            }
+
+            popuniTabeluPorudzbina(porudzbine);
+            cBoxRadnik.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            cBoxRadnik.setSelectedIndex(-1);
+            System.out.println("Greska kod vracanje liste porudzbina kriterijum Radnik" + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnPrtgRadnikActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -463,11 +508,14 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     private javax.swing.JButton btnOsveziTabelu;
     private javax.swing.JButton btnPretraga;
     private javax.swing.JButton btnPrtgMusterija;
+    private javax.swing.JButton btnPrtgRadnik;
     private javax.swing.JComboBox<Musterija> cBoxMusterija;
+    private javax.swing.JComboBox<Radnik> cBoxRadnik;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -639,16 +687,24 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         try {
             List<Musterija> musterije = Kontroler.getInstance().vratiListuSviMusterija();
 
+            List<Radnik> radnici = Kontroler.getInstance().vratiListuSviRadnik();
+
             cBoxMusterija.removeAllItems();
+            cBoxRadnik.removeAllItems();
 
             for (Musterija m : musterije) {
                 cBoxMusterija.addItem(m);
             }
 
+            for (Radnik radnik : radnici) {
+                cBoxRadnik.addItem(radnik);
+            }
+
             cBoxMusterija.setSelectedIndex(-1);
+            cBoxRadnik.setSelectedIndex(-1);
 
         } catch (Exception ex) {
-            System.out.println("Greška pri učitavanju musterija: " + ex.getMessage());
+            System.out.println("Greška pri učitavanju comboBoxova" + ex.getMessage());
         }
     }
 
@@ -658,7 +714,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
         // Postavljanje modela na tabelu
         tblPorudzbine.setModel(dt);
-        
+
         int brojac = 0;
 
         for (Porudzbina p : porudzbine) {

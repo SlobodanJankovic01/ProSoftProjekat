@@ -651,4 +651,16 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public List<Porudzbina> vratiListuPorudzbina(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_RADNIKU, (Radnik) r);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Porudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }
