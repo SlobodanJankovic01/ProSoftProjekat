@@ -505,6 +505,18 @@ public class Kontroler {
 
         throw odg.getEx();
     }
+    
+    public List<Radnik> vratiListuRadnik(RadnaSmena rs) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_RADNIKE_PO_SMENI, rs);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Radnik>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
 
     public List<RadnaSmena> vratiListuRadnaSmena(String pretraga) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_RADNE_SMENE_PO_NAZIVU, pretraga);
@@ -626,6 +638,8 @@ public class Kontroler {
 
         throw odg.getEx();
     }
+
+    
 
     
 

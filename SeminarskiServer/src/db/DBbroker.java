@@ -1022,6 +1022,44 @@ public class DBbroker {
         }
     }
 
+    public List<Radnik> vratiListuRadnikPoSmeni(RadnaSmena radnaSmena) throws SQLException {
+        try {
+
+            List<Radnik> radnici = new ArrayList<>();
+
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT DISTINCT r.*\n"
+                    + "FROM radnik r\n"
+                    + "JOIN rrs rrss ON r.idRadnik = rrss.idRadnik\n"
+                    + "WHERE rrss.idRadnaSmena = ?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, radnaSmena.getIdRadnaSmena());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Radnik r = new Radnik(rs.getInt("idRadnik"), rs.getString("ime"), rs.getString("prezime"),
+                        rs.getString("korisnickoIme"), rs.getString("lozinka"));
+                radnici.add(r);
+            }
+
+            if (radnici.isEmpty()) {
+                throw new SQLException("Nema radnika u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return radnici;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
     public List<RadnaSmena> vratiListuRadnaSmena(String naziv) throws SQLException {
         try {
 
