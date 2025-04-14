@@ -1392,4 +1392,38 @@ public class DBbroker {
         }
     }
 
+    public List<Porudzbina> vratiListuPorudzbinaPoProizvodu(Proizvod proizvod) throws SQLException {
+        List<Porudzbina> porudzbine = new ArrayList<>();
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT DISTINCT p.*\n"
+                    + "FROM Porudzbina p\n"
+                    + "JOIN StavkaPorudzbine sp ON p.idPorudzbina = sp.idPorudzbina\n"
+                    + "JOIN Proizvod pr ON sp.idProizvod = pr.idProizvod\n"
+                    + "WHERE pr.idProizvod = ?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, proizvod.getIdProizvod());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Porudzbina p = new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                        rs.getTimestamp("datumVreme").toLocalDateTime(), rs.getString("napomena"),
+                        rs.getInt("idRadnik"), rs.getInt("idMusterija"));
+
+                porudzbine.add(p);
+            }
+
+            rs.close();
+            ps.close();
+
+            return porudzbine;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }
