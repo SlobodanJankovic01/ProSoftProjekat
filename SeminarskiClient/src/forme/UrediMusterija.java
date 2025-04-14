@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
 import modeliTabela.TabelProizvodiModel;
-import niti.NitPopuniCboxMesta;
 
 /**
  *
@@ -25,11 +24,14 @@ public class UrediMusterija extends javax.swing.JFrame {
     /**
      * Creates new form UrediMusterija
      */
+    List<Mesto> mesta;
+
     public UrediMusterija() {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
         popuniTabelu();
+        popuniCboxMesta();
     }
 
     /**
@@ -57,11 +59,14 @@ public class UrediMusterija extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cboxMesto = new javax.swing.JComboBox<>();
         brnKreirajMesto = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         txtPretraga = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnPretraga = new javax.swing.JButton();
         lblGreska = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btnPretraga1 = new javax.swing.JButton();
+        cboxMesto1 = new javax.swing.JComboBox<>();
+        lblGreska1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uredi musteriju");
@@ -120,8 +125,6 @@ public class UrediMusterija extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Pretraga po imenu");
-
         jLabel7.setText("Unesi ime:");
 
         btnPretraga.setText("Pretraga");
@@ -134,6 +137,19 @@ public class UrediMusterija extends javax.swing.JFrame {
         lblGreska.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblGreska.setForeground(new java.awt.Color(255, 0, 0));
         lblGreska.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel8.setText("Izaberi mesto:");
+
+        btnPretraga1.setText("Pretraga");
+        btnPretraga1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPretraga1ActionPerformed(evt);
+            }
+        });
+
+        lblGreska1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGreska1.setForeground(new java.awt.Color(255, 0, 0));
+        lblGreska1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,12 +165,9 @@ public class UrediMusterija extends javax.swing.JFrame {
                                 .addGap(145, 145, 145)
                                 .addComponent(btnIzaberiMusteriju))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnIzmeniMusteriju)
-                                .addGap(111, 111, 111))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,39 +190,58 @@ public class UrediMusterija extends javax.swing.JFrame {
                                             .addComponent(txtBrTelefona))))
                                 .addGap(16, 16, 16)
                                 .addComponent(brnKreirajMesto)
-                                .addContainerGap())))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addContainerGap())
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(58, 58, 58)
-                                .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnPretraga))
-                            .addComponent(lblGreska, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(128, 128, 128)
+                                .addComponent(btnIzmeniMusteriju)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cboxMesto1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPretraga, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPretraga1, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                            .addComponent(btnPretraga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblGreska, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblGreska1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(btnPretraga))
-                .addGap(8, 8, 8)
-                .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtPretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblGreska, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(btnPretraga)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(btnPretraga1)
+                            .addComponent(cboxMesto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblGreska1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,8 +263,11 @@ public class UrediMusterija extends javax.swing.JFrame {
                             .addComponent(cboxMesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(brnKreirajMesto))
                         .addGap(28, 28, 28)
-                        .addComponent(btnIzmeniMusteriju)
-                        .addGap(72, 72, 72)))
+                        .addComponent(btnIzmeniMusteriju))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnIzaberiMusteriju)
                     .addComponent(jButton1))
@@ -368,6 +403,23 @@ public class UrediMusterija extends javax.swing.JFrame {
         txtPretraga.setText("");
     }//GEN-LAST:event_btnPretragaActionPerformed
 
+    private void btnPretraga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraga1ActionPerformed
+
+        Mesto izabranoMesto = (Mesto) cboxMesto1.getSelectedItem();
+
+        try {
+            List<Musterija> musterije=Kontroler.getInstance().vratiListuMusterija(izabranoMesto);
+            lblGreska1.setText("");
+            popuniTabelu(musterije);
+        } catch (Exception ex) {
+            lblGreska1.setText("Nema musterija za izabrano mesto");
+            popuniTabelu();
+            System.out.println("Greska kod vracanja musterija sa zadatim vrednostima" + ex.getMessage());
+        }
+
+        cboxMesto1.setSelectedIndex(-1);
+    }//GEN-LAST:event_btnPretraga1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -408,17 +460,20 @@ public class UrediMusterija extends javax.swing.JFrame {
     private javax.swing.JButton btnIzaberiMusteriju;
     private javax.swing.JButton btnIzmeniMusteriju;
     private javax.swing.JButton btnPretraga;
+    private javax.swing.JButton btnPretraga1;
     private javax.swing.JComboBox<Mesto> cboxMesto;
+    private javax.swing.JComboBox<Mesto> cboxMesto1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblGreska;
+    private javax.swing.JLabel lblGreska1;
     private javax.swing.JLabel lblID;
     private javax.swing.JTable tblSveMusterije;
     private javax.swing.JTextField txtBrTelefona;
@@ -486,7 +541,7 @@ public class UrediMusterija extends javax.swing.JFrame {
 
         // Postavljanje modela na tabelu
         tblSveMusterije.setModel(dt);
-        
+
         int brojac = 0;
 
         for (Musterija musterija : musterije) {
@@ -504,5 +559,25 @@ public class UrediMusterija extends javax.swing.JFrame {
         tblSveMusterije.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblSveMusterije.setRowSelectionAllowed(true);
         tblSveMusterije.setColumnSelectionAllowed(false);
+    }
+
+    private void popuniCboxMesta() {
+        try {
+            mesta = Kontroler.getInstance().vratiListuSviMesta();
+
+            cboxMesto.removeAllItems();
+            cboxMesto1.removeAllItems();
+
+            for (Mesto mesto : mesta) {
+                cboxMesto.addItem(mesto);
+                cboxMesto1.addItem(mesto);
+            }
+
+            cboxMesto.setSelectedIndex(-1);
+            cboxMesto1.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Greška pri učitavanju mesta: " + ex.getMessage());
+        }
     }
 }

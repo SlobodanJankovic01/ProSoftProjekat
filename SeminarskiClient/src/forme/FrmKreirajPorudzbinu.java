@@ -12,10 +12,13 @@ import domain.StavkaPorudzbina;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerDateModel;
 import kontroler.Kontroler;
 import modeliTabela.TabelProizvodiModel;
 
@@ -34,6 +37,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
     Radnik radnik;
     List<Proizvod> sviProizvodi;
     List<StavkaPorudzbina> sveStavkePorudzbine;
+    List<Musterija> musterije;
 
     public FrmKreirajPorudzbinu() {
         initComponents();
@@ -51,6 +55,8 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         popuniTabelu();
         popuniStavke();
         popuniMusterije();
+        popuniAtribute();
+
     }
 
     /**
@@ -599,7 +605,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
         try {
 
-            List<Musterija> musterije = Kontroler.getInstance().vratiListuSviMusterija();
+            musterije = Kontroler.getInstance().vratiListuSviMusterija();
 
             for (Musterija musterija : musterije) {
                 cboxMusterije.addItem(musterija);
@@ -624,5 +630,52 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
         LocalDateTime datumVreme = LocalDateTime.of(localDate, localTime);
         return datumVreme;
+    }
+
+    private void popuniAtribute() {
+
+        try {
+            Porudzbina p = Kontroler.getInstance().pretraziPorudzbina(idPorudzbine);
+
+            txtNapomena.setText(p.getNapomena());
+
+            if (p.getNacinIsporuke().equals("Dostava")) {
+                jRadioDostava.setSelected(true);
+                btnObrisiStavku.setEnabled(true);
+            } else if (p.getNacinIsporuke().equals("Preuzimanje")) {
+                jRadioPreuzimanje.setSelected(true);
+                btnObrisiStavku.setEnabled(true);
+            }
+
+            if (p.getDatumVreme() != null) {
+                jDatum.setDate(Date.from(
+                        p.getDatumVreme()
+                                .toLocalDate()
+                                .atStartOfDay(ZoneId.systemDefault())
+                                .toInstant()
+                ));
+
+                LocalDateTime datum = p.getDatumVreme();
+                Date date = Date.from(datum.atZone(ZoneId.systemDefault()).toInstant());
+
+                SpinnerDateModel model = new SpinnerDateModel();
+                jVreme.setModel(model);
+                jVreme.setEditor(new JSpinner.DateEditor(jVreme, "HH:mm"));
+
+                model.setValue(date);
+            }
+
+            if (p.getIdMusterija() != 0) {
+                for (Musterija m : musterije) {
+                    if (m.getIdMusterija() == p.getIdMusterija()) {
+                        cboxMusterije.setSelectedItem(m);
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Greska pri vracanju porudzbine" + ex.getMessage());
+        }
+
     }
 }

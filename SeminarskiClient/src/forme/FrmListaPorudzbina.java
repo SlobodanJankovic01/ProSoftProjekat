@@ -8,11 +8,10 @@ import domain.Mesto;
 import domain.Musterija;
 import domain.Porudzbina;
 import domain.Proizvod;
+import domain.Radnik;
 import domain.StavkaPorudzbina;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
@@ -29,9 +28,15 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
      */
     List<Porudzbina> svePorudzbine = new ArrayList<>();
     List<Musterija> sveMusterije = new ArrayList<>();
-
+    Radnik r;
+    
     public FrmListaPorudzbina() {
-
+        initComponents();
+        setVisible(true);
+        setLocationRelativeTo(null);
+    }
+    
+    public FrmListaPorudzbina(Radnik radnik){
         initComponents();
 
         setVisible(true);
@@ -44,9 +49,9 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             System.out.println("Greska pri ucitavanju musterija" + ex.getMessage());
         }
 
+        r=radnik;
         popuniTabeluPorudzbina();
         osveziTabeluStavke();
-
     }
 
     /**
@@ -74,6 +79,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         btnPretraga = new javax.swing.JButton();
         btnOsveziTabelu = new javax.swing.JButton();
+        btnIzmeniPorudzbinu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Spisak porudzbina");
@@ -145,7 +151,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
         txtId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        btnPretraga.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnPretraga.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         btnPretraga.setText("Pretrazi");
         btnPretraga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +167,14 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             }
         });
 
+        btnIzmeniPorudzbinu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnIzmeniPorudzbinu.setText("Izmeni porudzbinu");
+        btnIzmeniPorudzbinu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniPorudzbinuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,22 +182,18 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(41, 41, 41))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btnPretraga)
-                                        .addGap(31, 31, 31))
-                                    .addComponent(btnObrisiPorudzbinu)))
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnIzmeniPorudzbinu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnObrisiPorudzbinu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,15 +202,27 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                             .addComponent(lblCena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblMesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnOsveziTabelu)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnOsveziTabelu)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPretraga)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPretraga))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,18 +239,14 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                         .addComponent(lblMesto)
                         .addGap(13, 13, 13)
                         .addComponent(lblCena))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPretraga)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnObrisiPorudzbinu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(btnObrisiPorudzbinu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIzmeniPorudzbinu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOsveziTabelu)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -339,6 +357,23 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         lblCena.setText("Ukupna cena:");
     }//GEN-LAST:event_btnOsveziTabeluActionPerformed
 
+    private void btnIzmeniPorudzbinuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniPorudzbinuActionPerformed
+        
+        int red = tblPorudzbine.getSelectedRow();
+
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Nije izabrana porudzbina!");
+            return;
+        }
+
+        int idPor = (int) tblPorudzbine.getValueAt(red, 0);
+        
+        FrmKreirajPorudzbinu fkp=new FrmKreirajPorudzbinu(idPor, r);
+        
+        btnOsveziTabeluActionPerformed(evt);
+        
+    }//GEN-LAST:event_btnIzmeniPorudzbinuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -375,6 +410,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIzmeniPorudzbinu;
     private javax.swing.JButton btnObrisiPorudzbinu;
     private javax.swing.JButton btnOsveziTabelu;
     private javax.swing.JButton btnPretraga;
@@ -526,7 +562,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                 return;
             }
 
-            String[] kolone = {"Rb", "Proizvod", "Kolicina", "Cena"};
+            String[] kolone = {"Id", "Kupac", "Datum", "Vreme"};
             TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 
             tblPorudzbine.setModel(dt);

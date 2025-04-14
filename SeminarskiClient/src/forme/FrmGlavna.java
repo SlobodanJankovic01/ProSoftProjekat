@@ -411,7 +411,7 @@ public class FrmGlavna extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajPoruActionPerformed
 
     private void btnPregledPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregledPoruActionPerformed
-        FrmListaPorudzbina lista=new FrmListaPorudzbina();
+        FrmListaPorudzbina lista=new FrmListaPorudzbina(radnik);
     }//GEN-LAST:event_btnPregledPoruActionPerformed
 
     /**

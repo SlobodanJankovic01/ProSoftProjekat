@@ -469,6 +469,18 @@ public class Kontroler {
 
         throw odg.getEx();
     }
+    
+    public List<Musterija> vratiListuMusterija(Mesto izabranoMesto) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_MESTU, izabranoMesto);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Musterija>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
 
     public List<Proizvod> vratiListuProizvod(String pretraga) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_PROIZVOD_PO_NAZIVU, pretraga);
@@ -614,5 +626,7 @@ public class Kontroler {
 
         throw odg.getEx();
     }
+
+    
 
 }

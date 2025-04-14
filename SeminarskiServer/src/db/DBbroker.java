@@ -917,6 +917,41 @@ public class DBbroker {
         }
     }
 
+    public List<Musterija> vratiListuMusterijaMesto(Mesto mesto) throws SQLException {
+        List<Musterija> musterije = new ArrayList<>();
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+            String query = "SELECT * FROM musterija WHERE idMesto=?";
+
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, mesto.getIdMesto());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Musterija m = new Musterija(rs.getInt("idMusterija"), rs.getString("ime"), rs.getString("prezime"),
+                        rs.getString("brojTelefona"), rs.getInt("idMesto"));
+                musterije.add(m);
+            }
+
+            if (musterije.isEmpty()) {
+                throw new SQLException("Nema musterija u bazi");
+            }
+
+            rs.close();
+            ps.close();
+
+            return musterije;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+
+    }
+
     public List<Proizvod> vratiListuProizvod(String argument) throws SQLException {
 
         List<Proizvod> proizvodi = new ArrayList<>();
