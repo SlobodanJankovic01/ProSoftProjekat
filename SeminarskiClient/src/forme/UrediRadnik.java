@@ -138,6 +138,12 @@ public class UrediRadnik extends javax.swing.JFrame {
 
         jLabel9.setText("Filter radna smena:");
 
+        cboxRS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxRSActionPerformed(evt);
+            }
+        });
+
         btnPretraga1.setText("Pretraga");
         btnPretraga1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -392,6 +398,10 @@ public class UrediRadnik extends javax.swing.JFrame {
 
         cboxRS.setSelectedIndex(-1);
     }//GEN-LAST:event_btnPretraga1ActionPerformed
+
+    private void cboxRSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxRSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxRSActionPerformed
 
     /**
      * @param args the command line arguments

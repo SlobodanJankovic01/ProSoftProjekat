@@ -12,6 +12,8 @@ import domain.Radnik;
 import domain.StavkaPorudzbina;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import kontroler.Kontroler;
@@ -29,14 +31,14 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     List<Porudzbina> svePorudzbine = new ArrayList<>();
     List<Musterija> sveMusterije = new ArrayList<>();
     Radnik r;
-    
+
     public FrmListaPorudzbina() {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
     }
-    
-    public FrmListaPorudzbina(Radnik radnik){
+
+    public FrmListaPorudzbina(Radnik radnik) {
         initComponents();
 
         setVisible(true);
@@ -49,9 +51,10 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             System.out.println("Greska pri ucitavanju musterija" + ex.getMessage());
         }
 
-        r=radnik;
+        r = radnik;
         popuniTabeluPorudzbina();
         osveziTabeluStavke();
+        popuniCbox();
     }
 
     /**
@@ -80,6 +83,9 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         btnPretraga = new javax.swing.JButton();
         btnOsveziTabelu = new javax.swing.JButton();
         btnIzmeniPorudzbinu = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        btnPrtgMusterija = new javax.swing.JButton();
+        cBoxMusterija = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Spisak porudzbina");
@@ -114,7 +120,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Napomena");
 
-        lblCena.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        lblCena.setFont(new java.awt.Font("Segoe UI", 3, 16)); // NOI18N
         lblCena.setForeground(new java.awt.Color(255, 0, 0));
         lblCena.setText("Ukupna Cena:");
 
@@ -175,6 +181,17 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Musterija");
+
+        btnPrtgMusterija.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        btnPrtgMusterija.setText("Pretrazi");
+        btnPrtgMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrtgMusterijaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -209,7 +226,13 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPretraga)))
+                                .addComponent(btnPretraga)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cBoxMusterija, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPrtgMusterija)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -220,8 +243,11 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPretraga))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnPretraga)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(btnPrtgMusterija)
+                        .addComponent(cBoxMusterija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -358,7 +384,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOsveziTabeluActionPerformed
 
     private void btnIzmeniPorudzbinuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniPorudzbinuActionPerformed
-        
+
         int red = tblPorudzbine.getSelectedRow();
 
         if (red == -1) {
@@ -367,12 +393,34 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         }
 
         int idPor = (int) tblPorudzbine.getValueAt(red, 0);
-        
-        FrmKreirajPorudzbinu fkp=new FrmKreirajPorudzbinu(idPor, r);
-        
+
+        FrmKreirajPorudzbinu fkp = new FrmKreirajPorudzbinu(idPor, r);
+
         btnOsveziTabeluActionPerformed(evt);
-        
+
     }//GEN-LAST:event_btnIzmeniPorudzbinuActionPerformed
+
+    private void btnPrtgMusterijaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrtgMusterijaActionPerformed
+
+        try {
+
+            Musterija m = (Musterija) cBoxMusterija.getSelectedItem();
+
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(m);
+
+            if (porudzbine.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nema porudzbina za izabranu musteriju");
+                return;
+            }
+
+            popuniTabeluPorudzbina(porudzbine);
+            cBoxMusterija.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Greska kod vracanje liste porudzbina kriterijum Musterija" + ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnPrtgMusterijaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -414,9 +462,12 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     private javax.swing.JButton btnObrisiPorudzbinu;
     private javax.swing.JButton btnOsveziTabelu;
     private javax.swing.JButton btnPretraga;
+    private javax.swing.JButton btnPrtgMusterija;
+    private javax.swing.JComboBox<Musterija> cBoxMusterija;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -581,6 +632,49 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Neuspela pretraga mesta po idiju" + ex.getMessage());
         }
+    }
+
+    private void popuniCbox() {
+
+        try {
+            List<Musterija> musterije = Kontroler.getInstance().vratiListuSviMusterija();
+
+            cBoxMusterija.removeAllItems();
+
+            for (Musterija m : musterije) {
+                cBoxMusterija.addItem(m);
+            }
+
+            cBoxMusterija.setSelectedIndex(-1);
+
+        } catch (Exception ex) {
+            System.out.println("Greška pri učitavanju musterija: " + ex.getMessage());
+        }
+    }
+
+    private void popuniTabeluPorudzbina(List<Porudzbina> porudzbine) {
+        String[] kolone = {"Id", "Kupac", "Datum", "Vreme"};
+        TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
+
+        // Postavljanje modela na tabelu
+        tblPorudzbine.setModel(dt);
+        
+        int brojac = 0;
+
+        for (Porudzbina p : porudzbine) {
+            dt.setRowCount(brojac + 1);
+
+            dt.setValueAt(p.getIdPorudzbina(), brojac, 0);
+            dt.setValueAt(vratiMusteriju(p.getIdMusterija()), brojac, 1);
+            dt.setValueAt(p.getDatumVreme().toLocalDate(), brojac, 2);
+            dt.setValueAt(p.getDatumVreme().toLocalTime(), brojac, 3);
+
+            brojac++;
+        }
+
+        tblPorudzbine.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblPorudzbine.setRowSelectionAllowed(true);
+        tblPorudzbine.setColumnSelectionAllowed(false);
     }
 
 }

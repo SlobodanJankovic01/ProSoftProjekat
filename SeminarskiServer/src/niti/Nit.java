@@ -301,7 +301,7 @@ public class Nit implements Runnable {
                         try {
                             List<Radnik> radnici = dbb.vratiListuRadnikPoSmeni((RadnaSmena) zahtev.getArgumenti());
                             odgovor.setResult(radnici);
-                        } catch (SQLException e) { 
+                        } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
                     } else if (operacija == Operacija.VRATI_RADNE_SMENE_PO_NAZIVU) {
@@ -339,6 +339,13 @@ public class Nit implements Runnable {
                     } else if (operacija == Operacija.VRATI_LISTU_SVE_PORUDZBINE) {
                         try {
                             List<Porudzbina> porudzbine = dbb.vratiListuSviPorudzbina();
+                            odgovor.setResult(porudzbine);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
+                    } else if (operacija == Operacija.VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI) {
+                        try {
+                            List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoMusteriji((Musterija)zahtev.getArgumenti());
                             odgovor.setResult(porudzbine);
                         } catch (SQLException e) {
                             odgovor.setEx(e);

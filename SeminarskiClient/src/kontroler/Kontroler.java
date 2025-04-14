@@ -469,7 +469,7 @@ public class Kontroler {
 
         throw odg.getEx();
     }
-    
+
     public List<Musterija> vratiListuMusterija(Mesto izabranoMesto) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_MESTU, izabranoMesto);
         sender.send(z);
@@ -505,7 +505,7 @@ public class Kontroler {
 
         throw odg.getEx();
     }
-    
+
     public List<Radnik> vratiListuRadnik(RadnaSmena rs) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_RADNIKE_PO_SMENI, rs);
         sender.send(z);
@@ -620,7 +620,7 @@ public class Kontroler {
 
         Odgovor odg = (Odgovor) receiver.receive();
         if (odg.getEx() == null) {
-            return ;
+            return;
         }
 
         throw odg.getEx();
@@ -639,8 +639,16 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    
+    public List<Porudzbina> vratiListuPorudzbina(Musterija m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI, (Musterija) m);
+        sender.send(z);
 
-    
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Porudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
 
 }
