@@ -364,6 +364,13 @@ public class Nit implements Runnable {
                         } catch (SQLException e) {
                             odgovor.setEx(e);
                         }
+                    } else if (operacija == Operacija.VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE) {
+                        try {
+                            List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoNacinuIsporuke((String) zahtev.getArgumenti());
+                            odgovor.setResult(porudzbine);
+                        } catch (SQLException e) {
+                            odgovor.setEx(e);
+                        }
                     } else if (operacija == Operacija.OBRISI_PORUDZBINA) {
                         try {
                             odgovor.setResult(dbb.obrisiPorudzbina((int) zahtev.getArgumenti()));

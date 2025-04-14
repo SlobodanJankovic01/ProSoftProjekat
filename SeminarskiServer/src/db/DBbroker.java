@@ -1426,4 +1426,35 @@ public class DBbroker {
         }
     }
 
+    public List<Porudzbina> vratiListuPorudzbinaPoNacinuIsporuke(String nacinIsporuke) throws SQLException {
+
+        List<Porudzbina> porudzbine = new ArrayList<>();
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM porudzbina WHERE nacinIsporuke=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setString(1, nacinIsporuke);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Porudzbina p = new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                        rs.getTimestamp("datumVreme").toLocalDateTime(), rs.getString("napomena"),
+                        rs.getInt("idRadnik"), rs.getInt("idMusterija"));
+
+                porudzbine.add(p);
+            }
+
+            rs.close();
+            ps.close();
+
+            return porudzbine;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
+
 }

@@ -675,4 +675,16 @@ public class Kontroler {
         throw odg.getEx();
     }
 
+    public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE, (String) nacinIsporuke);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Porudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }
+
 }
