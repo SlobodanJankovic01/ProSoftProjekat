@@ -385,7 +385,7 @@ public class Nit implements Runnable {
                         }
                     }
 
-                    // Pošalji odgovor klijentu
+                    // Slanje odgovora klijentu
                     sender.send(odgovor);
 
                 } catch (Exception ex) {
