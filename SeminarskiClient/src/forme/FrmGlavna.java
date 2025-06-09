@@ -23,11 +23,10 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmGlavna
-     * 
+     *
      */
-    
     Radnik radnik;
-    
+
     public FrmGlavna() {
         initComponents();
         setVisible(true);
@@ -45,8 +44,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         if (!r.equals(admin)) {
             blokirajOpcije();
         }
-        
-        radnik=r;
+
+        radnik = r;
 
         //popuniTabelu();
     }
@@ -62,50 +61,129 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         lblKorIme = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnPregledPoru = new javax.swing.JButton();
-        btnKreirajPoru = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuKreirajPoru = new javax.swing.JMenuItem();
+        jMenuPregledPoru = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuKreRadnika = new javax.swing.JMenuItem();
+        jMenuUrediRadnik = new javax.swing.JMenuItem();
+        jMenuObrRadnik = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuKreMusterija = new javax.swing.JMenuItem();
+        jMenuUrediMusterija = new javax.swing.JMenuItem();
+        jMenuObrMusterija = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuKrePro = new javax.swing.JMenuItem();
-        jMenuKreMesto = new javax.swing.JMenuItem();
-        jMenuKreMusterija = new javax.swing.JMenuItem();
-        jMenuKreRadnaSmena = new javax.swing.JMenuItem();
-        jMenuKreRadnika = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenuUrediProizvo = new javax.swing.JMenuItem();
-        jMenuUrediMusterija = new javax.swing.JMenuItem();
-        jMenuUrediMesto = new javax.swing.JMenuItem();
-        jMenuUrediRadnik = new javax.swing.JMenuItem();
-        jMenuUrediRS = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
         jMenuObrProizvod = new javax.swing.JMenuItem();
-        jMenuObrMusterija = new javax.swing.JMenuItem();
+        jMenuKreMesto = new javax.swing.JMenuItem();
+        jMenuUrediMesto = new javax.swing.JMenuItem();
         jMenuObrMesto = new javax.swing.JMenuItem();
+        jMenuKreRadnaSmena = new javax.swing.JMenuItem();
+        jMenuUrediRS = new javax.swing.JMenuItem();
         jMenuObrRS = new javax.swing.JMenuItem();
-        jMenuObrRadnik = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Kreiraj porudzbinu");
+        setTitle("Glavna forma");
 
         jLabel1.setText("Radnik:");
 
-        btnPregledPoru.setText("Pregled porudzbina");
-        btnPregledPoru.addActionListener(new java.awt.event.ActionListener() {
+        jMenu4.setText("Porudzbina");
+
+        jMenuKreirajPoru.setText("Kreiraj");
+        jMenuKreirajPoru.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuKreirajPoru.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreirajPoru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPregledPoruActionPerformed(evt);
+                jMenuKreirajPoruActionPerformed(evt);
             }
         });
+        jMenu4.add(jMenuKreirajPoru);
 
-        btnKreirajPoru.setText("Kreiraj porudzbinu");
-        btnKreirajPoru.addActionListener(new java.awt.event.ActionListener() {
+        jMenuPregledPoru.setText("Pregled");
+        jMenuPregledPoru.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuPregledPoru.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuPregledPoru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKreirajPoruActionPerformed(evt);
+                jMenuPregledPoruActionPerformed(evt);
             }
         });
+        jMenu4.add(jMenuPregledPoru);
 
-        jMenu1.setText("Kreiraj");
+        jMenuBar.add(jMenu4);
+
+        jMenu6.setText(" Radnik");
+
+        jMenuKreRadnika.setText("Kreiraj");
+        jMenuKreRadnika.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuKreRadnika.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreRadnika.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKreRadnikaActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuKreRadnika);
+
+        jMenuUrediRadnik.setText("Uredi");
+        jMenuUrediRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuUrediRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuUrediRadnik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUrediRadnikActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuUrediRadnik);
+
+        jMenuObrRadnik.setText("Obrisi");
+        jMenuObrRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuObrRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrRadnik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrRadnikActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuObrRadnik);
+
+        jMenuBar.add(jMenu6);
+
+        jMenu7.setText("Musterija");
+
+        jMenuKreMusterija.setText("Kreiraj");
+        jMenuKreMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuKreMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuKreMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuKreMusterijaActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuKreMusterija);
+
+        jMenuUrediMusterija.setText("Uredi");
+        jMenuUrediMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuUrediMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuUrediMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUrediMusterijaActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuUrediMusterija);
+
+        jMenuObrMusterija.setText("Obrisi");
+        jMenuObrMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuObrMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrMusterija.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrMusterijaActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuObrMusterija);
+
+        jMenuBar.add(jMenu7);
+
+        jMenu1.setText("Sifarnici");
         jMenu1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jMenu1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +192,7 @@ public class FrmGlavna extends javax.swing.JFrame {
             }
         });
 
-        jMenuKrePro.setText("Proizvod");
+        jMenuKrePro.setText("Kreiraj proizvod");
         jMenuKrePro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuKrePro.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuKrePro.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +202,27 @@ public class FrmGlavna extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuKrePro);
 
-        jMenuKreMesto.setText("Mesto");
+        jMenuUrediProizvo.setText("Uredi proizvod");
+        jMenuUrediProizvo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuUrediProizvo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuUrediProizvo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUrediProizvoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuUrediProizvo);
+
+        jMenuObrProizvod.setText("Obrisi proizvod");
+        jMenuObrProizvod.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuObrProizvod.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrProizvod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrProizvodActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuObrProizvod);
+
+        jMenuKreMesto.setText("Kreiraj mesto");
         jMenuKreMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuKreMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuKreMesto.addActionListener(new java.awt.event.ActionListener() {
@@ -134,17 +232,27 @@ public class FrmGlavna extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuKreMesto);
 
-        jMenuKreMusterija.setText("Musterija");
-        jMenuKreMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuKreMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuKreMusterija.addActionListener(new java.awt.event.ActionListener() {
+        jMenuUrediMesto.setText("Uredi mesto");
+        jMenuUrediMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuUrediMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuUrediMesto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuKreMusterijaActionPerformed(evt);
+                jMenuUrediMestoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuKreMusterija);
+        jMenu1.add(jMenuUrediMesto);
 
-        jMenuKreRadnaSmena.setText("Radna smena");
+        jMenuObrMesto.setText("Obrisi mesto");
+        jMenuObrMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuObrMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jMenuObrMesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuObrMestoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuObrMesto);
+
+        jMenuKreRadnaSmena.setText("Kreiraj radna smena");
         jMenuKreRadnaSmena.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuKreRadnaSmena.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuKreRadnaSmena.addActionListener(new java.awt.event.ActionListener() {
@@ -154,61 +262,7 @@ public class FrmGlavna extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuKreRadnaSmena);
 
-        jMenuKreRadnika.setText("Radnik");
-        jMenuKreRadnika.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuKreRadnika.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuKreRadnika.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuKreRadnikaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuKreRadnika);
-
-        jMenuBar.add(jMenu1);
-
-        jMenu2.setText("Uredi");
-
-        jMenuUrediProizvo.setText("Proizvod");
-        jMenuUrediProizvo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuUrediProizvo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuUrediProizvo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUrediProizvoActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuUrediProizvo);
-
-        jMenuUrediMusterija.setText("Musterija");
-        jMenuUrediMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuUrediMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuUrediMusterija.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUrediMusterijaActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuUrediMusterija);
-
-        jMenuUrediMesto.setText("Mesto");
-        jMenuUrediMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuUrediMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuUrediMesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUrediMestoActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuUrediMesto);
-
-        jMenuUrediRadnik.setText("Radnik");
-        jMenuUrediRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuUrediRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuUrediRadnik.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuUrediRadnikActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuUrediRadnik);
-
-        jMenuUrediRS.setText("Radna smena");
+        jMenuUrediRS.setText("Uredi radna smena");
         jMenuUrediRS.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuUrediRS.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuUrediRS.addActionListener(new java.awt.event.ActionListener() {
@@ -216,43 +270,9 @@ public class FrmGlavna extends javax.swing.JFrame {
                 jMenuUrediRSActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuUrediRS);
+        jMenu1.add(jMenuUrediRS);
 
-        jMenuBar.add(jMenu2);
-
-        jMenu3.setText("Obrisi");
-
-        jMenuObrProizvod.setText("Proizvod");
-        jMenuObrProizvod.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuObrProizvod.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuObrProizvod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuObrProizvodActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuObrProizvod);
-
-        jMenuObrMusterija.setText("Musterija");
-        jMenuObrMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuObrMusterija.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuObrMusterija.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuObrMusterijaActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuObrMusterija);
-
-        jMenuObrMesto.setText("Mesto");
-        jMenuObrMesto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuObrMesto.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuObrMesto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuObrMestoActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuObrMesto);
-
-        jMenuObrRS.setText("Radna smena");
+        jMenuObrRS.setText("Obrisi radna smena");
         jMenuObrRS.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jMenuObrRS.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuObrRS.addActionListener(new java.awt.event.ActionListener() {
@@ -260,31 +280,22 @@ public class FrmGlavna extends javax.swing.JFrame {
                 jMenuObrRSActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuObrRS);
+        jMenu1.add(jMenuObrRS);
 
-        jMenuObrRadnik.setText("Radnik");
-        jMenuObrRadnik.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jMenuObrRadnik.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jMenuObrRadnik.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuObrRadnikActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuObrRadnik);
-
-        jMenuBar.add(jMenu3);
-
-        jMenu5.setText("Raspored");
-
-        jMenuItem1.setText("Uredjivanje");
+        jMenuItem1.setText("Uredi raspored");
+        jMenuItem1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jMenuItem1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem1);
+        jMenu1.add(jMenuItem1);
 
-        jMenuBar.add(jMenu5);
+        jMenuBar.add(jMenu1);
+
+        jMenu8.setText(" O programu");
+        jMenuBar.add(jMenu8);
 
         setJMenuBar(jMenuBar);
 
@@ -297,13 +308,7 @@ public class FrmGlavna extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(335, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnKreirajPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPregledPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(315, 315, 315))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,11 +317,7 @@ public class FrmGlavna extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(lblKorIme, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
-                .addComponent(btnKreirajPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(btnPregledPoru, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
 
         pack();
@@ -401,18 +402,18 @@ public class FrmGlavna extends javax.swing.JFrame {
         FrmRaspored raspored = new FrmRaspored();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void btnKreirajPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajPoruActionPerformed
+    private void jMenuKreirajPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuKreirajPoruActionPerformed
         Porudzbina p = new Porudzbina(0, "", 0, LocalDateTime.now(), "", 3, 1);
         try {
-            FrmKreirajPorudzbinu porudzbina = new FrmKreirajPorudzbinu(Kontroler.getInstance().kreirajPorudzbina(p),radnik);
+            FrmKreirajPorudzbinu porudzbina = new FrmKreirajPorudzbinu(Kontroler.getInstance().kreirajPorudzbina(p), radnik);
         } catch (Exception ex) {
             System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
         }
-    }//GEN-LAST:event_btnKreirajPoruActionPerformed
+    }//GEN-LAST:event_jMenuKreirajPoruActionPerformed
 
-    private void btnPregledPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregledPoruActionPerformed
-        FrmListaPorudzbina lista=new FrmListaPorudzbina(radnik);
-    }//GEN-LAST:event_btnPregledPoruActionPerformed
+    private void jMenuPregledPoruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPregledPoruActionPerformed
+        FrmListaPorudzbina lista = new FrmListaPorudzbina(radnik);
+    }//GEN-LAST:event_jMenuPregledPoruActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,13 +451,12 @@ public class FrmGlavna extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnKreirajPoru;
-    private javax.swing.JButton btnPregledPoru;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuKreMesto;
@@ -464,11 +464,13 @@ public class FrmGlavna extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuKrePro;
     private javax.swing.JMenuItem jMenuKreRadnaSmena;
     private javax.swing.JMenuItem jMenuKreRadnika;
+    private javax.swing.JMenuItem jMenuKreirajPoru;
     private javax.swing.JMenuItem jMenuObrMesto;
     private javax.swing.JMenuItem jMenuObrMusterija;
     private javax.swing.JMenuItem jMenuObrProizvod;
     private javax.swing.JMenuItem jMenuObrRS;
     private javax.swing.JMenuItem jMenuObrRadnik;
+    private javax.swing.JMenuItem jMenuPregledPoru;
     private javax.swing.JMenuItem jMenuUrediMesto;
     private javax.swing.JMenuItem jMenuUrediMusterija;
     private javax.swing.JMenuItem jMenuUrediProizvo;
@@ -480,9 +482,7 @@ public class FrmGlavna extends javax.swing.JFrame {
 //   
     private void blokirajOpcije() {
 
-        jMenu3.setEnabled(false);
-        jMenu2.setEnabled(false);
-        jMenu5.setEnabled(false);
+        jMenu1.setEnabled(false);
 
     }
 
