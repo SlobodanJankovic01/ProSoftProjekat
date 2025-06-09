@@ -416,7 +416,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
                 System.out.println("Greska pri brisanju porudzbine!" + ex.getMessage());
             }
 
-            JOptionPane.showMessageDialog(this, "Uspesno obrisana porudzbina!");
+            JOptionPane.showMessageDialog(this, "Sistem je obrisao porudzbinu!");
             popuniTabeluPorudzbina();
             osveziTabeluStavke();
 
@@ -465,6 +465,8 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         }
 
         int idPor = (int) tblPorudzbine.getValueAt(red, 0);
+        
+        JOptionPane.showMessageDialog(this, "Sistem je nasao porudzbinu");
 
         FrmKreirajPorudzbinu fkp = new FrmKreirajPorudzbinu(idPor, r);
 
@@ -758,10 +760,12 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             Porudzbina p = Kontroler.getInstance().pretraziPorudzbina(idPor);
 
             if (p.getNacinIsporuke() == null) {
-                JOptionPane.showMessageDialog(this, "Ne postoji porudzbina sa unetim id-ijem, probaj opet");
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje porudzbine po zadatim kriterijumima");
                 return;
             }
 
+            JOptionPane.showMessageDialog(this, "Sistem je nasao porudzbine sa zadatim kriterijumima");
+            
             String[] kolone = {"Id", "Kupac", "Datum", "Vreme"};
             TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 

@@ -184,11 +184,11 @@ public class ObrisiMusterija extends java.awt.Dialog {
 
         try {
             if (Kontroler.getInstance().obrisiMusterija(idMusterija)) {
-                JOptionPane.showMessageDialog(this, "Musterija uspesno izbrisana iz baze");
+                JOptionPane.showMessageDialog(this, "Sistem je obrisao musteriju");
                 popuniTabelu();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Greska kod brisanja musterije");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise musteriju");
             System.out.println(ex.getMessage());
         }
 
@@ -301,9 +301,11 @@ public class ObrisiMusterija extends java.awt.Dialog {
             Musterija m = Kontroler.getInstance().pretraziMusterija(idMusterije);
 
             if (m.getIme() == null) {
-                JOptionPane.showMessageDialog(this, "Ne postoji musterija sa unetim id-ijem, probaj opet");
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje musterije po zadatim kriterijumima");
                 return;
             }
+
+            JOptionPane.showMessageDialog(this, "Sistem je nasao musterije po zadatim kriterijumima");
 
             String[] kolone = {"Id", "Ime", "Prezime", "Br. telefona", "Mesto"};
             TabelProizvodiModel dt = new TabelProizvodiModel(kolone);

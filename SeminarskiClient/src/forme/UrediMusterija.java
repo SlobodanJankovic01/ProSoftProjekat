@@ -296,7 +296,7 @@ public class UrediMusterija extends javax.swing.JFrame {
 
             Kontroler.getInstance().promeniMusterija(m);
 
-            JOptionPane.showMessageDialog(this, "Uspesno izmenjena musterija");
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio musteriju");
 
             popuniTabelu();
 
@@ -337,6 +337,8 @@ public class UrediMusterija extends javax.swing.JFrame {
             for (Musterija m : sveMusterije) {
                 if (m.getIdMusterija() == idMusterija) {
                     izabranaMusterija = m;
+                    JOptionPane.showMessageDialog(this, "Sistem je nasao musteriju");
+                    continue;
                 }
             }
 
@@ -394,9 +396,11 @@ public class UrediMusterija extends javax.swing.JFrame {
         try {
             musterije = Kontroler.getInstance().vratiListuMusterija(pretraga);
             lblGreska.setText("");
+            JOptionPane.showMessageDialog(this, "Sistem je nasao musterije po zadatim kriterijumima");
             popuniTabelu(musterije);
         } catch (Exception ex) {
             lblGreska.setText("Nema musterija za uneti kriterijum");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje musterije po zadatim kriterijumima");
             System.out.println("Greska kod vracanja musterija sa zadatim vrednostima" + ex.getMessage());
         }
 
@@ -408,11 +412,13 @@ public class UrediMusterija extends javax.swing.JFrame {
         Mesto izabranoMesto = (Mesto) cboxMesto1.getSelectedItem();
 
         try {
-            List<Musterija> musterije=Kontroler.getInstance().vratiListuMusterija(izabranoMesto);
+            List<Musterija> musterije = Kontroler.getInstance().vratiListuMusterija(izabranoMesto);
             lblGreska1.setText("");
+            JOptionPane.showMessageDialog(this, "Sistem je nasao musterije po zadatim kriterijumima");
             popuniTabelu(musterije);
         } catch (Exception ex) {
             lblGreska1.setText("Nema musterija za izabrano mesto");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje musterije po zadatim kriterijumima");
             popuniTabelu();
             System.out.println("Greska kod vracanja musterija sa zadatim vrednostima" + ex.getMessage());
         }
@@ -536,6 +542,7 @@ public class UrediMusterija extends javax.swing.JFrame {
     }
 
     private void popuniTabelu(List<Musterija> musterije) {
+
         String[] kolone = {"Id", "Ime", "Prezime", "Br. telefona", "Mesto"};
         TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 

@@ -15,6 +15,8 @@ public class ServeskaForma extends javax.swing.JFrame {
     /**
      * Creates new form ServeskaForma
      */
+    private Server server;
+
     public ServeskaForma() {
 
         initComponents();
@@ -91,10 +93,8 @@ public class ServeskaForma extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
 
-        new Thread(() -> {
-            Server server = new Server();
-            server.startServer();
-        }).start();
+        server = new Server();
+        new Thread(() -> server.startServer()).start();
 
         btnStart.setEnabled(false);
         btnStop.setEnabled(true);
@@ -105,6 +105,9 @@ public class ServeskaForma extends javax.swing.JFrame {
 
     private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
 
+        if (server != null) {
+            server.stopServer();
+        }
         btnStart.setEnabled(true);
         btnStop.setEnabled(false);
         lblText.setText("Server je ugasen");

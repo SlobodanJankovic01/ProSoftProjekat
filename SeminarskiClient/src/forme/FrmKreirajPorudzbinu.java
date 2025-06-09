@@ -410,11 +410,11 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         try {
             Kontroler.getInstance().promeniPorudzbina(p);
 
-            JOptionPane.showMessageDialog(this, "Uspesno zavrsena porudzbina");
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio porudzbinu");
 
             this.dispose();
         } catch (Exception ex) {
-            System.out.println("Neuspelo kreiranje porudzbine" + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti porudzbinu");
         }
 
 

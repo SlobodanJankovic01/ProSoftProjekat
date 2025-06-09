@@ -207,11 +207,11 @@ public class KreirajMusterija extends java.awt.Dialog {
 
         try {
             if (Kontroler.getInstance().kreirajMusterija(m)) {
-                JOptionPane.showMessageDialog(null, "Uspesno kreirana musterija");
+                JOptionPane.showMessageDialog(null, "Sistem je kreirao musteriju");
                 this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Greska pri kreiranju musterije");
+            JOptionPane.showMessageDialog(null, "Sistem ne moze da kreira musteriju");
             System.out.println(ex.getMessage());
         }
 

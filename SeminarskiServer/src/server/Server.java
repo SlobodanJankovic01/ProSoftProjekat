@@ -8,6 +8,7 @@ import db.DBbroker;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import niti.Nit;
 
 /**
@@ -17,33 +18,55 @@ import niti.Nit;
 public class Server {
 
     private DBbroker dbb;
-    
-    
+    private boolean running;
+    private ServerSocket serverSoket;
+
     public Server() {
         dbb = new DBbroker();
     }
 
-    
     public void startServer() {
+
+        running = true;
 
         try {
             //Kreiranje soketa
-            ServerSocket serverSoket = new ServerSocket(9000);
+            serverSoket = new ServerSocket(9000);
             System.out.println("Server pokrenut cekam klijenta");
 
-            while (true) {
+            while (running) {
                 //Cekanje klijenta
-                Socket soket = serverSoket.accept();
-                System.out.println("Server:Klijent se povezao sa serverom");
-                
-                Nit nit=new Nit(soket, dbb);
-                new Thread(nit).start();
+                try {
+                    Socket soket = serverSoket.accept();
+                    System.out.println("Server:Klijent se povezao sa serverom");
+
+                    Nit nit = new Nit(soket, dbb);
+                    new Thread(nit).start();
+                } catch (SocketException e) {
+                    if (!running) {
+                        System.out.println("Server zaustavljen.");
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
         } catch (IOException ex) {
-            System.out.println("Greska"+ex.getMessage());
+            System.out.println("Greska" + ex.getMessage());
         }
-
     }
+    
+    public void stopServer() {
+        running = false;
+        try {
+            if (serverSoket != null && !serverSoket.isClosed()) {
+                serverSoket.close();
+            }
+        } catch (IOException ex) {
+            System.out.println("Greška pri zatvaranju server soketa: " + ex.getMessage());
+        }
+    }
+    
 
 }
