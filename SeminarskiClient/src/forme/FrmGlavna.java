@@ -92,6 +92,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jLabel1.setText("Radnik:");
 
         jMenu4.setText("Porudzbina");
+        jMenu4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jMenuKreirajPoru.setText("Kreiraj");
         jMenuKreirajPoru.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -116,6 +118,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuBar.add(jMenu4);
 
         jMenu6.setText(" Radnik");
+        jMenu6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jMenuKreRadnika.setText("Kreiraj");
         jMenuKreRadnika.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -150,6 +154,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuBar.add(jMenu6);
 
         jMenu7.setText("Musterija");
+        jMenu7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jMenuKreMusterija.setText("Kreiraj");
         jMenuKreMusterija.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -295,6 +301,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jMenuBar.add(jMenu1);
 
         jMenu8.setText(" O programu");
+        jMenu8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenuBar.add(jMenu8);
 
         setJMenuBar(jMenuBar);

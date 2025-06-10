@@ -102,7 +102,7 @@ public class KreirajMesto extends java.awt.Dialog {
                     .addComponent(txtUlica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
                 .addComponent(btnSacuvajMesto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -124,6 +124,12 @@ public class KreirajMesto extends java.awt.Dialog {
 
     private void btnSacuvajMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajMestoActionPerformed
 
+        
+        if(!validacija()){
+            JOptionPane.showMessageDialog(this, "Moraju biti popunjena oba polja");
+            return;
+        }
+        
         Mesto m = new Mesto();
         m.setAdresa(txtUlica.getText());
         m.setGrad(txtGrad.getText());
@@ -168,4 +174,13 @@ public class KreirajMesto extends java.awt.Dialog {
     private javax.swing.JTextField txtGrad;
     private javax.swing.JTextField txtUlica;
     // End of variables declaration//GEN-END:variables
+
+    private boolean validacija() {
+        
+        if(txtGrad.getText().trim().isEmpty() || txtUlica.getText().trim().isEmpty()){
+            return false;
+        }
+
+        return true;
+    }
 }

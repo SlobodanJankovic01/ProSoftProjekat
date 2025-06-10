@@ -217,6 +217,10 @@ public class FrmRaspored extends javax.swing.JFrame {
 
         popuniTabelu();
         lblGreska.setText("");
+        
+        cboxRadnici.setSelectedIndex(-1);
+        cboxSmene.setSelectedIndex(-1);
+        jKalendar.setDate(null);
 
     }//GEN-LAST:event_btnUbaciActionPerformed
 

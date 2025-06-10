@@ -159,7 +159,7 @@ public class KreirajMusterija extends java.awt.Dialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
-        
+
     }//GEN-LAST:event_closeDialog
 
     private void brnKreirajMestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnKreirajMestoActionPerformed
@@ -177,29 +177,7 @@ public class KreirajMusterija extends java.awt.Dialog {
         String prezime = txtPrezime.getText().trim();
         String brTelefona = txtBrTelefona.getText().trim();
 
-        if (ime.isEmpty()) {
-            lblGreska.setText("Ime je obavezno.");
-            return;
-        }
-
-        if (prezime.isEmpty()) {
-            lblGreska.setText("Prezime je obavezno.");
-            return;
-        }
-
-        if (brTelefona.isEmpty()) {
-            lblGreska.setText("Broj telefona je obavezan.");
-            return;
-        }
-
-        // Provera formata broja telefona (broj telefona može imati 9 ili 10 cifara)
-        if (!brTelefona.matches("\\d{9,10}")) {
-            lblGreska.setText("Broj telefona mora sadržati 9 ili 10 cifara.");
-            return;
-        }
-        
-        if (mesto == null) {
-            lblGreska.setText("Molimo izaberite mesto.");
+        if (!validacija()) {
             return;
         }
 
@@ -267,10 +245,38 @@ public class KreirajMusterija extends java.awt.Dialog {
                 System.out.println("Greška pri učitavanju mesta: " + ex.getMessage());
             }
         }).start();*/
-        
+
         new NitPopuniCboxMesta(cboxMesto).start();
+
+    }
+
+    private boolean validacija() {
+        if (txtIme.getText().trim().isEmpty()) {
+            lblGreska.setText("Ime je obavezno.");
+            return false;
+        }
+
+        if (txtPrezime.getText().trim().isEmpty()) {
+            lblGreska.setText("Prezime je obavezno.");
+            return false;
+        }
+
+        if (txtBrTelefona.getText().trim().isEmpty()) {
+            lblGreska.setText("Broj telefona je obavezan.");
+            return false;
+        }
+
+        if (!txtBrTelefona.getText().trim().matches("\\d{9,10}")) {
+            lblGreska.setText("Broj telefona mora sadržati 9 ili 10 cifara.");
+            return false;
+        }
+
+        if ((Mesto) cboxMesto.getSelectedItem() == null) {
+            lblGreska.setText("Molimo izaberite mesto.");
+            return false;
+        }
         
-        
+        return true;
     }
 
 }

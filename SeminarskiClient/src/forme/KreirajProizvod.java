@@ -18,13 +18,11 @@ public class KreirajProizvod extends java.awt.Dialog {
      */
     public KreirajProizvod(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         setTitle("Kreiraj proizvod");
-        
-        
-        
-        initComponents();   
-        
+
+        initComponents();
+
         this.setLocationRelativeTo(null);
 
         setVisible(true);
@@ -115,6 +113,10 @@ public class KreirajProizvod extends java.awt.Dialog {
 
     private void jBtnKreirajProizvodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKreirajProizvodActionPerformed
 
+        if (!validacija()) {
+            return;
+        }
+
         String naziv = txtNaziv.getText();
         int cena = Integer.parseInt(txtCena.getText());
 
@@ -158,4 +160,19 @@ public class KreirajProizvod extends java.awt.Dialog {
     private javax.swing.JTextField txtCena;
     private javax.swing.JTextField txtNaziv;
     // End of variables declaration//GEN-END:variables
+
+    private boolean validacija() {
+
+        if (txtNaziv.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Unesi naziv!");
+            return false;
+        }
+
+        if (!txtCena.getText().matches("^[0-9]+$") || Integer.parseInt(txtCena.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan ceo broj veci od 0!", "Greška", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -357,8 +357,8 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
         String kolicina = txtKolicina.getText().trim();
 
-        if (!kolicina.matches("^\\d+$")) {
-            JOptionPane.showMessageDialog(this, "Unesite validan broj za kolicinu!");
+        if (!kolicina.matches("^(0*[1-9]\\d*)$")) {
+            JOptionPane.showMessageDialog(this, "Količina mora biti ceo broj veći od 0!", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -387,7 +387,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         String nacinIsporuke = "";
 
         if (!jRadioDostava.isSelected() && !jRadioPreuzimanje.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Moras izabrati nacin isporuke!");
+            JOptionPane.showMessageDialog(this, "Mora biti izabran nacin isporuke!");
             return;
         }
 

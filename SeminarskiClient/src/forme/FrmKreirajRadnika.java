@@ -123,6 +123,11 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
 
     private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
 
+        if (!validacija()) {
+            JOptionPane.showMessageDialog(this, "Moraju biti popunjena sva polja");
+            return;
+        }
+
         String ime = txtIme.getText();
         String prezime = txtPrezime.getText();
         String korIme = txtKorIme.getText();
@@ -207,4 +212,13 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrezime;
     private javax.swing.JPasswordField txtpassLoznika;
     // End of variables declaration//GEN-END:variables
+
+    private boolean validacija() {
+        if (txtIme.getText().trim().isEmpty() || txtKorIme.getText().trim().isEmpty() || txtPrezime.getText().trim().isEmpty() ||
+                String.valueOf(txtpassLoznika.getPassword()).trim().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
 }

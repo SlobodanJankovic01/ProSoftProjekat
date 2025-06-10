@@ -21,11 +21,11 @@ public class KreirajRadnaSmena extends java.awt.Dialog {
      */
     public KreirajRadnaSmena(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         setTitle("Kreiraj radnu smenu");
-        
-        initComponents();   
-        
+
+        initComponents();
+
         this.setLocationRelativeTo(null);
 
         setVisible(true);
@@ -157,9 +157,13 @@ public class KreirajRadnaSmena extends java.awt.Dialog {
         // Kreiranje LocalTime objekta
         return LocalTime.of(sat, minut);
     }
-    
-    
+
+
     private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
+
+        if (!validacija()) {
+            return; // Prekida se ako validacija nije prošla
+        }
 
         String naziv = txtNaziv.getText();
         String vreOd = txtVremeOd.getText();
@@ -168,18 +172,18 @@ public class KreirajRadnaSmena extends java.awt.Dialog {
         LocalTime vremeOd = prebaciUVreme(vreOd);
         LocalTime vremeDo = prebaciUVreme(vreDo);
 
-        RadnaSmena rs=new RadnaSmena();
+        RadnaSmena rs = new RadnaSmena();
         rs.setNaziv(naziv);
         rs.setVremeDo(vremeDo);
         rs.setVremeOd(vremeOd);
 
         try {
-            if(Kontroler.getInstance().ubaciRadnuSmenu(rs)){
+            if (Kontroler.getInstance().ubaciRadnuSmenu(rs)) {
                 JOptionPane.showMessageDialog(null, "Sistem je zapamtio radnu smenu");
                 this.dispose();
             }
         } catch (Exception ex) {
-            System.out.println("Greska pri unosu radne smene "+ex.getMessage());
+            System.out.println("Greska pri unosu radne smene " + ex.getMessage());
             JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti radnu smenu");
         }
 
@@ -214,4 +218,38 @@ public class KreirajRadnaSmena extends java.awt.Dialog {
     private javax.swing.JTextField txtVremeDo;
     private javax.swing.JTextField txtVremeOd;
     // End of variables declaration//GEN-END:variables
+
+    private boolean validacija() {
+
+        if (txtNaziv.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Naziv smene ne sme biti prazan!", "Greška", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            // Provera formata vremena
+            if (!txtVremeOd.getText().matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]$")) {
+                JOptionPane.showMessageDialog(this, "Unesite vreme početka u formatu HH:mm", "Greška", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+
+            if (!txtVremeDo.getText().matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]$")) {
+                JOptionPane.showMessageDialog(this, "Unesite vreme završetka u formatu HH:mm", "Greška", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+
+            LocalTime vremeOd = prebaciUVreme(txtVremeOd.getText());
+            LocalTime vremeDo = prebaciUVreme(txtVremeDo.getText());
+
+            if (!vremeOd.isBefore(vremeDo)) {
+                JOptionPane.showMessageDialog(this, "Vreme početka mora biti pre vremena završetka!", "Greška", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Došlo je do greške pri unosu vremena", "Greška", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
 }
