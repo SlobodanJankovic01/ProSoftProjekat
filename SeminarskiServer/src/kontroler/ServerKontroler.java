@@ -7,6 +7,7 @@ package kontroler;
 import domain.Mesto;
 import domain.Musterija;
 import domain.Proizvod;
+import domain.Radnik;
 import java.util.List;
 import so.mesto.SoAddMesto;
 import so.mesto.SoDeleteMesto;
@@ -21,6 +22,10 @@ import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
 import so.proizvod.SoUpdateProizvod;
+import so.radnik.SoAddRadnik;
+import so.radnik.SoDeleteRadnik;
+import so.radnik.SoGetListRadnik;
+import so.radnik.SoUpdateRadnik;
 
 /**
  *
@@ -159,6 +164,44 @@ public class ServerKontroler {
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
             throw new Exception("Sistem nije uspeo da izmeni musteriju");
+        }
+    }
+
+    public int kreirajRadnik(Radnik radnik) throws Exception {
+        SoAddRadnik so = new SoAddRadnik();
+        so.templateExecute(radnik);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Radnik nije dodat!!!");
+        }
+        return id;
+    }
+
+    public void obrisiRadnik(Radnik radnik) throws Exception {
+        SoDeleteRadnik so = new SoDeleteRadnik();
+        so.templateExecute(radnik);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise radnika");
+        }
+    }
+
+    public List<Radnik> vratiListuSviRadnik() throws Exception {
+        SoGetListRadnik so = new SoGetListRadnik();
+        so.templateExecute(new Radnik());
+        List<Radnik> radnici = so.getRadnici();
+        if (radnici.isEmpty()) {
+            throw new Exception("Sistem nije uspeo ucita sve radnike");
+        }
+        return radnici;
+    }
+
+    public void promeniRadnik(Radnik radnik) throws Exception {
+        SoUpdateRadnik so = new SoUpdateRadnik();
+        so.templateExecute(radnik);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni radnika");
         }
     }
 

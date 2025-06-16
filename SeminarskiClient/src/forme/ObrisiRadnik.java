@@ -157,9 +157,11 @@ public class ObrisiRadnik extends javax.swing.JFrame {
         }
 
         int idRadnika = (int) tblRadnici.getValueAt(selectedRow, 0);
+        
+        Radnik r=new Radnik(idRadnika, null, null, null, null);
 
         try {
-            if (Kontroler.getInstance().obrisiRadnik(idRadnika)) {
+            if (Kontroler.getInstance().obrisiRadnik(r)) {
                 JOptionPane.showMessageDialog(this, "Sistem je obrisao radnika");
                 popuniTabelu();
             }

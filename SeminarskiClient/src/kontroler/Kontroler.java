@@ -293,8 +293,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public boolean obrisiRadnik(int idRadnika) throws Exception {
-        Zahtev z = new Zahtev(Operacija.OBRISI_RADNIKA, idRadnika);
+    public boolean obrisiRadnik(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.OBRISI_RADNIKA, r);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
