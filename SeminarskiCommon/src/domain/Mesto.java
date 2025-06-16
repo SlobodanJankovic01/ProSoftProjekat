@@ -94,27 +94,27 @@ public class Mesto extends AbstractDomainObject {
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(grad,adresa)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + grad + "', '" + adresa + "'";
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " grad= '" + grad + "', adresa= '" + adresa + "'";
     }
 
     @Override
     public String requiredCondition() {
-        return "";
+        return " idMesto=" + idMesto;
     }
 
     @Override
     public String conditionForSelect() {
-        return "";
+        return " WHERE grad LIKE ' " + grad + "'";
     }
 
     @Override

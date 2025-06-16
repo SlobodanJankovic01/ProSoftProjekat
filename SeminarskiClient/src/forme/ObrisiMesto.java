@@ -22,6 +22,8 @@ public class ObrisiMesto extends java.awt.Dialog {
     /**
      * Creates new form ObrisiMesto
      */
+    List<Mesto> svaMesta;
+
     public ObrisiMesto(java.awt.Frame parent, boolean modal) {
         super(parent, "Obrisi mesto", modal);
         initComponents();
@@ -174,7 +176,7 @@ public class ObrisiMesto extends java.awt.Dialog {
         int idMesto = (int) tblSvaMesta.getValueAt(red, 0);
 
         try {
-            if (Kontroler.getInstance().obrisiMesto(idMesto)) {
+            if (Kontroler.getInstance().obrisiMesto(vratiMesto(idMesto))) {
                 JOptionPane.showMessageDialog(this, "Mesto uspesno izbrisano iz baze");
                 popuniTabelu();
             }
@@ -245,8 +247,6 @@ public class ObrisiMesto extends java.awt.Dialog {
         // Postavljanje modela na tabelu
         tblSvaMesta.setModel(dt);
 
-        List<Mesto> svaMesta;
-
         try {
             svaMesta = Kontroler.getInstance().vratiListuSviMesta();
         } catch (Exception ex) {
@@ -276,7 +276,7 @@ public class ObrisiMesto extends java.awt.Dialog {
         try {
             Mesto m = Kontroler.getInstance().pretraziMesta(idMesta);
 
-            if (m.getAdresa()== null) {
+            if (m.getAdresa() == null) {
                 JOptionPane.showMessageDialog(this, "Ne postoji mesto sa unetim id-ijem, probaj opet");
                 return;
             }
@@ -299,5 +299,16 @@ public class ObrisiMesto extends java.awt.Dialog {
         } catch (Exception ex) {
             System.out.println("Neuspela pretraga mesta po idiju" + ex.getMessage());
         }
+    }
+
+    private Mesto vratiMesto(int idMesto) {
+        
+        for (Mesto mesto : svaMesta) {
+            if(mesto.getIdMesto()==idMesto){
+                return mesto;
+            }
+        }
+        
+        return null;
     }
 }

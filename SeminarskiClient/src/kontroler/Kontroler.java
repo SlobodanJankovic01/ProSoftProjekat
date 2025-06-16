@@ -271,9 +271,9 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public boolean obrisiMesto(int idMesto) throws Exception {
+    public boolean obrisiMesto(Mesto mesto) throws Exception {
 
-        Zahtev z = new Zahtev(Operacija.OBRISI_MESTO, idMesto);
+        Zahtev z = new Zahtev(Operacija.OBRISI_MESTO, mesto);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -446,8 +446,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Mesto> vratiListuMesto(String pretraga) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_MESTA_PO_GRADU, pretraga);
+    public List<Mesto> vratiListuMesto(Mesto m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_MESTA_PO_GRADU, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();

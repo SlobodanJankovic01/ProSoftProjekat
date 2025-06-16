@@ -5,9 +5,12 @@
 package kontroler;
 
 import domain.Mesto;
-import java.util.ArrayList;
 import java.util.List;
+import so.mesto.SoAddMesto;
+import so.mesto.SoDeleteMesto;
 import so.mesto.SoGetListMesto;
+import so.mesto.SoSearchMesto;
+import so.mesto.SoUpdateMesto;
 
 /**
  *
@@ -35,4 +38,43 @@ public class ServerKontroler {
         return mesta;
     }
 
+    public int kreirajMesto(Mesto m) throws Exception {
+        SoAddMesto so = new SoAddMesto();
+        so.templateExecute(m);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Trener nije dodat!!!");
+        }
+        return id;
+    }
+
+    public void obrisiMesto(Mesto mesto) throws Exception {
+        SoDeleteMesto so = new SoDeleteMesto();
+        so.templateExecute(mesto);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise mesto");
+        }
+    }
+
+    public void promeniMesto(Mesto mesto) throws Exception {
+        SoUpdateMesto so = new SoUpdateMesto();
+        so.templateExecute(mesto);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni mesto");
+        }
+    }
+
+    public List<Mesto> pretraziMestoPoGradu(Mesto mesto) throws Exception {
+
+        SoSearchMesto so = new SoSearchMesto();
+        so.templateExecute(mesto);
+        List<Mesto> mesta = so.getMesta();
+        if (mesta.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
+        }
+        return mesta;
+
+    }
 }

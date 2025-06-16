@@ -40,6 +40,27 @@ public class DBbroker {
         return instance;
     }
 
+    public int insert(AbstractDomainObject ado) throws Exception {
+
+        int id = -1;
+
+        String upit = "INSERT INTO " + ado.tableName() + " "
+                + ado.insertColumns() + " VALUES(" + ado.insertValues() + ")";
+
+        System.out.println(upit);
+        Statement s = DBConnection.getInstance().getConnection().createStatement();
+        s.executeUpdate(upit, Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = s.getGeneratedKeys();
+
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+        rs.close();
+        s.close();
+
+        return id;
+    }
+
     public List<AbstractDomainObject> selectList(AbstractDomainObject ado) throws Exception {
 
         String upit = "SELECT * FROM " + ado.tableName() + " " + ado.alies()
@@ -52,6 +73,57 @@ public class DBbroker {
 
     }
 
+    public int delete(AbstractDomainObject ado) throws Exception {
+
+        String upit = "DELETE FROM " + ado.tableName() + " WHERE " + ado.requiredCondition();
+        System.out.println(upit);
+        Statement s = DBConnection.getInstance().getConnection().createStatement();
+        int affectedRows = s.executeUpdate(upit);
+        return affectedRows;
+
+    }
+    
+    
+    public int update(AbstractDomainObject ado) throws Exception {
+
+        String upit = "UPDATE " + ado.tableName() + " SET "
+                + ado.updateValues() + " WHERE " + ado.requiredCondition();
+        System.out.println(upit);
+        Statement s = DBConnection.getInstance().getConnection().createStatement();
+        int affectedRows = s.executeUpdate(upit);
+        return affectedRows;
+
+    }
+
+    
+    public Mesto pretraziMesto2(int i) throws SQLException {
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String query = "SELECT * FROM mesto WHERE idMesto=?";
+            PreparedStatement ps = k.prepareStatement(query);
+
+            ps.setInt(1, i);
+
+            ResultSet rs = ps.executeQuery();
+
+            Mesto m = new Mesto();
+
+            if (rs.next()) {
+                m.setIdMesto(rs.getInt("idMesto"));
+                m.setGrad(rs.getString("grad"));
+                m.setAdresa(rs.getString("adresa"));
+            }
+
+            rs.close();
+            ps.close();
+
+            return m;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw ex;
+        }
+    }
     ////////////////////////////////////////
     ////////////////////////////////////////
     ////////////////////////////////////////
@@ -124,7 +196,6 @@ public class DBbroker {
 
     }
 
-    
     public List<Musterija> vratiListuSviMusterija() throws SQLException {
         List<Musterija> musterije = new ArrayList<>();
 

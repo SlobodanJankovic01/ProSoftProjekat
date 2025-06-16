@@ -19,6 +19,11 @@ import java.sql.SQLException;
 import java.util.List;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
+import static komunikacija.Operacija.OBRISI_MESTO;
+import static komunikacija.Operacija.PRETRAGA_MESTA;
+import static komunikacija.Operacija.PROMENI_MESTO;
+import static komunikacija.Operacija.VRATI_MESTA;
+import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
 import komunikacija.Receiver;
 import komunikacija.Sender;
 import komunikacija.Zahtev;
@@ -73,15 +78,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_MESTA: {
-                            try {
-                                List<Mesto> mesta = ServerKontroler.getInstance().vratiListuSviMesto();
-                                odgovor.setResult(mesta);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         case VRATI_MUSTERIJE: {
                             try {
                                 List<Musterija> musterije = dbb.vratiListuSviMusterija();
@@ -128,17 +125,63 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        ////
                         case KREIRAJ_MESTO: {
                             try {
                                 Mesto m = (Mesto) zahtev.getArgumenti();
-                                if (dbb.kreirajMesto(m)) {
+                                if (ServerKontroler.getInstance().kreirajMesto(m) != -1) {
                                     odgovor.setResult(true);
                                 }
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case OBRISI_MESTO: {
+                            try {
+                                ServerKontroler.getInstance().obrisiMesto((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PROMENI_MESTO: {
+                            try {
+                                ServerKontroler.getInstance().promeniMesto((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }case VRATI_MESTA_PO_GRADU: {
+                            try {
+                                List<Mesto> mesta = ServerKontroler.getInstance().pretraziMestoPoGradu((Mesto)zahtev.getArgumenti());
+                                odgovor.setResult(mesta);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
                             break;
                         }
+                        case PRETRAGA_MESTA: {
+                            try {
+                                odgovor.setResult(dbb.pretraziMesto((int) zahtev.getArgumenti()));
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_MESTA: {
+                            try {
+                                List<Mesto> mesta = ServerKontroler.getInstance().vratiListuSviMesto();
+                                odgovor.setResult(mesta);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        ///////
                         case KREIRAJ_RADNIKA: {
                             try {
                                 Radnik r = (Radnik) zahtev.getArgumenti();
@@ -198,14 +241,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case OBRISI_MESTO: {
-                            try {
-                                odgovor.setResult(dbb.obrisiMesto((int) zahtev.getArgumenti()));
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         case OBRISI_MUSTERIJU: {
                             try {
                                 odgovor.setResult(dbb.obrisiMusteriju((int) zahtev.getArgumenti()));
@@ -246,14 +282,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case PROMENI_MESTO: {
-                            try {
-                                odgovor.setResult(dbb.promeniMesto((Mesto) zahtev.getArgumenti()));
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         case PROMENI_RADNU_SMENU: {
                             try {
                                 odgovor.setResult(dbb.promeniRadnuSmenu((RadnaSmena) zahtev.getArgumenti()));
@@ -294,14 +323,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case PRETRAGA_MESTA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziMesto((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         case PRETRAGA_MUSTERIJA: {
                             try {
                                 odgovor.setResult(dbb.pretraziMusterija((int) zahtev.getArgumenti()));
@@ -326,15 +348,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_MESTA_PO_GRADU: {
-                            try {
-                                List<Mesto> mesta = dbb.vratiListuMesto((String) zahtev.getArgumenti());
-                                odgovor.setResult(mesta);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+                        
                         case VRATI_MUSTERIJU_PO_IMENU: {
                             try {
                                 List<Musterija> musterije = dbb.vratiListuMusterija((String) zahtev.getArgumenti());
