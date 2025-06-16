@@ -24,6 +24,8 @@ public class ObrisiProizvod extends java.awt.Dialog {
     /**
      * Creates new form ObrisiProizvod
      */
+    List<Proizvod> sviProizvodi;
+
     public ObrisiProizvod(java.awt.Frame parent, boolean modal) {
         super(parent, "Obrisi proizvod", modal);
         initComponents();
@@ -180,7 +182,7 @@ public class ObrisiProizvod extends java.awt.Dialog {
         int idProizvoda = (int) tblProizvodi.getValueAt(red, 0);
 
         try {
-            if (Kontroler.getInstance().obrisiProizvod(idProizvoda)) {
+            if (Kontroler.getInstance().obrisiProizvod(vratiProizvod(idProizvoda))) {
                 JOptionPane.showMessageDialog(this, "Proizvod uspesno izbrisan iz baze");
                 popuniTabelu();
             }
@@ -200,7 +202,7 @@ public class ObrisiProizvod extends java.awt.Dialog {
         }
 
         lblPretraga.setText("");
-        
+
         int idProizvoda = Integer.parseInt(txtIdProizvoda.getText());
 
         System.out.println(idProizvoda);
@@ -247,8 +249,6 @@ public class ObrisiProizvod extends java.awt.Dialog {
         // Postavljanje modela na tabelu
         tblProizvodi.setModel(dt);
 
-        List<Proizvod> sviProizvodi;
-
         try {
             sviProizvodi = Kontroler.getInstance().vratiListuSviProizvodi();
         } catch (Exception ex) {
@@ -280,11 +280,11 @@ public class ObrisiProizvod extends java.awt.Dialog {
             Proizvod p = Kontroler.getInstance().pretraziProizvod(idProizvoda);
 
             System.out.println(p);
-            if(p.getNaziv()==null){
-                JOptionPane.showMessageDialog(this,"Ne postoji proizvod sa unetim id-ijem, probaj opet");
+            if (p.getNaziv() == null) {
+                JOptionPane.showMessageDialog(this, "Ne postoji proizvod sa unetim id-ijem, probaj opet");
                 return;
             }
-            
+
             String[] kolone = {"Id", "Naziv", "Cena"};
             TabelProizvodiModel dt = new TabelProizvodiModel(kolone);
 
@@ -301,8 +301,17 @@ public class ObrisiProizvod extends java.awt.Dialog {
             tblProizvodi.setColumnSelectionAllowed(false);
 
         } catch (Exception ex) {
-            System.out.println("Neuspela pretraga proizvoda po idiju"+ex.getMessage());
+            System.out.println("Neuspela pretraga proizvoda po idiju" + ex.getMessage());
         }
 
+    }
+
+    private Proizvod vratiProizvod(int idProizvoda) {
+        for (Proizvod proizvod : sviProizvodi) {
+            if (proizvod.getIdProizvod() == idProizvoda) {
+                return proizvod;
+            }
+        }
+        return null;
     }
 }

@@ -145,11 +145,7 @@ public class Kontroler {
         throw new Exception("Neuspelo ucitavanje rasporeda");
     }
 
-    public boolean kreirajProizvod(String naziv, int cena) throws Exception {
-
-        Proizvod p = new Proizvod();
-        p.setJedinicnaCena(cena);
-        p.setNaziv(naziv);
+    public boolean kreirajProizvod(Proizvod p) throws Exception {
 
         Zahtev zahtev = new Zahtev(Operacija.KREIRAJ_PROIZVOD, p);
         sender.send(zahtev);
@@ -163,9 +159,9 @@ public class Kontroler {
 
     }
 
-    public boolean kreirajMesto(Mesto grad) throws Exception {
+    public boolean kreirajMesto(Mesto mesto) throws Exception {
 
-        Zahtev z = new Zahtev(Operacija.KREIRAJ_MESTO, grad);
+        Zahtev z = new Zahtev(Operacija.KREIRAJ_MESTO, mesto);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -258,9 +254,9 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public boolean obrisiProizvod(int idProizvoda) throws Exception {
+    public boolean obrisiProizvod(Proizvod p) throws Exception {
 
-        Zahtev z = new Zahtev(Operacija.OBRISI_PROIZVOD, idProizvoda);
+        Zahtev z = new Zahtev(Operacija.OBRISI_PROIZVOD, p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();

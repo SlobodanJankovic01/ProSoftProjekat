@@ -5,12 +5,17 @@
 package kontroler;
 
 import domain.Mesto;
+import domain.Proizvod;
 import java.util.List;
 import so.mesto.SoAddMesto;
 import so.mesto.SoDeleteMesto;
 import so.mesto.SoGetListMesto;
 import so.mesto.SoSearchMesto;
 import so.mesto.SoUpdateMesto;
+import so.proizvod.SoAddProizvod;
+import so.proizvod.SoDeleteProizvod;
+import so.proizvod.SoGetListProizvod;
+import so.proizvod.SoUpdateProizvod;
 
 /**
  *
@@ -67,7 +72,6 @@ public class ServerKontroler {
     }
 
     public List<Mesto> pretraziMestoPoGradu(Mesto mesto) throws Exception {
-
         SoSearchMesto so = new SoSearchMesto();
         so.templateExecute(mesto);
         List<Mesto> mesta = so.getMesta();
@@ -75,6 +79,44 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
         }
         return mesta;
-
     }
+
+    public int kreirajProizvod(Proizvod p) throws Exception {
+        SoAddProizvod so = new SoAddProizvod();
+        so.templateExecute(p);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Proizvod nije dodat!!!");
+        }
+        return id;
+    }
+
+    public void obrisiProizvod(Proizvod p) throws Exception {
+        SoDeleteProizvod so = new SoDeleteProizvod();
+        so.templateExecute(p);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise proizvod");
+        }
+    }
+
+    public List<Proizvod> vratiListuSviProizvod() throws Exception {
+        SoGetListProizvod so = new SoGetListProizvod();
+        so.templateExecute(new Proizvod());
+        List<Proizvod> proizvodi = so.getProizvodi();
+        if (proizvodi.isEmpty()) {
+            throw new Exception("Sistem nije uspeo ucita sve proizvode");
+        }
+        return proizvodi;
+    }
+
+    public void promeniProizvod(Proizvod proizvod) throws Exception {
+        SoUpdateProizvod so = new SoUpdateProizvod();
+        so.templateExecute(proizvod);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni proizvod");
+        }
+    }
+
 }

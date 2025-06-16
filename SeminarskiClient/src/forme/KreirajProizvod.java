@@ -4,6 +4,7 @@
  */
 package forme;
 
+import domain.Proizvod;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 
@@ -116,19 +117,19 @@ public class KreirajProizvod extends java.awt.Dialog {
         if (!validacija()) {
             return;
         }
-
-        String naziv = txtNaziv.getText();
-        int cena = Integer.parseInt(txtCena.getText());
+        
+        Proizvod p = new Proizvod(0, txtNaziv.getText(), Integer.parseInt(txtCena.getText()));
 
         try {
 
-            if (Kontroler.getInstance().kreirajProizvod(naziv, cena)) {
+            if (Kontroler.getInstance().kreirajProizvod(p)) {
                 JOptionPane.showMessageDialog(this, "Uspesno kreiran proizvod");
             }
 
             this.dispose();
 
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(this, "Neuspesno kreiranje proizvoda");
         }
 

@@ -114,7 +114,7 @@ public class Mesto extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return " WHERE grad LIKE ' " + grad + "'";
+        return "";
     }
 
     @Override
