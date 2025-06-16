@@ -281,8 +281,8 @@ public class Kontroler {
 
     }
 
-    public boolean obrisiMusterija(int idMusterija) throws Exception {
-        Zahtev z = new Zahtev(Operacija.OBRISI_MUSTERIJU, idMusterija);
+    public boolean obrisiMusterija(Musterija m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.OBRISI_MUSTERIJU, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();

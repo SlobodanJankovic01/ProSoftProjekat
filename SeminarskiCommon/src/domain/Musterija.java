@@ -13,8 +13,8 @@ import java.util.ArrayList;
  *
  * @author Slobodan
  */
-public class Musterija extends AbstractDomainObject{
-    
+public class Musterija extends AbstractDomainObject {
+
     private int idMusterija;
     private String ime;
     private String prezime;
@@ -32,7 +32,6 @@ public class Musterija extends AbstractDomainObject{
         this.idMesto = idMesto;
     }
 
-    
     public int getIdMusterija() {
         return idMusterija;
     }
@@ -101,42 +100,42 @@ public class Musterija extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "musterija";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(ime,prezime,brojTelefona,idMesto)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + ime + "', '" + prezime + "', '" + brojTelefona + "', " + idMesto;
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " ime= '" + ime + "', prezime= '" + prezime + "', brojTelefona='"+brojTelefona+"', idMesto="+idMesto;
     }
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " idMusterija=" + idMusterija;
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -146,9 +145,22 @@ public class Musterija extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            int idMusterija = rs.getInt("idMusterija");
+            String ime = rs.getString("ime");
+            String prezime = rs.getString("prezime");
+            String brTelefona=rs.getString("brojTelefona");
+            int idMesta=rs.getInt("idMesto");
+            
+            Musterija m = new Musterija(idMusterija, ime, prezime,brTelefona,idMesta);
+
+            lista.add(m);
+        }
+        rs.close();
+        return lista;
     }
 
-    
-    
 }

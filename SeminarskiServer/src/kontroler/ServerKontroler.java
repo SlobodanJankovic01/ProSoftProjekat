@@ -5,6 +5,7 @@
 package kontroler;
 
 import domain.Mesto;
+import domain.Musterija;
 import domain.Proizvod;
 import java.util.List;
 import so.mesto.SoAddMesto;
@@ -12,6 +13,10 @@ import so.mesto.SoDeleteMesto;
 import so.mesto.SoGetListMesto;
 import so.mesto.SoSearchMesto;
 import so.mesto.SoUpdateMesto;
+import so.musterija.SoAddMusterija;
+import so.musterija.SoDeleteMusterija;
+import so.musterija.SoGetListMusterija;
+import so.musterija.SoUpdateMusterija;
 import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
@@ -116,6 +121,44 @@ public class ServerKontroler {
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
             throw new Exception("Sistem nije uspeo da izmeni proizvod");
+        }
+    }
+
+    public int kreirajMusterija(Musterija musterija) throws Exception {
+        SoAddMusterija so = new SoAddMusterija();
+        so.templateExecute(musterija);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Musterija nije dodata!!!");
+        }
+        return id;
+    }
+
+    public List<Musterija> vratiListuSviMusterija() throws Exception {
+        SoGetListMusterija so = new SoGetListMusterija();
+        so.templateExecute(new Musterija());
+        List<Musterija> musterije = so.getMusterije();
+        if (musterije.isEmpty()) {
+            throw new Exception("Sistem nije uspeo ucita sve musterije");
+        }
+        return musterije;
+    }
+
+    public void obrisiMusterija(Musterija musterija) throws Exception {
+        SoDeleteMusterija so = new SoDeleteMusterija();
+        so.templateExecute(musterija);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise musteriju");
+        }
+    }
+
+    public void promeniMusterija(Musterija musterija) throws Exception {
+        SoUpdateMusterija so = new SoUpdateMusterija();
+        so.templateExecute(musterija);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni musteriju");
         }
     }
 

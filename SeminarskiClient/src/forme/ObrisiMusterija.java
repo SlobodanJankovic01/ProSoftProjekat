@@ -25,6 +25,8 @@ public class ObrisiMusterija extends java.awt.Dialog {
     /**
      * Creates new form ObrisiMusterija
      */
+    List<Musterija> sveMusterije;
+
     public ObrisiMusterija(java.awt.Frame parent, boolean modal) {
         super(parent, "Obrisi musteriju", modal);
         initComponents();
@@ -183,7 +185,7 @@ public class ObrisiMusterija extends java.awt.Dialog {
         int idMusterija = (int) tblSveMusterije.getValueAt(red, 0);
 
         try {
-            if (Kontroler.getInstance().obrisiMusterija(idMusterija)) {
+            if (Kontroler.getInstance().obrisiMusterija(vratiMusteriju(idMusterija))) {
                 JOptionPane.showMessageDialog(this, "Sistem je obrisao musteriju");
                 popuniTabelu();
             }
@@ -248,8 +250,6 @@ public class ObrisiMusterija extends java.awt.Dialog {
 
         // Postavljanje modela na tabelu
         tblSveMusterije.setModel(dt);
-
-        List<Musterija> sveMusterije;
 
         try {
             sveMusterije = Kontroler.getInstance().vratiListuSviMusterija();
@@ -327,6 +327,15 @@ public class ObrisiMusterija extends java.awt.Dialog {
         } catch (Exception ex) {
             System.out.println("Neuspela pretraga musterija po idiju" + ex.getMessage());
         }
+    }
+
+    private Musterija vratiMusteriju(int idMusterija) {
+        for (Musterija m : sveMusterije) {
+            if (m.getIdMusterija() == idMusterija) {
+                return m;
+            }
+        }
+        return null;
     }
 
 }

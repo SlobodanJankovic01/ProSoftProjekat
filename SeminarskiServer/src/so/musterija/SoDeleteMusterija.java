@@ -2,19 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package so.proizvod;
+package so.musterija;
 
 import db.DBbroker;
 import domain.AbstractDomainObject;
-import domain.Proizvod;
+import domain.Musterija;
 import so.AbstractSO;
 
 /**
  *
  * @author Slobodan
  */
-public class SoDeleteProizvod extends AbstractSO {
-
+public class SoDeleteMusterija extends AbstractSO {
+    
     int affectedRows;
 
     public int getAffectedRows() {
@@ -25,8 +25,8 @@ public class SoDeleteProizvod extends AbstractSO {
     protected void validate(Object obj) throws Exception {
         AbstractDomainObject ado = (AbstractDomainObject) obj;
 
-        if (!(ado instanceof Proizvod)) {
-            throw new Exception("Prosledjeni objekat nije instanca klase Proizvod!");
+        if (!(ado instanceof Musterija)) {
+            throw new Exception("Prosledjeni objekat nije instanca klase Musterija!");
         }
     }
 
@@ -37,5 +37,5 @@ public class SoDeleteProizvod extends AbstractSO {
 
         affectedRows = DBbroker.getInstance().delete(ado);
     }
-
+    
 }
