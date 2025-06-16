@@ -12,8 +12,8 @@ import java.util.ArrayList;
  *
  * @author Slobodan
  */
-public class Mesto extends AbstractDomainObject{ 
-    
+public class Mesto extends AbstractDomainObject {
+
     private int idMesto;
     private String grad;
     private String adresa;
@@ -53,7 +53,7 @@ public class Mesto extends AbstractDomainObject{
 
     @Override
     public String toString() {
-        return grad+", "+adresa;
+        return grad + ", " + adresa;
     }
 
     @Override
@@ -79,17 +79,17 @@ public class Mesto extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "mesto";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -109,12 +109,12 @@ public class Mesto extends AbstractDomainObject{
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -124,10 +124,20 @@ public class Mesto extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            int idMesto = rs.getInt("idMesto");
+            String grad = rs.getString("grad");
+            String adresa = rs.getString("adresa");
+
+            Mesto m = new Mesto(idMesto, grad, adresa);
+
+            lista.add(m);
+        }
+        rs.close();
+        return lista;
     }
-    
-    
-    
-    
+
 }

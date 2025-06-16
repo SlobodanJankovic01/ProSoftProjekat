@@ -22,7 +22,7 @@ public class Server {
     private ServerSocket serverSoket;
 
     public Server() {
-        dbb = new DBbroker();
+        dbb = DBbroker.getInstance();
     }
 
     public void startServer() {

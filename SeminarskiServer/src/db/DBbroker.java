@@ -4,6 +4,7 @@
  */
 package db;
 
+import domain.AbstractDomainObject;
 import domain.Mesto;
 import domain.Musterija;
 import domain.Porudzbina;
@@ -15,12 +16,8 @@ import domain.StavkaPorudzbina;
 import java.util.List;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,9 +25,36 @@ import javax.swing.JOptionPane;
  */
 public class DBbroker {
 
-    public DBbroker() {
+    private static DBbroker instance;
+
+    private DBbroker() {
     }
 
+    public static DBbroker getInstance() {
+
+        if (instance == null) {
+            instance = new DBbroker();
+
+        }
+
+        return instance;
+    }
+
+    public List<AbstractDomainObject> selectList(AbstractDomainObject ado) throws Exception {
+
+        String upit = "SELECT * FROM " + ado.tableName() + " " + ado.alies()
+                + " " + ado.textJoin() + " " + ado.conditionForSelect();
+        System.out.println(upit);
+
+        Statement s = DBConnection.getInstance().getConnection().createStatement();
+        ResultSet rs = s.executeQuery(upit);
+        return ado.getList(rs);
+
+    }
+
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+    ////////////////////////////////////////
     public Radnik getRadnik(Radnik r) throws SQLException {
 
         try {
@@ -100,44 +124,7 @@ public class DBbroker {
 
     }
 
-    public List<Mesto> vratiListuSviMesto() throws SQLException {
-
-        List<Mesto> mesta = new ArrayList<>();
-
-        boolean ima = false;
-
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
-
-            Statement s = k.createStatement();
-
-            String query = "SELECT * FROM mesto";
-
-            ResultSet rs = s.executeQuery(query);
-
-            while (rs.next()) {
-                Mesto m = new Mesto(rs.getInt("idMesto"), rs.getString("grad"), rs.getString("adresa"));
-                mesta.add(m);
-                ima = true;
-            }
-
-            if (ima == false) {
-                throw new SQLException("Nema mesta u bazi");
-            }
-
-            rs.close();
-            s.close();
-
-            return mesta;
-
-        } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
-            throw ex;
-        }
-
-    }
-
+    
     public List<Musterija> vratiListuSviMusterija() throws SQLException {
         List<Musterija> musterije = new ArrayList<>();
 

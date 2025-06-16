@@ -22,6 +22,7 @@ import komunikacija.Operacija;
 import komunikacija.Receiver;
 import komunikacija.Sender;
 import komunikacija.Zahtev;
+import kontroler.ServerKontroler;
 
 /**
  *
@@ -74,7 +75,7 @@ public class Nit implements Runnable {
                         }
                         case VRATI_MESTA: {
                             try {
-                                List<Mesto> mesta = dbb.vratiListuSviMesto();
+                                List<Mesto> mesta = ServerKontroler.getInstance().vratiListuSviMesto();
                                 odgovor.setResult(mesta);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);

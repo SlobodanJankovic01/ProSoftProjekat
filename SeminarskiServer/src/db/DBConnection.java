@@ -4,36 +4,33 @@
  */
 package db;
 
-
 import java.sql.*;
+
 /**
  *
  * @author Slobodan
  */
 public class DBConnection {
-    
-    static DBConnection instance;
 
-    
-    
-    
-    
-    public static DBConnection getInstance() {
-        
-        if(instance==null){
-            instance=new DBConnection();
+    public static DBConnection instance;
+    private Connection connection;
+
+    public DBConnection() throws SQLException {
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/seminarski", "root", "");
+        connection.setAutoCommit(false);
+    }
+
+    public static DBConnection getInstance() throws SQLException {
+
+        if (instance == null) {
+            instance = new DBConnection();
         }
-        
+
         return instance;
     }
-    
-    
-    
-    public static Connection getConnection() throws SQLException{
-        
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/seminarski", "root", "");
-        
+
+    public Connection getConnection() {
+        return connection;
     }
-    
-    
+
 }
