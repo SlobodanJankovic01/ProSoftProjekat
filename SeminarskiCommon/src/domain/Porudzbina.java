@@ -4,17 +4,17 @@
  */
 package domain;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 /**
  *
  * @author Slobodan
  */
-public class Porudzbina extends AbstractDomainObject{
-    
+public class Porudzbina extends AbstractDomainObject {
+
     private int idPorudzbina;
     private String nacinIsporuke;
     private int ukupnaCena;
@@ -120,42 +120,43 @@ public class Porudzbina extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "porudzbina";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(nacinIsporuke,ukupnaCena,datumVreme,napomena,idRadnik,idMusterija)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + nacinIsporuke + "'," + ukupnaCena + ", '" + datumVreme + "','" + napomena + "'," + idRadnik + "," + idMusterija;
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "nacinIsporuke='" + nacinIsporuke + "' , ukupnaCena= " + ukupnaCena + ", datumVreme='" + datumVreme + "',napomena='" + napomena
+                + "',idRadnik=" + idRadnik + ", idMusterija=" + idMusterija;
     }
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " idPorudzbina=" + idPorudzbina;
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -165,14 +166,17 @@ public class Porudzbina extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            Porudzbina p = new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                    rs.getTimestamp("datumVreme").toLocalDateTime(), rs.getString("napomena"),
+                    rs.getInt("idRadnik"), rs.getInt("idMusterija"));
+            lista.add(p);
+        }
+        rs.close();
+        return lista;
     }
 
-    
-    
-    
-    
-    
-    
-    
 }

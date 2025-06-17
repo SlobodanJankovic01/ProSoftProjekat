@@ -10,6 +10,7 @@ import domain.Porudzbina;
 import domain.Proizvod;
 import domain.Radnik;
 import domain.StavkaPorudzbina;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -399,6 +400,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         }
 
         int idPor = (int) tblPorudzbine.getValueAt(red, 0);
+        Porudzbina p=new Porudzbina(idPor, null, 0, LocalDateTime.MIN, null, 0, 0);
 
         int odgovor = JOptionPane.showConfirmDialog(
                 null,
@@ -411,7 +413,7 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         if (odgovor == JOptionPane.YES_OPTION) {
 
             try {
-                Kontroler.getInstance().obrisiPorudzbina(idPor);
+                Kontroler.getInstance().obrisiPorudzbina(p);
             } catch (Exception ex) {
                 System.out.println("Greska pri brisanju porudzbine!" + ex.getMessage());
             }

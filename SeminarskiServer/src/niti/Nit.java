@@ -20,6 +20,7 @@ import java.util.List;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
 import static komunikacija.Operacija.KREIRAJ_MUSTERIJA;
+import static komunikacija.Operacija.KREIRAJ_PORUDZBINU;
 import static komunikacija.Operacija.KREIRAJ_PROIZVOD;
 import static komunikacija.Operacija.KREIRAJ_RADNIKA;
 import static komunikacija.Operacija.KREIRAJ_RADNIK_RADNA_SMENA;
@@ -27,6 +28,7 @@ import static komunikacija.Operacija.KREIRAJ_RADNUSMENU;
 import static komunikacija.Operacija.KREIRAJ_STAVKU_PORUDZBINE;
 import static komunikacija.Operacija.OBRISI_MESTO;
 import static komunikacija.Operacija.OBRISI_MUSTERIJU;
+import static komunikacija.Operacija.OBRISI_PORUDZBINA;
 import static komunikacija.Operacija.OBRISI_PROIZVOD;
 import static komunikacija.Operacija.OBRISI_RADNIKA;
 import static komunikacija.Operacija.OBRISI_RADNIK_RADNA_SMENA;
@@ -35,11 +37,13 @@ import static komunikacija.Operacija.OBRISI_STAVKA_PORUDZBINE;
 import static komunikacija.Operacija.PRETRAGA_MESTA;
 import static komunikacija.Operacija.PROMENI_MESTO;
 import static komunikacija.Operacija.PROMENI_MUSTERIJU;
+import static komunikacija.Operacija.PROMENI_PORUDZBINA;
 import static komunikacija.Operacija.PROMENI_PROIZVOD;
 import static komunikacija.Operacija.PROMENI_RADNIKA;
 import static komunikacija.Operacija.PROMENI_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.PROMENI_RADNU_SMENU;
 import static komunikacija.Operacija.VRATI_LISTU_STAVKE_PORUDZBINE;
+import static komunikacija.Operacija.VRATI_LISTU_SVE_PORUDZBINE;
 import static komunikacija.Operacija.VRATI_MESTA;
 import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
 import static komunikacija.Operacija.VRATI_MUSTERIJE;
@@ -164,6 +168,17 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        case KREIRAJ_PORUDZBINU: {
+                            try {
+                                int idPorudzbine = ServerKontroler.getInstance().kreirajPorudzbina((Porudzbina) zahtev.getArgumenti());
+                                if (idPorudzbine != -1) {
+                                    odgovor.setResult(idPorudzbine);
+                                }
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
                         case OBRISI_PROIZVOD: {
                             try {
                                 ServerKontroler.getInstance().obrisiProizvod((Proizvod) zahtev.getArgumenti());
@@ -227,6 +242,15 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        case OBRISI_PORUDZBINA: {
+                            try {
+                                ServerKontroler.getInstance().obrisiPorudzbina((Porudzbina) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
                         case PROMENI_MESTO: {
                             try {
                                 ServerKontroler.getInstance().promeniMesto((Mesto) zahtev.getArgumenti());
@@ -275,6 +299,15 @@ public class Nit implements Runnable {
                         case PROMENI_RADNIK_RADNA_SMENA: {
                             try {
                                 ServerKontroler.getInstance().promeniRadnikRadnaSmena((RadnikRadnaSmena) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PROMENI_PORUDZBINA: {
+                            try {
+                                ServerKontroler.getInstance().promeniPorudzbina((Porudzbina) zahtev.getArgumenti());
                                 odgovor.setResult(true);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
@@ -354,9 +387,18 @@ public class Nit implements Runnable {
                         }
                         case VRATI_LISTU_STAVKE_PORUDZBINE: {
                             try {
-                                List<StavkaPorudzbina> stavke= ServerKontroler.getInstance().vratiListuSviStavkePorudzbine((int)zahtev.getArgumenti());
+                                List<StavkaPorudzbina> stavke = ServerKontroler.getInstance().vratiListuSviStavkePorudzbine((int) zahtev.getArgumenti());
                                 odgovor.setResult(stavke);
                             } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_LISTU_SVE_PORUDZBINE: {
+                            try {
+                                List<Porudzbina> porudzbine =  ServerKontroler.getInstance().vratiListuSviPorudzbina();
+                                odgovor.setResult(porudzbine);
+                            } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
                             break;
@@ -450,32 +492,6 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case KREIRAJ_PORUDZBINU: {
-                            try {
-                                int idPorudzbine = dbb.kreirajPorudzbina(zahtev.getArgumenti());
-                                odgovor.setResult(idPorudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case PROMENI_PORUDZBINA: {
-                            try {
-                                odgovor.setResult(dbb.promeniPorudzbina((Porudzbina) zahtev.getArgumenti()));
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case VRATI_LISTU_SVE_PORUDZBINE: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuSviPorudzbina();
-                                odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
                         case VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI: {
                             try {
                                 List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoMusteriji((Musterija) zahtev.getArgumenti());
@@ -507,14 +523,6 @@ public class Nit implements Runnable {
                             try {
                                 List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoNacinuIsporuke((String) zahtev.getArgumenti());
                                 odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case OBRISI_PORUDZBINA: {
-                            try {
-                                odgovor.setResult(dbb.obrisiPorudzbina((int) zahtev.getArgumenti()));
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }

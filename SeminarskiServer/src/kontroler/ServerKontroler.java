@@ -6,6 +6,7 @@ package kontroler;
 
 import domain.Mesto;
 import domain.Musterija;
+import domain.Porudzbina;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
@@ -21,6 +22,10 @@ import so.musterija.SoAddMusterija;
 import so.musterija.SoDeleteMusterija;
 import so.musterija.SoGetListMusterija;
 import so.musterija.SoUpdateMusterija;
+import so.porudzbina.SoAddPorudzbina;
+import so.porudzbina.SoDeletePorudzbina;
+import so.porudzbina.SoGetListPorudzbina;
+import so.porudzbina.SoUpdatePorudzbina;
 import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
@@ -322,6 +327,44 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo da ucita stavke");
         }
         return stavke;
+    }
+
+    public int kreirajPorudzbina(Porudzbina porudzbina) throws Exception {
+        SoAddPorudzbina so = new SoAddPorudzbina();
+        so.templateExecute(porudzbina);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Porudzbine nije kreirana!!!");
+        }
+        return id;
+    }
+
+    public void promeniPorudzbina(Porudzbina porudzbina) throws Exception {
+        SoUpdatePorudzbina so = new SoUpdatePorudzbina();
+        so.templateExecute(porudzbina);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni porudzbinu");
+        }
+    }
+
+    public void obrisiPorudzbina(Porudzbina porudzbina) throws Exception {
+        SoDeletePorudzbina so = new SoDeletePorudzbina();
+        so.templateExecute(porudzbina);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise Porudzbinu.");
+        }
+    }
+
+    public List<Porudzbina> vratiListuSviPorudzbina() throws Exception {
+        SoGetListPorudzbina so = new SoGetListPorudzbina();
+        so.templateExecute(new Porudzbina());
+        List<Porudzbina> porudzbine = so.getPorudzbine();
+        if (porudzbine.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da ucita porudzbine");
+        }
+        return porudzbine;
     }
 
 }

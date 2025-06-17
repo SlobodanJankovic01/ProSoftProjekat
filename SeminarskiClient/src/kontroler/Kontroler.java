@@ -609,9 +609,9 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public void obrisiPorudzbina(int idPor) throws Exception {
+    public void obrisiPorudzbina(Porudzbina p) throws Exception {
 
-        Zahtev z = new Zahtev(Operacija.OBRISI_PORUDZBINA, idPor);
+        Zahtev z = new Zahtev(Operacija.OBRISI_PORUDZBINA, p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
