@@ -10,6 +10,7 @@ import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
+import domain.StavkaPorudzbina;
 import java.util.List;
 import so.mesto.SoAddMesto;
 import so.mesto.SoDeleteMesto;
@@ -36,6 +37,9 @@ import so.rrs.SoAddRadnikRadnaSmena;
 import so.rrs.SoDeleteRadnikRadnaSmena;
 import so.rrs.SoGetListRadnikRadnaSmena;
 import so.rrs.SoUpdateRadnikRadnaSmena;
+import so.stavkaporudzbine.SoAddStavkaPorudzbine;
+import so.stavkaporudzbine.SoDeleteStavkaPorudzbine;
+import so.stavkaporudzbine.SoGetListStavkaPorudzbine;
 
 /**
  *
@@ -289,6 +293,35 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo ucita ceo raspored");
         }
         return rrs;
+    }
+
+    public int kreirajStavkaPorudzbine(StavkaPorudzbina stavkaPorudzbina) throws Exception {
+        SoAddStavkaPorudzbine so = new SoAddStavkaPorudzbine();
+        so.templateExecute(stavkaPorudzbina);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Stavka porudzbine nije dodata!!!");
+        }
+        return id;
+    }
+
+    public void obrisiStavkaPorudzbine(StavkaPorudzbina stavkaPorudzbina) throws Exception {
+        SoDeleteStavkaPorudzbine so = new SoDeleteStavkaPorudzbine();
+        so.templateExecute(stavkaPorudzbina);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise stavku porudzbine.");
+        }
+    }
+
+    public List<StavkaPorudzbina> vratiListuSviStavkePorudzbine(int i) throws Exception {
+        SoGetListStavkaPorudzbine so = new SoGetListStavkaPorudzbine();
+        so.templateExecute(new StavkaPorudzbina(i, 0, 0, 0, 0));
+        List<StavkaPorudzbina> stavke = so.getStavke();
+        if (stavke.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da ucita stavke");
+        }
+        return stavke;
     }
 
 }

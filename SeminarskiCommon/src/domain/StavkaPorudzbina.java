@@ -4,7 +4,6 @@
  */
 package domain;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ import java.util.ArrayList;
  *
  * @author Slobodan
  */
-public class StavkaPorudzbina extends AbstractDomainObject{
-    
+public class StavkaPorudzbina extends AbstractDomainObject {
+
     private int idPorudzbina;
     private int rb;
     private int kolicina;
@@ -103,42 +102,42 @@ public class StavkaPorudzbina extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "stavkaporudzbine";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(idPorudzbina,rb,kolicina,cena,idProizvod)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return idPorudzbina + "," + rb + ", " + kolicina + "," + cena + "," + idProizvod;
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "idPorudzbina=" + idPorudzbina + ",rb= " + rb + ", kolicina= " + kolicina + ",cena=" + cena + ",idProizvod=" + idProizvod;
     }
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " idPorudzbina=" + idPorudzbina + " AND rb=" + rb + " AND idProizvod=" + idProizvod;
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE idPorudzbina=" + idPorudzbina;
     }
 
     @Override
@@ -148,10 +147,16 @@ public class StavkaPorudzbina extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            StavkaPorudzbina sp = new StavkaPorudzbina(rs.getInt("idPorudzbina"), rs.getInt("rb"), rs.getInt("kolicina"),
+                    rs.getInt("cena"), rs.getInt("idProizvod"));
+            lista.add(sp);
+        }
+        rs.close();
+        return lista;
     }
-    
-    
-    
-    
+
 }

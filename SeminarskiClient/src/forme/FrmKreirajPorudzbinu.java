@@ -47,6 +47,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
+        btnObrisiStavku.setEnabled(true);
 
         idPorudzbine = id;
         radnik = r;
@@ -569,6 +570,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         }
         int brojac = 0;
         ukupnaCena = 0;
+        redniBroj=1;
 
         if (!sveStavkePorudzbine.isEmpty()) {
             for (StavkaPorudzbina sp : sveStavkePorudzbine) {
@@ -587,6 +589,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
                 ukupnaCena += sp.getCena();
                 brojac++;
+                redniBroj+=1;
             }
         }
 
