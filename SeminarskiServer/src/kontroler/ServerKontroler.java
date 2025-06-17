@@ -9,6 +9,7 @@ import domain.Musterija;
 import domain.Proizvod;
 import domain.RadnaSmena;
 import domain.Radnik;
+import domain.RadnikRadnaSmena;
 import java.util.List;
 import so.mesto.SoAddMesto;
 import so.mesto.SoDeleteMesto;
@@ -31,6 +32,10 @@ import so.radnik.SoAddRadnik;
 import so.radnik.SoDeleteRadnik;
 import so.radnik.SoGetListRadnik;
 import so.radnik.SoUpdateRadnik;
+import so.rrs.SoAddRadnikRadnaSmena;
+import so.rrs.SoDeleteRadnikRadnaSmena;
+import so.rrs.SoGetListRadnikRadnaSmena;
+import so.rrs.SoUpdateRadnikRadnaSmena;
 
 /**
  *
@@ -246,6 +251,44 @@ public class ServerKontroler {
         if (affectedRows == 0) {
             throw new Exception("Sistem nije uspeo da izmeni radnu smenu");
         }
+    }
+
+    public int kreirajRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
+        SoAddRadnikRadnaSmena so = new SoAddRadnikRadnaSmena();
+        so.templateExecute(radnikRadnaSmena);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Raspored nije azuriran!!!");
+        }
+        return id;
+    }
+
+    public void obrisiRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
+        SoDeleteRadnikRadnaSmena so = new SoDeleteRadnikRadnaSmena();
+        so.templateExecute(radnikRadnaSmena);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise smenu iz rasporeda");
+        }
+    }
+
+    public void promeniRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
+        SoUpdateRadnikRadnaSmena so = new SoUpdateRadnikRadnaSmena();
+        so.templateExecute(radnikRadnaSmena);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni smenu u rasporedu");
+        }
+    }
+
+    public List<RadnikRadnaSmena> vratiListuSviRadnikRadnaSmena() throws Exception {
+        SoGetListRadnikRadnaSmena so = new SoGetListRadnikRadnaSmena();
+        so.templateExecute(new RadnikRadnaSmena());
+        List<RadnikRadnaSmena> rrs = so.getRrs();
+        if (rrs.isEmpty()) {
+            throw new Exception("Sistem nije uspeo ucita ceo raspored");
+        }
+        return rrs;
     }
 
 }

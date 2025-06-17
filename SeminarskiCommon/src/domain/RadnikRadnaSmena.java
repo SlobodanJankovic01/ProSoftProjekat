@@ -14,8 +14,8 @@ import java.util.ArrayList;
  *
  * @author Slobodan
  */
-public class RadnikRadnaSmena extends AbstractDomainObject{
-    
+public class RadnikRadnaSmena extends AbstractDomainObject {
+
     private int id;
     private int idRadnik;
     private int idRadnaSmena;
@@ -97,42 +97,42 @@ public class RadnikRadnaSmena extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "rrs";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(idRadnik,idRadnaSmena,datum)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "" + idRadnik + ", " + idRadnaSmena + ",'" + datum + "'";
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " idRadnik= " + idRadnik + ", idRadnaSmena= " + idRadnaSmena + ", datum= '" + datum + "'";
     }
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id=" + id;
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -142,8 +142,22 @@ public class RadnikRadnaSmena extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            int id = rs.getInt("id");
+            int idRadnika = rs.getInt("idRadnik");
+            int idRadneSmene = rs.getInt("idRadnaSmena");
+
+            java.sql.Date sqlDate = rs.getDate("datum");
+            LocalDate datum = sqlDate != null ? sqlDate.toLocalDate() : null;
+
+            RadnikRadnaSmena rrs = new RadnikRadnaSmena(id, idRadnika, idRadneSmene, datum);
+            lista.add(rrs);
+        }
+        rs.close();
+        return lista;
     }
-    
-     
+
 }

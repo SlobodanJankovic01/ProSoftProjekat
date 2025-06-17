@@ -239,9 +239,10 @@ public class FrmRaspored extends javax.swing.JFrame {
 
         int red = tblRaspored.getSelectedRow();
         int idRrs = (int) tblRaspored.getValueAt(red, 0);
+        RadnikRadnaSmena rrs=new RadnikRadnaSmena(idRrs, 0, 0, null);
 
         try {
-            if (Kontroler.getInstance().obrisiRadnikRadnaSmena(idRrs)) {
+            if (Kontroler.getInstance().obrisiRadnikRadnaSmena(rrs)) {
                 JOptionPane.showMessageDialog(this, "Smena uspesno izbrisana");
                 popuniTabelu();
             }

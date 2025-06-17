@@ -22,17 +22,20 @@ import komunikacija.Operacija;
 import static komunikacija.Operacija.KREIRAJ_MUSTERIJA;
 import static komunikacija.Operacija.KREIRAJ_PROIZVOD;
 import static komunikacija.Operacija.KREIRAJ_RADNIKA;
+import static komunikacija.Operacija.KREIRAJ_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.KREIRAJ_RADNUSMENU;
 import static komunikacija.Operacija.OBRISI_MESTO;
 import static komunikacija.Operacija.OBRISI_MUSTERIJU;
 import static komunikacija.Operacija.OBRISI_PROIZVOD;
 import static komunikacija.Operacija.OBRISI_RADNIKA;
+import static komunikacija.Operacija.OBRISI_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.OBRISI_RADNUSMENU;
 import static komunikacija.Operacija.PRETRAGA_MESTA;
 import static komunikacija.Operacija.PROMENI_MESTO;
 import static komunikacija.Operacija.PROMENI_MUSTERIJU;
 import static komunikacija.Operacija.PROMENI_PROIZVOD;
 import static komunikacija.Operacija.PROMENI_RADNIKA;
+import static komunikacija.Operacija.PROMENI_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.PROMENI_RADNU_SMENU;
 import static komunikacija.Operacija.VRATI_MESTA;
 import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
@@ -40,6 +43,7 @@ import static komunikacija.Operacija.VRATI_MUSTERIJE;
 import static komunikacija.Operacija.VRATI_PROIZVODE;
 import static komunikacija.Operacija.VRATI_RADNESMENE;
 import static komunikacija.Operacija.VRATI_RADNIKE;
+import static komunikacija.Operacija.VRATI_RADNIK_RADNA_SMENA;
 import komunikacija.Receiver;
 import komunikacija.Sender;
 import komunikacija.Zahtev;
@@ -80,15 +84,6 @@ public class Nit implements Runnable {
                             try {
                                 radnik = dbb.getRadnik(radnik);
                                 odgovor.setResult(radnik);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case VRATI_RADNIK_RADNA_SMENA: {
-                            try {
-                                List<RadnikRadnaSmena> raspored = dbb.vratiListuSviRadnikRadnaSmena();
-                                odgovor.setResult(raspored);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
@@ -146,6 +141,16 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        case KREIRAJ_RADNIK_RADNA_SMENA: {
+                            try {
+                                if (ServerKontroler.getInstance().kreirajRadnikRadnaSmena((RadnikRadnaSmena) zahtev.getArgumenti()) != -1) {
+                                    odgovor.setResult(true);
+                                }
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
                         case OBRISI_PROIZVOD: {
                             try {
                                 ServerKontroler.getInstance().obrisiProizvod((Proizvod) zahtev.getArgumenti());
@@ -191,6 +196,15 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        case OBRISI_RADNIK_RADNA_SMENA: {
+                            try {
+                                ServerKontroler.getInstance().obrisiRadnikRadnaSmena((RadnikRadnaSmena) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
                         case PROMENI_MESTO: {
                             try {
                                 ServerKontroler.getInstance().promeniMesto((Mesto) zahtev.getArgumenti());
@@ -230,6 +244,15 @@ public class Nit implements Runnable {
                         case PROMENI_RADNU_SMENU: {
                             try {
                                 ServerKontroler.getInstance().promeniRadnaSmena((RadnaSmena) zahtev.getArgumenti());
+                                odgovor.setResult(true);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PROMENI_RADNIK_RADNA_SMENA: {
+                            try {
+                                ServerKontroler.getInstance().promeniRadnikRadnaSmena((RadnikRadnaSmena) zahtev.getArgumenti());
                                 odgovor.setResult(true);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
@@ -298,38 +321,20 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
+                        case VRATI_RADNIK_RADNA_SMENA: {
+                            try {
+                                List<RadnikRadnaSmena> raspored = ServerKontroler.getInstance().vratiListuSviRadnikRadnaSmena();
+                                odgovor.setResult(raspored);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
                         ///////
-                        case KREIRAJ_RADNIK_RADNA_SMENA: {
-                            try {
-                                RadnikRadnaSmena rrs = (RadnikRadnaSmena) zahtev.getArgumenti();
-                                if (dbb.kreirajRadnikRadnaSmena(rrs)) {
-                                    odgovor.setResult(true);
-                                }
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case OBRISI_RADNIK_RADNA_SMENA: {
-                            try {
-                                odgovor.setResult(dbb.obrisiRadnikRadnaSmena((int) zahtev.getArgumenti()));
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
                         case OBRISI_STAVKA_PORUDZBINE: {
                             try {
                                 odgovor.setResult(dbb.obrisiStavkaPorudzbine((StavkaPorudzbina) zahtev.getArgumenti()));
                             } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case PROMENI_RADNIK_RADNA_SMENA: {
-                            try {
-                                odgovor.setResult(dbb.promeniRadnikRadnaSmena((RadnikRadnaSmena) zahtev.getArgumenti()));
-                            } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
                             break;
