@@ -7,6 +7,7 @@ package kontroler;
 import domain.Mesto;
 import domain.Musterija;
 import domain.Proizvod;
+import domain.RadnaSmena;
 import domain.Radnik;
 import java.util.List;
 import so.mesto.SoAddMesto;
@@ -22,6 +23,10 @@ import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
 import so.proizvod.SoUpdateProizvod;
+import so.radnasmena.SoAddRadnaSmena;
+import so.radnasmena.SoDeleteRadnaSmena;
+import so.radnasmena.SoGetListRadnaSmena;
+import so.radnasmena.SoUpdateRadnaSmena;
 import so.radnik.SoAddRadnik;
 import so.radnik.SoDeleteRadnik;
 import so.radnik.SoGetListRadnik;
@@ -202,6 +207,44 @@ public class ServerKontroler {
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
             throw new Exception("Sistem nije uspeo da izmeni radnika");
+        }
+    }
+
+    public int kreirajRadnaSmena(RadnaSmena radnaSmena) throws Exception {
+        SoAddRadnaSmena so = new SoAddRadnaSmena();
+        so.templateExecute(radnaSmena);
+        int id = so.getId();
+        if (id == -1) {
+            throw new Exception("Radna smena nije dodata!!!");
+        }
+        return id;
+    }
+
+    public void obrisiRadnaSmena(RadnaSmena radnaSmena) throws Exception {
+        SoDeleteRadnaSmena so = new SoDeleteRadnaSmena();
+        so.templateExecute(radnaSmena);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izbrise radnu smenu");
+        }
+    }
+
+    public List<RadnaSmena> vratiListuSviRadnaSmena() throws Exception {
+        SoGetListRadnaSmena so = new SoGetListRadnaSmena();
+        so.templateExecute(new RadnaSmena());
+        List<RadnaSmena> radneSmene = so.getRadneSmene();
+        if (radneSmene.isEmpty()) {
+            throw new Exception("Sistem nije uspeo ucita sve radne smene");
+        }
+        return radneSmene;
+    }
+
+    public void promeniRadnaSmena(RadnaSmena radnaSmena) throws Exception {
+        SoUpdateRadnaSmena so = new SoUpdateRadnaSmena();
+        so.templateExecute(radnaSmena);
+        int affectedRows = so.getAffectedRows();
+        if (affectedRows == 0) {
+            throw new Exception("Sistem nije uspeo da izmeni radnu smenu");
         }
     }
 

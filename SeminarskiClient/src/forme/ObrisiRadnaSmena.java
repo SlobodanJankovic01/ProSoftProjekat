@@ -7,6 +7,7 @@ package forme;
 import domain.Mesto;
 import domain.RadnaSmena;
 import java.awt.Color;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -150,15 +151,15 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
         }
 
         int idRadneSmene = (int) tblRadneSmene.getValueAt(selectedRow, 0);
+        RadnaSmena rs = new RadnaSmena(idRadneSmene, null, null, null);
 
         try {
-            if (Kontroler.getInstance().obrisiRadnaSmena(idRadneSmene)) {
-                // Ažuriranje tabele nakon brisanja
+            if (Kontroler.getInstance().obrisiRadnaSmena(rs)) {
                 JOptionPane.showMessageDialog(null, "Sistem je obrisao radnu smenu");
                 popuniTabelu();
             }
         } catch (Exception ex) {
-            Logger.getLogger(ObrisiRadnaSmena.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise radnu smenu");
         }
     }//GEN-LAST:event_btnObrisiActionPerformed

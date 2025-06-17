@@ -227,9 +227,9 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public boolean obrisiRadnaSmena(int idRadneSmene) throws Exception {
+    public boolean obrisiRadnaSmena(RadnaSmena rs) throws Exception {
 
-        Zahtev zahtev = new Zahtev(Operacija.OBRISI_RADNUSMENU, idRadneSmene);
+        Zahtev zahtev = new Zahtev(Operacija.OBRISI_RADNUSMENU, rs);
         sender.send(zahtev);
 
         Odgovor odg = new Odgovor();

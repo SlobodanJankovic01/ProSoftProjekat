@@ -9,12 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 /**
  *
  * @author Slobodan
  */
-public class RadnaSmena extends AbstractDomainObject{
-    
+public class RadnaSmena extends AbstractDomainObject {
+
     private int idRadnaSmena;
     private String naziv;
     private LocalTime vremeOd;
@@ -90,42 +91,42 @@ public class RadnaSmena extends AbstractDomainObject{
 
     @Override
     public String tableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "radnasmena";
     }
 
     @Override
     public String alies() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String textJoin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String insertColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "(naziv,vremeOd,vremeDo)";
     }
 
     @Override
     public String insertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "'" + naziv + "', '" + java.sql.Time.valueOf(vremeOd) + "','" + java.sql.Time.valueOf(vremeDo)+"'";
     }
 
     @Override
     public String updateValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " naziv= '" + naziv + "', vremeOd= '" + java.sql.Time.valueOf(vremeOd) + "',vremeDo='" + java.sql.Time.valueOf(vremeDo)+"'";
     }
 
     @Override
     public String requiredCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return " idRadnaSmena=" + idRadnaSmena;
     }
 
     @Override
     public String conditionForSelect() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
@@ -135,10 +136,23 @@ public class RadnaSmena extends AbstractDomainObject{
 
     @Override
     public ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<AbstractDomainObject> lista = new ArrayList<>();
+
+        while (rs.next()) {
+
+            java.sql.Time sqlVremeOd = rs.getTime("vremeOd");
+            java.sql.Time sqlVremeDo = rs.getTime("vremeDo");
+
+            // Konvertovanje u LocalTime
+            LocalTime vremeOd = sqlVremeOd != null ? sqlVremeOd.toLocalTime() : null;
+            LocalTime vremeDo = sqlVremeDo != null ? sqlVremeDo.toLocalTime() : null;
+
+            RadnaSmena radnasmena = new RadnaSmena(rs.getInt("idRadnaSmena"), rs.getString("naziv"), vremeOd, vremeDo);
+
+            lista.add(radnasmena);
+        }
+        rs.close();
+        return lista;
     }
 
-
-    
-    
 }
