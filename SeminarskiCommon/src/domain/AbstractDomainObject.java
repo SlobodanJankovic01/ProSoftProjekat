@@ -25,5 +25,7 @@ public abstract class AbstractDomainObject implements Serializable {
     public abstract String conditionForSelect();
     public abstract String getIdCondition();
     public abstract ArrayList<AbstractDomainObject> getList(ResultSet rs) throws SQLException;
+    public abstract AbstractDomainObject getAdo(ResultSet rs);
+
     
 }

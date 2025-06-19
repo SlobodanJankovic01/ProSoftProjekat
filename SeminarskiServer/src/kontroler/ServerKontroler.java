@@ -4,6 +4,7 @@
  */
 package kontroler;
 
+import db.DBConnection;
 import domain.Mesto;
 import domain.Musterija;
 import domain.Porudzbina;
@@ -12,31 +13,41 @@ import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
 import domain.StavkaPorudzbina;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import so.mesto.SoAddMesto;
 import so.mesto.SoDeleteMesto;
 import so.mesto.SoGetListMesto;
+import so.mesto.SoLoadMesto;
 import so.mesto.SoSearchMesto;
 import so.mesto.SoUpdateMesto;
 import so.musterija.SoAddMusterija;
 import so.musterija.SoDeleteMusterija;
 import so.musterija.SoGetListMusterija;
+import so.musterija.SoLoadMusterija;
 import so.musterija.SoUpdateMusterija;
 import so.porudzbina.SoAddPorudzbina;
 import so.porudzbina.SoDeletePorudzbina;
 import so.porudzbina.SoGetListPorudzbina;
+import so.porudzbina.SoLoadPorudzbina;
 import so.porudzbina.SoUpdatePorudzbina;
 import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
+import so.proizvod.SoLoadProizvod;
 import so.proizvod.SoUpdateProizvod;
 import so.radnasmena.SoAddRadnaSmena;
 import so.radnasmena.SoDeleteRadnaSmena;
 import so.radnasmena.SoGetListRadnaSmena;
+import so.radnasmena.SoLoadRadnaSmena;
 import so.radnasmena.SoUpdateRadnaSmena;
 import so.radnik.SoAddRadnik;
 import so.radnik.SoDeleteRadnik;
 import so.radnik.SoGetListRadnik;
+import so.radnik.SoLoadRadnik;
 import so.radnik.SoUpdateRadnik;
 import so.rrs.SoAddRadnikRadnaSmena;
 import so.rrs.SoDeleteRadnikRadnaSmena;
@@ -60,6 +71,39 @@ public class ServerKontroler {
             instance = new ServerKontroler();
         }
         return instance;
+    }
+
+    public Radnik getRadnik(Radnik r) throws SQLException {
+
+        try {
+            Connection k = DBConnection.getInstance().getConnection();
+
+            String upit = "SELECT * FROM radnik WHERE korisnickoIme=? AND lozinka=?";
+
+            PreparedStatement ps = k.prepareStatement(upit);
+
+            ps.setString(1, r.getKorIme());
+            ps.setString(2, r.getLoznika());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                r.setIdRadnik(rs.getInt("idRadnik"));
+                r.setIme(rs.getString("ime"));
+                r.setPrezime(rs.getString("prezime"));
+            } else {
+                throw new SQLException("Korisnik ne postoji");
+            }
+
+            rs.close();
+            ps.close();
+            System.out.println("Uspesno ucitavanje Radnika iz baze");
+            return r;
+        } catch (SQLException ex) {
+            System.out.println("Radnik nije pronadjen u bazi");
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 
     public List<Mesto> vratiListuSviMesto() throws Exception {
@@ -365,6 +409,66 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo da ucita porudzbine");
         }
         return porudzbine;
+    }
+
+    public Mesto pretraziMestoPoId(Mesto mesto) throws Exception {
+        SoLoadMesto so = new SoLoadMesto();
+        so.templateExecute(mesto);
+        Mesto m = so.getMesto();
+        if (m == null) {
+            throw new Exception("Sistem nije uspeo da ucita mesto");
+        }
+        return m;
+    }
+
+    public Proizvod pretraziProizvodPoId(Proizvod proizvod) throws Exception {
+        SoLoadProizvod so = new SoLoadProizvod();
+        so.templateExecute(proizvod);
+        Proizvod p = so.getProizvod();
+        if (p == null) {
+            throw new Exception("Sistem nije uspeo da ucita proizvod");
+        }
+        return p;
+    }
+
+    public Musterija pretraziMusterijuPoId(Musterija musterija) throws Exception {
+        SoLoadMusterija so = new SoLoadMusterija();
+        so.templateExecute(musterija);
+        Musterija m = so.getMusterija();
+        if (m == null) {
+            throw new Exception("Sistem nije uspeo da ucita musteriju");
+        }
+        return m;
+    }
+
+    public Porudzbina pretraziPorudzbinuPoId(Porudzbina porudzbina) throws Exception {
+        SoLoadPorudzbina so = new SoLoadPorudzbina();
+        so.templateExecute(porudzbina);
+        Porudzbina p = so.getPorudzbina();
+        if (p == null) {
+            throw new Exception("Sistem nije uspeo da ucita porudzbinu");
+        }
+        return p;
+    }
+
+    public RadnaSmena pretraziRadnuSmenuPoId(RadnaSmena radnaSmena) throws Exception {
+        SoLoadRadnaSmena so = new SoLoadRadnaSmena();
+        so.templateExecute(radnaSmena);
+        RadnaSmena rs = so.getRadnaSmena();
+        if (rs == null) {
+            throw new Exception("Sistem nije uspeo da ucita radnu smenu");
+        }
+        return rs;
+    }
+
+    public Radnik pretraziRadnikaPoId(Radnik radnik) throws Exception {
+        SoLoadRadnik so = new SoLoadRadnik();
+        so.templateExecute(radnik);
+        Radnik r = so.getRadnik();
+        if (r == null) {
+            throw new Exception("Sistem nije uspeo da ucita radnika");
+        }
+        return r;
     }
 
 }

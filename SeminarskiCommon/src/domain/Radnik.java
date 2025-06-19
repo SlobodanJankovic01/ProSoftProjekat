@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -146,7 +148,7 @@ public class Radnik extends AbstractDomainObject {
 
     @Override
     public String getIdCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE idRadnik="+idRadnik;
     }
 
     @Override
@@ -162,6 +164,19 @@ public class Radnik extends AbstractDomainObject {
         }
         rs.close();
         return lista;
+    }
+
+    @Override
+    public AbstractDomainObject getAdo(ResultSet rs) {
+        try {
+            Radnik r = new Radnik(rs.getInt("idRadnik"), rs.getString("ime"), rs.getString("prezime"),
+                    rs.getString("korisnickoIme"), rs.getString("lozinka"));
+
+            return r;
+        } catch (SQLException ex) {
+            Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

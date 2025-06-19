@@ -283,7 +283,8 @@ public class ObrisiRadnik extends javax.swing.JFrame {
 
     private void popuniTabelu(int idRadnik) {
         try {
-            Radnik r = Kontroler.getInstance().pretraziRadnik(idRadnik);
+            Radnik r=new Radnik(idRadnik, null, null, null, null);
+            r = Kontroler.getInstance().pretraziRadnik(r);
 
             if (r.getKorIme() == null) {
                 JOptionPane.showMessageDialog(this, "Ne postoji radnik sa unetim id-ijem, probaj opet");

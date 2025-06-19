@@ -274,7 +274,9 @@ public class ObrisiMesto extends java.awt.Dialog {
     private void popuniTabelu(int idMesta) {
 
         try {
-            Mesto m = Kontroler.getInstance().pretraziMesta(idMesta);
+            Mesto mesto=new Mesto(idMesta, "", "");
+            
+            Mesto m = Kontroler.getInstance().pretraziMesta(mesto);
 
             if (m.getAdresa() == null) {
                 JOptionPane.showMessageDialog(this, "Ne postoji mesto sa unetim id-ijem, probaj opet");

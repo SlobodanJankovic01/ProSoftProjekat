@@ -277,7 +277,8 @@ public class ObrisiProizvod extends java.awt.Dialog {
     private void popuniTabelu(int idProizvoda) {
 
         try {
-            Proizvod p = Kontroler.getInstance().pretraziProizvod(idProizvoda);
+            Proizvod p = new Proizvod(idProizvoda, "", -1);
+            p = Kontroler.getInstance().pretraziProizvod(p);
 
             System.out.println(p);
             if (p.getNaziv() == null) {

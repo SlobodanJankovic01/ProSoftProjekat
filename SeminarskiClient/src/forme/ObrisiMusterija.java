@@ -298,7 +298,9 @@ public class ObrisiMusterija extends java.awt.Dialog {
 
     private void popuniTabelu(int idMusterije) {
         try {
-            Musterija m = Kontroler.getInstance().pretraziMusterija(idMusterije);
+
+            Musterija m = new Musterija(idMusterije, null, null, null, -1);
+            m = Kontroler.getInstance().pretraziMusterija(m);
 
             if (m.getIme() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje musterije po zadatim kriterijumima");

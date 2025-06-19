@@ -382,8 +382,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public Proizvod pretraziProizvod(int idProizvoda) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_PROIZVODA, (int) idProizvoda);
+    public Proizvod pretraziProizvod(Proizvod p) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_PROIZVODA, p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -394,8 +394,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public Mesto pretraziMesta(int idMesta) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_MESTA, (int) idMesta);
+    public Mesto pretraziMesta(Mesto m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_MESTA, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -406,8 +406,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public Musterija pretraziMusterija(int idMusterije) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_MUSTERIJA, (int) idMusterije);
+    public Musterija pretraziMusterija(Musterija m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_MUSTERIJA, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -418,8 +418,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public RadnaSmena pretraziRadnaSmena(int idRadnaSmena) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIH_SMENA, (int) idRadnaSmena);
+    public RadnaSmena pretraziRadnaSmena(RadnaSmena rs) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIH_SMENA, rs);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -430,8 +430,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public Radnik pretraziRadnik(int idRadnik) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIKA, (int) idRadnik);
+    public Radnik pretraziRadnik(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_RADNIKA, r);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -623,8 +623,8 @@ public class Kontroler {
 
     }
 
-    public Porudzbina pretraziPorudzbina(int idPor) throws Exception {
-        Zahtev z = new Zahtev(Operacija.PRETRAGA_PORUDZBINA, (int) idPor);
+    public Porudzbina pretraziPorudzbina(Porudzbina p) throws Exception {
+        Zahtev z = new Zahtev(Operacija.PRETRAGA_PORUDZBINA, p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();

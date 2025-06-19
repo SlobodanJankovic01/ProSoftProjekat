@@ -4,10 +4,11 @@
  */
 package domain;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -125,7 +126,7 @@ public class Musterija extends AbstractDomainObject {
 
     @Override
     public String updateValues() {
-        return " ime= '" + ime + "', prezime= '" + prezime + "', brojTelefona='"+brojTelefona+"', idMesto="+idMesto;
+        return " ime= '" + ime + "', prezime= '" + prezime + "', brojTelefona='" + brojTelefona + "', idMesto=" + idMesto;
     }
 
     @Override
@@ -140,7 +141,7 @@ public class Musterija extends AbstractDomainObject {
 
     @Override
     public String getIdCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE idMusterija="+idMusterija;
     }
 
     @Override
@@ -152,15 +153,33 @@ public class Musterija extends AbstractDomainObject {
             int idMusterija = rs.getInt("idMusterija");
             String ime = rs.getString("ime");
             String prezime = rs.getString("prezime");
-            String brTelefona=rs.getString("brojTelefona");
-            int idMesta=rs.getInt("idMesto");
-            
-            Musterija m = new Musterija(idMusterija, ime, prezime,brTelefona,idMesta);
+            String brTelefona = rs.getString("brojTelefona");
+            int idMesta = rs.getInt("idMesto");
+
+            Musterija m = new Musterija(idMusterija, ime, prezime, brTelefona, idMesta);
 
             lista.add(m);
         }
         rs.close();
         return lista;
+    }
+
+    @Override
+    public AbstractDomainObject getAdo(ResultSet rs) {
+        try {
+            int idMusterija = rs.getInt("idMusterija");
+            String ime = rs.getString("ime");
+            String prezime = rs.getString("prezime");
+            String brTelefona = rs.getString("brojTelefona");
+            int idMesta = rs.getInt("idMesto");
+
+            Musterija m = new Musterija(idMusterija, ime, prezime, brTelefona, idMesta);
+
+            return m;
+        } catch (SQLException ex) {
+            Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

@@ -7,6 +7,8 @@ package domain;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -119,7 +121,7 @@ public class Proizvod extends AbstractDomainObject {
 
     @Override
     public String getIdCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE idProizvod="+idProizvod;
     }
 
     @Override
@@ -132,12 +134,28 @@ public class Proizvod extends AbstractDomainObject {
             String naziv = rs.getString("naziv");
             int jedinicnaCena = rs.getInt("jedinicnaCena");
 
-            Proizvod p=new Proizvod(idProizvod, naziv, jedinicnaCena);
+            Proizvod p = new Proizvod(idProizvod, naziv, jedinicnaCena);
 
             lista.add(p);
         }
         rs.close();
         return lista;
+    }
+
+    @Override
+    public AbstractDomainObject getAdo(ResultSet rs) {
+        try {
+            int idProizvod = rs.getInt("idProizvod");
+            String naziv = rs.getString("naziv");
+            int jedinicnaCena = rs.getInt("jedinicnaCena");
+
+            Proizvod p = new Proizvod(idProizvod, naziv, jedinicnaCena);
+
+            return p;
+        } catch (SQLException ex) {
+            Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

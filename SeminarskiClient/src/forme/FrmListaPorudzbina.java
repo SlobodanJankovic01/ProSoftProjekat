@@ -737,7 +737,8 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
     private Mesto vratiMesto(int idMesto) {
 
         try {
-            return Kontroler.getInstance().pretraziMesta(idMesto);
+            Mesto m=new Mesto(idMesto, null, null);
+            return Kontroler.getInstance().pretraziMesta(m);
         } catch (Exception ex) {
             System.out.println("Greska pri ucitavnju mesta" + ex.getMessage());
         }
@@ -759,7 +760,8 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
     private void popuniTabeluPorudzbina(int idPor) {
         try {
-            Porudzbina p = Kontroler.getInstance().pretraziPorudzbina(idPor);
+            Porudzbina p=new Porudzbina(idPor, null, -1, null, null, -1, -1);
+            p = Kontroler.getInstance().pretraziPorudzbina(p);
 
             if (p.getNacinIsporuke() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje porudzbine po zadatim kriterijumima");

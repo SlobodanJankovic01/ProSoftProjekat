@@ -35,6 +35,11 @@ import static komunikacija.Operacija.OBRISI_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.OBRISI_RADNUSMENU;
 import static komunikacija.Operacija.OBRISI_STAVKA_PORUDZBINE;
 import static komunikacija.Operacija.PRETRAGA_MESTA;
+import static komunikacija.Operacija.PRETRAGA_MUSTERIJA;
+import static komunikacija.Operacija.PRETRAGA_PORUDZBINA;
+import static komunikacija.Operacija.PRETRAGA_PROIZVODA;
+import static komunikacija.Operacija.PRETRAGA_RADNIH_SMENA;
+import static komunikacija.Operacija.PRETRAGA_RADNIKA;
 import static komunikacija.Operacija.PROMENI_MESTO;
 import static komunikacija.Operacija.PROMENI_MUSTERIJU;
 import static komunikacija.Operacija.PROMENI_PORUDZBINA;
@@ -89,7 +94,7 @@ public class Nit implements Runnable {
                         case LOGIN: {
                             Radnik radnik = (Radnik) zahtev.getArgumenti();
                             try {
-                                radnik = dbb.getRadnik(radnik);
+                                radnik = ServerKontroler.getInstance().getRadnik(radnik);
                                 odgovor.setResult(radnik);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
@@ -325,7 +330,53 @@ public class Nit implements Runnable {
                         }
                         case PRETRAGA_MESTA: {
                             try {
-                                odgovor.setResult(dbb.pretraziMesto((int) zahtev.getArgumenti()));
+                                Mesto m = ServerKontroler.getInstance().pretraziMestoPoId((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(m);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PRETRAGA_PROIZVODA: {
+                            try {
+                                Proizvod p = ServerKontroler.getInstance().pretraziProizvodPoId((Proizvod) zahtev.getArgumenti());
+                                odgovor.setResult(p);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PRETRAGA_MUSTERIJA: {
+                            try {
+                                Musterija m = ServerKontroler.getInstance().pretraziMusterijuPoId((Musterija) zahtev.getArgumenti());
+                                odgovor.setResult(m);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PRETRAGA_RADNIKA: {
+                            try {
+                                Radnik r = ServerKontroler.getInstance().pretraziRadnikaPoId((Radnik) zahtev.getArgumenti());
+                                odgovor.setResult(r);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PRETRAGA_RADNIH_SMENA: {
+                            try {
+                                RadnaSmena rs = ServerKontroler.getInstance().pretraziRadnuSmenuPoId((RadnaSmena) zahtev.getArgumenti());
+                                odgovor.setResult(rs);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case PRETRAGA_PORUDZBINA: {
+                            try {
+                                Porudzbina p = ServerKontroler.getInstance().pretraziPorudzbinuPoId((Porudzbina) zahtev.getArgumenti());
+                                odgovor.setResult(p);
                             } catch (Exception e) {
                                 odgovor.setEx(e);
                             }
@@ -396,7 +447,7 @@ public class Nit implements Runnable {
                         }
                         case VRATI_LISTU_SVE_PORUDZBINE: {
                             try {
-                                List<Porudzbina> porudzbine =  ServerKontroler.getInstance().vratiListuSviPorudzbina();
+                                List<Porudzbina> porudzbine = ServerKontroler.getInstance().vratiListuSviPorudzbina();
                                 odgovor.setResult(porudzbine);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
@@ -404,39 +455,10 @@ public class Nit implements Runnable {
                             break;
                         }
                         ///////
-                        case PRETRAGA_PROIZVODA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziProizvod((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
 
-                        case PRETRAGA_MUSTERIJA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziMusterija((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case PRETRAGA_RADNIH_SMENA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziRadnaSmena((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case PRETRAGA_RADNIKA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziRadnik((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+                        
+                        
+                        
 
                         case VRATI_MUSTERIJU_PO_IMENU: {
                             try {
@@ -528,14 +550,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case PRETRAGA_PORUDZBINA: {
-                            try {
-                                odgovor.setResult(dbb.pretraziPorudzbina((int) zahtev.getArgumenti()));
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         default: {
                             odgovor.setEx(new UnsupportedOperationException("Nepoznata operacija: " + operacija));
                         }

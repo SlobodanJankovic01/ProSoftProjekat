@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -161,7 +163,7 @@ public class Porudzbina extends AbstractDomainObject {
 
     @Override
     public String getIdCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE idPorudzbina="+idPorudzbina;
     }
 
     @Override
@@ -177,6 +179,20 @@ public class Porudzbina extends AbstractDomainObject {
         }
         rs.close();
         return lista;
+    }
+
+    @Override
+    public AbstractDomainObject getAdo(ResultSet rs) {
+        try {
+            Porudzbina p = new Porudzbina(rs.getInt("idPorudzbina"), rs.getString("nacinIsporuke"), rs.getInt("ukupnaCena"),
+                    rs.getTimestamp("datumVreme").toLocalDateTime(), rs.getString("napomena"),
+                    rs.getInt("idRadnik"), rs.getInt("idMusterija"));
+
+            return p;
+        } catch (SQLException ex) {
+            Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

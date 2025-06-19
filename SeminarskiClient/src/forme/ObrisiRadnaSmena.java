@@ -284,7 +284,8 @@ public class ObrisiRadnaSmena extends javax.swing.JFrame {
 
     private void popuniTabelu(int idRadnaSmena) {
         try {
-            RadnaSmena rs = Kontroler.getInstance().pretraziRadnaSmena(idRadnaSmena);
+            RadnaSmena rs=new RadnaSmena(idRadnaSmena, "", null, null);
+            rs = Kontroler.getInstance().pretraziRadnaSmena(rs);
 
             if (rs.getNaziv() == null) {
                 JOptionPane.showMessageDialog(this, "Ne postoji radna smena sa unetim id-ijem, probaj opet");

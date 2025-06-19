@@ -638,7 +638,8 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
     private void popuniAtribute() {
 
         try {
-            Porudzbina p = Kontroler.getInstance().pretraziPorudzbina(idPorudzbine);
+            Porudzbina p=new Porudzbina(idPorudzbine, "", -1, null, "", -1, -1);
+            p = Kontroler.getInstance().pretraziPorudzbina(p);
 
             txtNapomena.setText(p.getNapomena());
 

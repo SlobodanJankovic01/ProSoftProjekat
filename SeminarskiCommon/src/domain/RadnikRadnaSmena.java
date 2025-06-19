@@ -4,11 +4,12 @@
  */
 package domain;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -137,7 +138,7 @@ public class RadnikRadnaSmena extends AbstractDomainObject {
 
     @Override
     public String getIdCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "WHERE id="+id;
     }
 
     @Override
@@ -158,6 +159,24 @@ public class RadnikRadnaSmena extends AbstractDomainObject {
         }
         rs.close();
         return lista;
+    }
+
+    @Override
+    public AbstractDomainObject getAdo(ResultSet rs) {
+        try {
+            int id = rs.getInt("id");
+            int idRadnika = rs.getInt("idRadnik");
+            int idRadneSmene = rs.getInt("idRadnaSmena");
+
+            java.sql.Date sqlDate = rs.getDate("datum");
+            LocalDate datum = sqlDate != null ? sqlDate.toLocalDate() : null;
+
+            RadnikRadnaSmena rrs = new RadnikRadnaSmena(id, idRadnika, idRadneSmene, datum);
+            return rrs;
+        } catch (SQLException ex) {
+            Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
