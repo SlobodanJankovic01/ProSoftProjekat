@@ -392,7 +392,7 @@ public class UrediMusterija extends javax.swing.JFrame {
 
         String pretraga = txtPretraga.getText();
         
-        Musterija m=new Musterija(0, pretraga, null, null, -1);
+        Musterija m=new Musterija(0, pretraga, null, null, 0);
 
         List<Musterija> musterije = new ArrayList<>();
         try {
@@ -412,9 +412,9 @@ public class UrediMusterija extends javax.swing.JFrame {
     private void btnPretraga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraga1ActionPerformed
 
         Mesto izabranoMesto = (Mesto) cboxMesto1.getSelectedItem();
-
+        Musterija m=new Musterija(0, null, null, null, izabranoMesto.getIdMesto());
         try {
-            List<Musterija> musterije = Kontroler.getInstance().vratiListuMusterija(izabranoMesto);
+            List<Musterija> musterije = Kontroler.getInstance().vratiListuMusterija(m);
             lblGreska1.setText("");
             JOptionPane.showMessageDialog(this, "Sistem je nasao musterije po zadatim kriterijumima");
             popuniTabelu(musterije);

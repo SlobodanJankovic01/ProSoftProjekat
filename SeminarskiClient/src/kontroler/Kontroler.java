@@ -455,7 +455,7 @@ public class Kontroler {
     }
 
     public List<Musterija> vratiListuMusterija(Musterija m) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_IMENU, m);
+        Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_KRITERIJUMU, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -466,7 +466,7 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Musterija> vratiListuMusterija(Mesto izabranoMesto) throws Exception {
+    /*public List<Musterija> vratiListuMusterija(Mesto izabranoMesto) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_MESTU, izabranoMesto);
         sender.send(z);
 
@@ -476,7 +476,7 @@ public class Kontroler {
         }
 
         throw odg.getEx();
-    }
+    }*/
 
     public List<Proizvod> vratiListuProizvod(Proizvod p) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_PROIZVOD_PO_NAZIVU, p);
@@ -635,8 +635,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Porudzbina> vratiListuPorudzbina(Musterija m) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI, (Musterija) m);
+    public List<Porudzbina> vratiListuPorudzbinaPoKriterijumu(Porudzbina p) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_KRITERIJUMU, (Porudzbina) p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -647,17 +647,6 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Porudzbina> vratiListuPorudzbina(Radnik r) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_RADNIKU, (Radnik) r);
-        sender.send(z);
-
-        Odgovor odg = (Odgovor) receiver.receive();
-        if (odg.getEx() == null) {
-            return (List<Porudzbina>) odg.getResult();
-        }
-
-        throw odg.getEx();
-    }
 
     public List<Porudzbina> vratiListuPorudzbina(Proizvod p) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_PROIZVODU, (Proizvod) p);
@@ -671,7 +660,7 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
+    /*public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE, (String) nacinIsporuke);
         sender.send(z);
 
@@ -681,6 +670,18 @@ public class Kontroler {
         }
 
         throw odg.getEx();
-    }
+    }*/
+    
+   /* public List<Porudzbina> vratiListuPorudzbina(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_RADNIKU, (Radnik) r);
+        sender.send(z);
+
+        Odgovor odg = (Odgovor) receiver.receive();
+        if (odg.getEx() == null) {
+            return (List<Porudzbina>) odg.getResult();
+        }
+
+        throw odg.getEx();
+    }*/
 
 }

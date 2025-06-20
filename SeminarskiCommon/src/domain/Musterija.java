@@ -140,9 +140,9 @@ public class Musterija extends AbstractDomainObject {
             return "";
         }
 
-        //if (!tipovi.isEmpty()) {
-          //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
-        //}
+        if (!(idMesto==0)) {
+          return " WHERE idMesto= " + idMesto;
+        }
 
         return " WHERE ime LIKE '%" + ime + "%' ";
     }

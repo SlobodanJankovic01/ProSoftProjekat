@@ -34,6 +34,7 @@ import so.porudzbina.SoAddPorudzbina;
 import so.porudzbina.SoDeletePorudzbina;
 import so.porudzbina.SoGetListPorudzbina;
 import so.porudzbina.SoLoadPorudzbina;
+import so.porudzbina.SoSearchPorudzbina;
 import so.porudzbina.SoUpdatePorudzbina;
 import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
@@ -465,7 +466,7 @@ public class ServerKontroler {
         return r;
     }
 
-    public List<Musterija> vratiListuSveMusterijePoImenu(Musterija m) throws Exception {
+    public List<Musterija> vratiListuSveMusterijePoKriterijumu(Musterija m) throws Exception {
         SoSearchMusterije so = new SoSearchMusterije();
         so.templateExecute(m);
         List<Musterija> musterije = so.getMusterija();
@@ -513,6 +514,16 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
         }
         return smene;
+    }
+
+    public List<Porudzbina> vratiListuSvePorudzbinePoKriterijumu(Porudzbina porudzbina) throws Exception {
+        SoSearchPorudzbina so = new SoSearchPorudzbina();
+        so.templateExecute(porudzbina);
+        List<Porudzbina> porudzbine = so.getPorudzbina();
+        if (porudzbine.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da ucita porudzbine");
+        }
+        return porudzbine;
     }
 
 }

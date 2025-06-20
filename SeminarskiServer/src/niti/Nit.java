@@ -47,12 +47,12 @@ import static komunikacija.Operacija.PROMENI_PROIZVOD;
 import static komunikacija.Operacija.PROMENI_RADNIKA;
 import static komunikacija.Operacija.PROMENI_RADNIK_RADNA_SMENA;
 import static komunikacija.Operacija.PROMENI_RADNU_SMENU;
+import static komunikacija.Operacija.VRATI_LISTU_PORUDZBINE_PO_KRITERIJUMU;
 import static komunikacija.Operacija.VRATI_LISTU_STAVKE_PORUDZBINE;
 import static komunikacija.Operacija.VRATI_LISTU_SVE_PORUDZBINE;
 import static komunikacija.Operacija.VRATI_MESTA;
 import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
 import static komunikacija.Operacija.VRATI_MUSTERIJE;
-import static komunikacija.Operacija.VRATI_MUSTERIJU_PO_IMENU;
 import static komunikacija.Operacija.VRATI_PROIZVODE;
 import static komunikacija.Operacija.VRATI_PROIZVOD_PO_NAZIVU;
 import static komunikacija.Operacija.VRATI_RADNESMENE;
@@ -449,10 +449,19 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_MUSTERIJU_PO_IMENU: {
+                        case VRATI_MUSTERIJU_PO_KRITERIJUMU: {
                             try {
-                                List<Musterija> musterije = ServerKontroler.getInstance().vratiListuSveMusterijePoImenu((Musterija) zahtev.getArgumenti());
+                                List<Musterija> musterije = ServerKontroler.getInstance().vratiListuSveMusterijePoKriterijumu((Musterija) zahtev.getArgumenti());
                                 odgovor.setResult(musterije);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_LISTU_PORUDZBINE_PO_KRITERIJUMU: {
+                            try {
+                                List<Porudzbina> porudzbine = ServerKontroler.getInstance().vratiListuSvePorudzbinePoKriterijumu((Porudzbina) zahtev.getArgumenti());
+                                odgovor.setResult(porudzbine);
                             } catch (Exception e) {
                                 odgovor.setEx(e);
                             }
@@ -495,38 +504,11 @@ public class Nit implements Runnable {
                             break;
                         }
                         ///////
-                        case VRATI_MUSTERIJU_PO_MESTU: {
-                            try {
-                                List<Musterija> musterije = dbb.vratiListuMusterijaMesto((Mesto) zahtev.getArgumenti());
-                                odgovor.setResult(musterije);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+                        
                         case VRATI_RADNIKE_PO_SMENI: {
                             try {
                                 List<Radnik> radnici = dbb.vratiListuRadnikPoSmeni((RadnaSmena) zahtev.getArgumenti());
                                 odgovor.setResult(radnici);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-
-                        case VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoMusteriji((Musterija) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case VRATI_LISTU_PORUDZBINE_PO_RADNIKU: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoRadniku((Radnik) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
@@ -541,7 +523,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE: {
+                        /*case VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE: {
                             try {
                                 List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoNacinuIsporuke((String) zahtev.getArgumenti());
                                 odgovor.setResult(porudzbine);
@@ -549,8 +531,26 @@ public class Nit implements Runnable {
                                 odgovor.setEx(e);
                             }
                             break;
-                        }
+                        }*/
 
+                        /*case VRATI_MUSTERIJU_PO_MESTU: {
+                            try {
+                                List<Musterija> musterije = dbb.vratiListuMusterijaMesto((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(musterije);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }*/
+                        /*case VRATI_LISTU_PORUDZBINE_PO_RADNIKU: {
+                            try {
+                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoRadniku((Radnik) zahtev.getArgumenti());
+                                odgovor.setResult(porudzbine);
+                            } catch (SQLException e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }*/
                         default: {
                             odgovor.setEx(new UnsupportedOperationException("Nepoznata operacija: " + operacija));
                         }

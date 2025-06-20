@@ -481,8 +481,10 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         try {
 
             Musterija m = (Musterija) cBoxMusterija.getSelectedItem();
+            
+            Porudzbina p=new Porudzbina(0, null, 0, null, null, 0, m.getIdMusterija());
 
-            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(m);
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbinaPoKriterijumu(p);
 
             if (porudzbine.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nema porudzbina za izabranu musteriju");
@@ -503,8 +505,10 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         try {
 
             Radnik r = (Radnik) cBoxRadnik.getSelectedItem();
+            
+            Porudzbina p=new Porudzbina(0, null, 0, null, null, r.getIdRadnik(), 0);
 
-            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(r);
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbinaPoKriterijumu(p);
 
             if (porudzbine.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nema porudzbina za izabranog radnika");
@@ -550,7 +554,9 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
 
             String nacinIsporuke = (String) cBoxNacinIsporuke.getSelectedItem();
 
-            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(nacinIsporuke);
+            Porudzbina p=new Porudzbina(0, nacinIsporuke, 0, null, null, 0, 0);
+
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbinaPoKriterijumu(p);
 
             if (porudzbine.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nema porudzbina za izabran nacin isporuke");

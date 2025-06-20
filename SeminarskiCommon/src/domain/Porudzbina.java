@@ -158,12 +158,25 @@ public class Porudzbina extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
+        if (nacinIsporuke == null && ukupnaCena == 0 && datumVreme == null && idPorudzbina == 0 && napomena == null
+                && idRadnik == 0 && idMusterija == 0) {
+            return "";
+        }
+
+        if (!(idMusterija == 0)) {
+            return " WHERE idMusterija= " + idMusterija;
+        }
+        
+        if (!(idRadnik == 0)) {
+            return " WHERE idRadnik= " + idRadnik;
+        }
+
+        return " WHERE nacinIsporuke LIKE '%" + nacinIsporuke+"%'" ;
     }
 
     @Override
     public String getIdCondition() {
-        return "WHERE idPorudzbina="+idPorudzbina;
+        return "WHERE idPorudzbina=" + idPorudzbina;
     }
 
     @Override
