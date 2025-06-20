@@ -116,12 +116,19 @@ public class Proizvod extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
+        if (naziv == null && jedinicnaCena == 0 && idProizvod==0) {
+            return "";
+        }
+
+        //if (!tipovi.isEmpty()) {
+        //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
+        //}
+        return " WHERE naziv LIKE '%" + naziv + "%' ";
     }
 
     @Override
     public String getIdCondition() {
-        return "WHERE idProizvod="+idProizvod;
+        return "WHERE idProizvod=" + idProizvod;
     }
 
     @Override

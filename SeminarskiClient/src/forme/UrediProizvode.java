@@ -274,10 +274,12 @@ public class UrediProizvode extends javax.swing.JFrame {
     private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
 
         String pretraga = txtPretraga.getText();
+        
+        Proizvod p=new Proizvod(0, pretraga, 0);
 
         List<Proizvod> proizvodi = new ArrayList<>();
         try {
-            proizvodi = Kontroler.getInstance().vratiListuProizvod(pretraga);
+            proizvodi = Kontroler.getInstance().vratiListuProizvod(p);
             lblGreska.setText("");
             popuniTabelu(proizvodi);
         } catch (Exception ex) {

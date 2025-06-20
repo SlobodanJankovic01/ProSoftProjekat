@@ -143,12 +143,19 @@ public class Radnik extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
+        if (ime == null && prezime == null && korIme==null && loznika==null && idRadnik==0) {
+            return "";
+        }
+
+        //if (!tipovi.isEmpty()) {
+        //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
+        //}
+        return " WHERE ime LIKE '%" + ime + "%' ";
     }
 
     @Override
     public String getIdCondition() {
-        return "WHERE idRadnik="+idRadnik;
+        return "WHERE idRadnik=" + idRadnik;
     }
 
     @Override

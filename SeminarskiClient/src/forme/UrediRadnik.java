@@ -368,10 +368,12 @@ public class UrediRadnik extends javax.swing.JFrame {
     private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
 
         String pretraga = txtPretraga.getText();
+        
+        Radnik r=new Radnik(0, pretraga, null, null, null);
 
         List<Radnik> radnici = new ArrayList<>();
         try {
-            radnici = Kontroler.getInstance().vratiListuRadnik(pretraga);
+            radnici = Kontroler.getInstance().vratiListuRadnik(r);
             lblGreska.setText("");
             popuniTabelu(radnici);
         } catch (Exception ex) {

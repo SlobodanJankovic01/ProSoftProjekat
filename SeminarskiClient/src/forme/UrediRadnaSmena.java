@@ -326,10 +326,12 @@ public class UrediRadnaSmena extends javax.swing.JFrame {
     private void btnPretraga2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraga2ActionPerformed
 
         String pretraga = txtPretraga.getText();
+        
+        RadnaSmena rs=new RadnaSmena(0, pretraga, null, null);
 
         List<RadnaSmena> radneSmene = new ArrayList<>();
         try {
-            radneSmene = Kontroler.getInstance().vratiListuRadnaSmena(pretraga);
+            radneSmene = Kontroler.getInstance().vratiListuRadnaSmena(rs);
             lblGreska.setText("");
             popuniTabelu(radneSmene);
         } catch (Exception ex) {

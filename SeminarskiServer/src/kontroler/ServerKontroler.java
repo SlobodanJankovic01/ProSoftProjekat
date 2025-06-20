@@ -28,6 +28,7 @@ import so.musterija.SoAddMusterija;
 import so.musterija.SoDeleteMusterija;
 import so.musterija.SoGetListMusterija;
 import so.musterija.SoLoadMusterija;
+import so.musterija.SoSearchMusterije;
 import so.musterija.SoUpdateMusterija;
 import so.porudzbina.SoAddPorudzbina;
 import so.porudzbina.SoDeletePorudzbina;
@@ -38,16 +39,19 @@ import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
 import so.proizvod.SoGetListProizvod;
 import so.proizvod.SoLoadProizvod;
+import so.proizvod.SoSearchProizvod;
 import so.proizvod.SoUpdateProizvod;
 import so.radnasmena.SoAddRadnaSmena;
 import so.radnasmena.SoDeleteRadnaSmena;
 import so.radnasmena.SoGetListRadnaSmena;
 import so.radnasmena.SoLoadRadnaSmena;
+import so.radnasmena.SoSearchRadnaSmena;
 import so.radnasmena.SoUpdateRadnaSmena;
 import so.radnik.SoAddRadnik;
 import so.radnik.SoDeleteRadnik;
 import so.radnik.SoGetListRadnik;
 import so.radnik.SoLoadRadnik;
+import so.radnik.SoSearchRadnik;
 import so.radnik.SoUpdateRadnik;
 import so.rrs.SoAddRadnikRadnaSmena;
 import so.rrs.SoDeleteRadnikRadnaSmena;
@@ -142,16 +146,6 @@ public class ServerKontroler {
         if (affectedRows == 0) {
             throw new Exception("Sistem nije uspeo da izmeni mesto");
         }
-    }
-
-    public List<Mesto> pretraziMestoPoGradu(Mesto mesto) throws Exception {
-        SoSearchMesto so = new SoSearchMesto();
-        so.templateExecute(mesto);
-        List<Mesto> mesta = so.getMesta();
-        if (mesta.isEmpty()) {
-            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
-        }
-        return mesta;
     }
 
     public int kreirajProizvod(Proizvod p) throws Exception {
@@ -469,6 +463,56 @@ public class ServerKontroler {
             throw new Exception("Sistem nije uspeo da ucita radnika");
         }
         return r;
+    }
+
+    public List<Musterija> vratiListuSveMusterijePoImenu(Musterija m) throws Exception {
+        SoSearchMusterije so = new SoSearchMusterije();
+        so.templateExecute(m);
+        List<Musterija> musterije = so.getMusterija();
+        if (musterije.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da ucita musterije");
+        }
+        return musterije;
+    }
+
+    public List<Mesto> pretraziMestoPoGradu(Mesto mesto) throws Exception {
+        SoSearchMesto so = new SoSearchMesto();
+        so.templateExecute(mesto);
+        List<Mesto> mesta = so.getMesta();
+        if (mesta.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
+        }
+        return mesta;
+    }
+
+    public List<Proizvod> pretraziProizvodPoNazivu(Proizvod proizvod) throws Exception {
+        SoSearchProizvod so = new SoSearchProizvod();
+        so.templateExecute(proizvod);
+        List<Proizvod> proizvodi = so.getProizvod();
+        if (proizvodi.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
+        }
+        return proizvodi;
+    }
+
+    public List<Radnik> pretraziRadnikePoImenu(Radnik radnik) throws Exception {
+        SoSearchRadnik so = new SoSearchRadnik();
+        so.templateExecute(radnik);
+        List<Radnik> radnici = so.getRadnik();
+        if (radnici.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
+        }
+        return radnici;
+    }
+
+    public List<RadnaSmena> pretraziRadneSmenePoNazivu(RadnaSmena radnaSmena) throws Exception {
+        SoSearchRadnaSmena so = new SoSearchRadnaSmena();
+        so.templateExecute(radnaSmena);
+        List<RadnaSmena> smene = so.getRadnaSmena();
+        if (smene.isEmpty()) {
+            throw new Exception("Sistem nije uspeo da pronadje mesta po zadatim kriterijumima");
+        }
+        return smene;
     }
 
 }

@@ -391,10 +391,12 @@ public class UrediMusterija extends javax.swing.JFrame {
     private void btnPretragaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretragaActionPerformed
 
         String pretraga = txtPretraga.getText();
+        
+        Musterija m=new Musterija(0, pretraga, null, null, -1);
 
         List<Musterija> musterije = new ArrayList<>();
         try {
-            musterije = Kontroler.getInstance().vratiListuMusterija(pretraga);
+            musterije = Kontroler.getInstance().vratiListuMusterija(m);
             lblGreska.setText("");
             JOptionPane.showMessageDialog(this, "Sistem je nasao musterije po zadatim kriterijumima");
             popuniTabelu(musterije);

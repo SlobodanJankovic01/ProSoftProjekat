@@ -52,9 +52,13 @@ import static komunikacija.Operacija.VRATI_LISTU_SVE_PORUDZBINE;
 import static komunikacija.Operacija.VRATI_MESTA;
 import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
 import static komunikacija.Operacija.VRATI_MUSTERIJE;
+import static komunikacija.Operacija.VRATI_MUSTERIJU_PO_IMENU;
 import static komunikacija.Operacija.VRATI_PROIZVODE;
+import static komunikacija.Operacija.VRATI_PROIZVOD_PO_NAZIVU;
 import static komunikacija.Operacija.VRATI_RADNESMENE;
+import static komunikacija.Operacija.VRATI_RADNE_SMENE_PO_NAZIVU;
 import static komunikacija.Operacija.VRATI_RADNIKE;
+import static komunikacija.Operacija.VRATI_RADNIKE_PO_IMENU;
 import static komunikacija.Operacija.VRATI_RADNIK_RADNA_SMENA;
 import komunikacija.Receiver;
 import komunikacija.Sender;
@@ -319,15 +323,6 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_MESTA_PO_GRADU: {
-                            try {
-                                List<Mesto> mesta = ServerKontroler.getInstance().pretraziMestoPoGradu((Mesto) zahtev.getArgumenti());
-                                odgovor.setResult(mesta);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
                         case PRETRAGA_MESTA: {
                             try {
                                 Mesto m = ServerKontroler.getInstance().pretraziMestoPoId((Mesto) zahtev.getArgumenti());
@@ -454,25 +449,19 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        ///////
-
-                        
-                        
-                        
-
                         case VRATI_MUSTERIJU_PO_IMENU: {
                             try {
-                                List<Musterija> musterije = dbb.vratiListuMusterija((String) zahtev.getArgumenti());
+                                List<Musterija> musterije = ServerKontroler.getInstance().vratiListuSveMusterijePoImenu((Musterija) zahtev.getArgumenti());
                                 odgovor.setResult(musterije);
-                            } catch (SQLException e) {
+                            } catch (Exception e) {
                                 odgovor.setEx(e);
                             }
                             break;
                         }
-                        case VRATI_MUSTERIJU_PO_MESTU: {
+                        case VRATI_MESTA_PO_GRADU: {
                             try {
-                                List<Musterija> musterije = dbb.vratiListuMusterijaMesto((Mesto) zahtev.getArgumenti());
-                                odgovor.setResult(musterije);
+                                List<Mesto> mesta = ServerKontroler.getInstance().pretraziMestoPoGradu((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(mesta);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
@@ -480,17 +469,36 @@ public class Nit implements Runnable {
                         }
                         case VRATI_PROIZVOD_PO_NAZIVU: {
                             try {
-                                List<Proizvod> proizvodi = dbb.vratiListuProizvod((String) zahtev.getArgumenti());
+                                List<Proizvod> proizvodi = ServerKontroler.getInstance().pretraziProizvodPoNazivu((Proizvod) zahtev.getArgumenti());
                                 odgovor.setResult(proizvodi);
-                            } catch (SQLException e) {
+                            } catch (Exception e) {
                                 odgovor.setEx(e);
                             }
                             break;
                         }
                         case VRATI_RADNIKE_PO_IMENU: {
                             try {
-                                List<Radnik> radnici = dbb.vratiListuRadnik((String) zahtev.getArgumenti());
+                                List<Radnik> radnici = ServerKontroler.getInstance().pretraziRadnikePoImenu((Radnik) zahtev.getArgumenti());
                                 odgovor.setResult(radnici);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_RADNE_SMENE_PO_NAZIVU: {
+                            try {
+                                List<RadnaSmena> radneSmene = ServerKontroler.getInstance().pretraziRadneSmenePoNazivu((RadnaSmena) zahtev.getArgumenti());
+                                odgovor.setResult(radneSmene);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        ///////
+                        case VRATI_MUSTERIJU_PO_MESTU: {
+                            try {
+                                List<Musterija> musterije = dbb.vratiListuMusterijaMesto((Mesto) zahtev.getArgumenti());
+                                odgovor.setResult(musterije);
                             } catch (SQLException e) {
                                 odgovor.setEx(e);
                             }
@@ -505,15 +513,7 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_RADNE_SMENE_PO_NAZIVU: {
-                            try {
-                                List<RadnaSmena> radneSmene = dbb.vratiListuRadnaSmena((String) zahtev.getArgumenti());
-                                odgovor.setResult(radneSmene);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
+
                         case VRATI_LISTU_PORUDZBINE_PO_MUSTERIJI: {
                             try {
                                 List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoMusteriji((Musterija) zahtev.getArgumenti());

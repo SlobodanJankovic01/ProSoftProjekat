@@ -270,7 +270,7 @@ public class UrediMesto extends javax.swing.JFrame {
 
         List<Mesto> mesta = new ArrayList<>();
         try {
-            Mesto m=new Mesto(0, pretraga, "");
+            Mesto m=new Mesto(0, pretraga, null);
             mesta = Kontroler.getInstance().vratiListuMesto(m);
             lblGreska.setText("");
             popuniTabelu(mesta);

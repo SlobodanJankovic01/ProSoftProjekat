@@ -127,8 +127,14 @@ public class RadnaSmena extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
-    }
+        if (naziv == null && vremeOd == null && vremeDo==null && idRadnaSmena==0) {
+            return "";
+        }
+
+        //if (!tipovi.isEmpty()) {
+        //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
+        //}
+        return " WHERE naziv LIKE '%" + naziv + "%' ";    }
 
     @Override
     public String getIdCondition() {

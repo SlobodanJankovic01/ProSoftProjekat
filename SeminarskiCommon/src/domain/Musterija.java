@@ -136,12 +136,20 @@ public class Musterija extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
+        if (ime == null && prezime == null && brojTelefona == null && idMesto == 0 ) {
+            return "";
+        }
+
+        //if (!tipovi.isEmpty()) {
+          //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
+        //}
+
+        return " WHERE ime LIKE '%" + ime + "%' ";
     }
 
     @Override
     public String getIdCondition() {
-        return "WHERE idMusterija="+idMusterija;
+        return "WHERE idMusterija=" + idMusterija;
     }
 
     @Override

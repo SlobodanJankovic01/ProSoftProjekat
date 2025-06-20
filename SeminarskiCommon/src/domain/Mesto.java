@@ -116,12 +116,19 @@ public class Mesto extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
-        return "";
+        if (grad == null && adresa == null && idMesto == 0) {
+            return "";
+        }
+
+        //if (!tipovi.isEmpty()) {
+        //  return " WHERE tt.idTipa= " + tipovi.get(0).getIdTipa();
+        //}
+        return " WHERE grad LIKE '%" + grad + "%' ";
     }
 
     @Override
     public String getIdCondition() {
-        return "WHERE idMesto="+idMesto;
+        return "WHERE idMesto=" + idMesto;
     }
 
     @Override
@@ -148,9 +155,9 @@ public class Mesto extends AbstractDomainObject {
             int idMesto = rs.getInt("idMesto");
             String grad = rs.getString("grad");
             String adresa = rs.getString("adresa");
-            
+
             Mesto m = new Mesto(idMesto, grad, adresa);
-            
+
             return m;
         } catch (SQLException ex) {
             Logger.getLogger(Mesto.class.getName()).log(Level.SEVERE, null, ex);

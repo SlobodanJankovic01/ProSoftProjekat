@@ -454,8 +454,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Musterija> vratiListuMusterija(String pretraga) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_IMENU, pretraga);
+    public List<Musterija> vratiListuMusterija(Musterija m) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_MUSTERIJU_PO_IMENU, m);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -478,8 +478,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Proizvod> vratiListuProizvod(String pretraga) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_PROIZVOD_PO_NAZIVU, pretraga);
+    public List<Proizvod> vratiListuProizvod(Proizvod p) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_PROIZVOD_PO_NAZIVU, p);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -490,8 +490,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<Radnik> vratiListuRadnik(String pretraga) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_RADNIKE_PO_IMENU, pretraga);
+    public List<Radnik> vratiListuRadnik(Radnik r) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_RADNIKE_PO_IMENU, r);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
@@ -514,8 +514,8 @@ public class Kontroler {
         throw odg.getEx();
     }
 
-    public List<RadnaSmena> vratiListuRadnaSmena(String pretraga) throws Exception {
-        Zahtev z = new Zahtev(Operacija.VRATI_RADNE_SMENE_PO_NAZIVU, pretraga);
+    public List<RadnaSmena> vratiListuRadnaSmena(RadnaSmena rs) throws Exception {
+        Zahtev z = new Zahtev(Operacija.VRATI_RADNE_SMENE_PO_NAZIVU, rs);
         sender.send(z);
 
         Odgovor odg = (Odgovor) receiver.receive();
