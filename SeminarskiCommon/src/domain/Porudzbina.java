@@ -174,7 +174,7 @@ public class Porudzbina extends AbstractDomainObject {
     public String conditionForSelect() {
 
         if (pom != null) {
-            return "WHERE sp.idProizvod=" + pom.getIdProizvod();
+            return "WHERE sp.idProizvod=" + pom.getIdProizvod()+" GROUP BY p.idPorudzbina;";
         }
         
         if (nacinIsporuke == null && ukupnaCena == 0 && datumVreme == null && idPorudzbina == 0 && napomena == null
