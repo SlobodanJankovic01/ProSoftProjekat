@@ -68,7 +68,7 @@ public class Kontroler {
             return (Radnik) odgovor.getResult();
         }
 
-        JOptionPane.showMessageDialog(null, "Radnik sa unetim korisnickim imenom ne postoji!");
+        JOptionPane.showMessageDialog(null, "Korisnicko ime i sifra nisu ispravni");
         throw new Exception(odgovor.getEx().getMessage());
     }
 
@@ -648,7 +648,7 @@ public class Kontroler {
     }
 
 
-    public List<Porudzbina> vratiListuPorudzbina(Proizvod p) throws Exception {
+    /*public List<Porudzbina> vratiListuPorudzbina(Proizvod p) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_PROIZVODU, (Proizvod) p);
         sender.send(z);
 
@@ -658,7 +658,7 @@ public class Kontroler {
         }
 
         throw odg.getEx();
-    }
+    }*/
 
     /*public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE, (String) nacinIsporuke);

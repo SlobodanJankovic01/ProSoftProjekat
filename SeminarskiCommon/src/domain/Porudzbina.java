@@ -24,6 +24,7 @@ public class Porudzbina extends AbstractDomainObject {
     private String napomena;
     private int idRadnik;
     private int idMusterija;
+    private Proizvod pom;
 
     public Porudzbina() {
     }
@@ -94,6 +95,14 @@ public class Porudzbina extends AbstractDomainObject {
         this.idMusterija = idMusterija;
     }
 
+    public Proizvod getPom() {
+        return pom;
+    }
+
+    public void setPom(Proizvod pom) {
+        this.pom = pom;
+    }
+
     @Override
     public String toString() {
         return "Porudzbina{" + "idPorudzbina=" + idPorudzbina + ", nacinIsporuke=" + nacinIsporuke + ", ukupnaCena=" + ukupnaCena + ", datumVreme=" + datumVreme + ", napomena=" + napomena + ", idRadnik=" + idRadnik + ", idMusterija=" + idMusterija + '}';
@@ -127,11 +136,16 @@ public class Porudzbina extends AbstractDomainObject {
 
     @Override
     public String alies() {
-        return "";
+        return "p";
     }
 
     @Override
     public String textJoin() {
+
+        if (pom != null) {
+            return "JOIN stavkaporudzbine sp ON p.idPorudzbina = sp.idPorudzbina";
+        }
+
         return "";
     }
 
@@ -158,6 +172,11 @@ public class Porudzbina extends AbstractDomainObject {
 
     @Override
     public String conditionForSelect() {
+
+        if (pom != null) {
+            return "WHERE sp.idProizvod=" + pom.getIdProizvod();
+        }
+        
         if (nacinIsporuke == null && ukupnaCena == 0 && datumVreme == null && idPorudzbina == 0 && napomena == null
                 && idRadnik == 0 && idMusterija == 0) {
             return "";
@@ -166,12 +185,12 @@ public class Porudzbina extends AbstractDomainObject {
         if (!(idMusterija == 0)) {
             return " WHERE idMusterija= " + idMusterija;
         }
-        
+
         if (!(idRadnik == 0)) {
             return " WHERE idRadnik= " + idRadnik;
         }
 
-        return " WHERE nacinIsporuke LIKE '%" + nacinIsporuke+"%'" ;
+        return " WHERE nacinIsporuke LIKE '%" + nacinIsporuke + "%'";
     }
 
     @Override

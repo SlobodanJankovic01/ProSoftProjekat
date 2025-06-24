@@ -53,6 +53,7 @@ import static komunikacija.Operacija.VRATI_LISTU_SVE_PORUDZBINE;
 import static komunikacija.Operacija.VRATI_MESTA;
 import static komunikacija.Operacija.VRATI_MESTA_PO_GRADU;
 import static komunikacija.Operacija.VRATI_MUSTERIJE;
+import static komunikacija.Operacija.VRATI_MUSTERIJU_PO_KRITERIJUMU;
 import static komunikacija.Operacija.VRATI_PROIZVODE;
 import static komunikacija.Operacija.VRATI_PROIZVOD_PO_NAZIVU;
 import static komunikacija.Operacija.VRATI_RADNESMENE;
@@ -449,24 +450,6 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        case VRATI_MUSTERIJU_PO_KRITERIJUMU: {
-                            try {
-                                List<Musterija> musterije = ServerKontroler.getInstance().vratiListuSveMusterijePoKriterijumu((Musterija) zahtev.getArgumenti());
-                                odgovor.setResult(musterije);
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case VRATI_LISTU_PORUDZBINE_PO_KRITERIJUMU: {
-                            try {
-                                List<Porudzbina> porudzbine = ServerKontroler.getInstance().vratiListuSvePorudzbinePoKriterijumu((Porudzbina) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
-                            } catch (Exception e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
                         case VRATI_MESTA_PO_GRADU: {
                             try {
                                 List<Mesto> mesta = ServerKontroler.getInstance().pretraziMestoPoGradu((Mesto) zahtev.getArgumenti());
@@ -498,6 +481,24 @@ public class Nit implements Runnable {
                             try {
                                 List<RadnaSmena> radneSmene = ServerKontroler.getInstance().pretraziRadneSmenePoNazivu((RadnaSmena) zahtev.getArgumenti());
                                 odgovor.setResult(radneSmene);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_MUSTERIJU_PO_KRITERIJUMU: {
+                            try {
+                                List<Musterija> musterije = ServerKontroler.getInstance().vratiListuSveMusterijePoKriterijumu((Musterija) zahtev.getArgumenti());
+                                odgovor.setResult(musterije);
+                            } catch (Exception e) {
+                                odgovor.setEx(e);
+                            }
+                            break;
+                        }
+                        case VRATI_LISTU_PORUDZBINE_PO_KRITERIJUMU: {
+                            try {
+                                List<Porudzbina> porudzbine = ServerKontroler.getInstance().vratiListuSvePorudzbinePoKriterijumu((Porudzbina) zahtev.getArgumenti());
+                                odgovor.setResult(porudzbine);
                             } catch (Exception e) {
                                 odgovor.setEx(e);
                             }

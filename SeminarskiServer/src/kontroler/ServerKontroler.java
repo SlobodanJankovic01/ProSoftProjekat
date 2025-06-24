@@ -521,7 +521,7 @@ public class ServerKontroler {
         so.templateExecute(porudzbina);
         List<Porudzbina> porudzbine = so.getPorudzbina();
         if (porudzbine.isEmpty()) {
-            throw new Exception("Sistem nije uspeo da ucita porudzbine");
+            throw new Exception("Sistem nije pronasao porudzbine sa zadatim kriterijumom");
         }
         return porudzbine;
     }

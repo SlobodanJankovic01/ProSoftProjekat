@@ -530,8 +530,11 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
         try {
 
             Proizvod p = (Proizvod) cBoxProizvod.getSelectedItem();
+            
+            Porudzbina por=new Porudzbina(0, null, 0, null, null, 0, 0);
+            por.setPom(p);
 
-            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbina(p);
+            List<Porudzbina> porudzbine = Kontroler.getInstance().vratiListuPorudzbinaPoKriterijumu(por);
 
             if (porudzbine.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Nema porudzbina za izabran proizvod");
