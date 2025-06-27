@@ -11,9 +11,12 @@ import java.io.Serializable;
  * @author Slobodan
  */
 public class Zahtev implements Serializable {
-    
+
     private Operacija operacija;
     private Object argumenti;
+
+    public Zahtev() {
+    }
 
     public Zahtev(Operacija operacija, Object argumenti) {
         this.operacija = operacija;
@@ -35,7 +38,5 @@ public class Zahtev implements Serializable {
     public void setArgumenti(Object argumenti) {
         this.argumenti = argumenti;
     }
-    
-    
-    
+
 }

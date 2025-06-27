@@ -4,7 +4,7 @@
  */
 package kontroler;
 
-import db.DBConnection;
+import db.DBbroker;
 import domain.Mesto;
 import domain.Musterija;
 import domain.Porudzbina;
@@ -13,9 +13,6 @@ import domain.RadnaSmena;
 import domain.Radnik;
 import domain.RadnikRadnaSmena;
 import domain.StavkaPorudzbina;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import so.mesto.SoAddMesto;
@@ -34,7 +31,6 @@ import so.porudzbina.SoAddPorudzbina;
 import so.porudzbina.SoDeletePorudzbina;
 import so.porudzbina.SoGetListPorudzbina;
 import so.porudzbina.SoLoadPorudzbina;
-import so.porudzbina.SoSearchPorudzbina;
 import so.porudzbina.SoUpdatePorudzbina;
 import so.proizvod.SoAddProizvod;
 import so.proizvod.SoDeleteProizvod;
@@ -80,35 +76,9 @@ public class ServerKontroler {
 
     public Radnik getRadnik(Radnik r) throws SQLException {
 
-        try {
-            Connection k = DBConnection.getInstance().getConnection();
+        Radnik radnik = DBbroker.getInstance().login(r);
 
-            String upit = "SELECT * FROM radnik WHERE korisnickoIme=? AND lozinka=?";
-
-            PreparedStatement ps = k.prepareStatement(upit);
-
-            ps.setString(1, r.getKorIme());
-            ps.setString(2, r.getLoznika());
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                r.setIdRadnik(rs.getInt("idRadnik"));
-                r.setIme(rs.getString("ime"));
-                r.setPrezime(rs.getString("prezime"));
-            } else {
-                throw new SQLException("Korisnik ne postoji");
-            }
-
-            rs.close();
-            ps.close();
-            System.out.println("Uspesno ucitavanje Radnika iz baze");
-            return r;
-        } catch (SQLException ex) {
-            System.out.println("Radnik nije pronadjen u bazi");
-            ex.printStackTrace();
-            throw ex;
-        }
+        return radnik;
     }
 
     public List<Mesto> vratiListuSviMesto() throws Exception {
@@ -517,9 +487,9 @@ public class ServerKontroler {
     }
 
     public List<Porudzbina> vratiListuSvePorudzbinePoKriterijumu(Porudzbina porudzbina) throws Exception {
-        SoSearchPorudzbina so = new SoSearchPorudzbina();
+        SoGetListPorudzbina so = new SoGetListPorudzbina();
         so.templateExecute(porudzbina);
-        List<Porudzbina> porudzbine = so.getPorudzbina();
+        List<Porudzbina> porudzbine = so.getPorudzbine();
         if (porudzbine.isEmpty()) {
             throw new Exception("Sistem nije pronasao porudzbine sa zadatim kriterijumom");
         }

@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Slobodan
- */
+ */ 
 public class Porudzbina extends AbstractDomainObject {
 
     private int idPorudzbina;
@@ -29,7 +29,8 @@ public class Porudzbina extends AbstractDomainObject {
     public Porudzbina() {
     }
 
-    public Porudzbina(int idPorudzbina, String nacinIsporuke, int ukupnaCena, LocalDateTime datumVreme, String napomena, int idRadnik, int idMusterija) {
+    public Porudzbina(int idPorudzbina, String nacinIsporuke, int ukupnaCena, LocalDateTime datumVreme,
+            String napomena, int idRadnik, int idMusterija) {
         this.idPorudzbina = idPorudzbina;
         this.nacinIsporuke = nacinIsporuke;
         this.ukupnaCena = ukupnaCena;

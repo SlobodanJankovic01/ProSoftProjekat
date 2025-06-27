@@ -102,7 +102,7 @@ public class Nit implements Runnable {
                                 radnik = ServerKontroler.getInstance().getRadnik(radnik);
                                 odgovor.setResult(radnik);
                             } catch (SQLException e) {
-                                odgovor.setEx(e);
+                                odgovor.setEx(e); 
                             }
                             break;
                         }
@@ -505,7 +505,7 @@ public class Nit implements Runnable {
                             break;
                         }
                         ///////
-                        
+                        /*
                         case VRATI_RADNIKE_PO_SMENI: {
                             try {
                                 List<Radnik> radnici = dbb.vratiListuRadnikPoSmeni((RadnaSmena) zahtev.getArgumenti());
@@ -523,7 +523,7 @@ public class Nit implements Runnable {
                                 odgovor.setEx(e);
                             }
                             break;
-                        }
+                        }*/
                         /*case VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE: {
                             try {
                                 List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoNacinuIsporuke((String) zahtev.getArgumenti());
