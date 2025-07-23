@@ -2,36 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package so.radnasmena;
+package so.rrs;
 
 import db.DBbroker;
 import domain.AbstractDomainObject;
-import domain.RadnaSmena;
+import domain.RadnikRadnaSmena;
+import java.util.List;
 import so.AbstractSO;
 
 /**
  *
  * @author Slobodan
  */
-public class SoUpdateRadnaSmena extends AbstractSO{
-    private int affectedRows;
+public class SoGetListRRS extends AbstractSO{
+    private List<RadnikRadnaSmena> rrs;
 
-    public int getAffectedRows() {
-        return affectedRows;
+    public List<RadnikRadnaSmena> getRrs() {
+        return rrs;
     }
 
     @Override
     protected void validate(Object obj) throws Exception {
         AbstractDomainObject ado = (AbstractDomainObject) obj;
-        if (!(ado instanceof RadnaSmena)) {
-            throw new Exception("Prosledjeni objekat nije instanca klase RadnaSmena!");
+        if (ado == null || !(ado instanceof RadnikRadnaSmena)) {
+            throw new Exception("Prosledjeni objekat nije instanca klase RadnikRadnaSmena!");
         }
     }
 
     @Override
     protected void execute(Object obj) throws Exception {
         AbstractDomainObject ado = (AbstractDomainObject) obj;
-
-        affectedRows = DBbroker.getInstance().update(ado);
+        List<AbstractDomainObject> lista = DBbroker.getInstance().selectList(ado);
+        rrs = (List<RadnikRadnaSmena>) (List<?>) lista;
     }
 }

@@ -38,22 +38,22 @@ import so.proizvod.SoGetListProizvod;
 import so.proizvod.SoLoadProizvod;
 import so.proizvod.SoSearchProizvod;
 import so.proizvod.SoUpdateProizvod;
-import so.radnasmena.SoAddRadnaSmena;
-import so.radnasmena.SoDeleteRadnaSmena;
-import so.radnasmena.SoGetListRadnaSmena;
-import so.radnasmena.SoLoadRadnaSmena;
-import so.radnasmena.SoSearchRadnaSmena;
-import so.radnasmena.SoUpdateRadnaSmena;
+import so.radnasmena.SoAddRS;
+import so.radnasmena.SoDeleteRS;
+import so.radnasmena.SoGetListRS;
+import so.radnasmena.SoLoadRS;
+import so.radnasmena.SoSearchRS;
+import so.radnasmena.SoUpdateRS;
 import so.radnik.SoAddRadnik;
 import so.radnik.SoDeleteRadnik;
 import so.radnik.SoGetListRadnik;
 import so.radnik.SoLoadRadnik;
 import so.radnik.SoSearchRadnik;
 import so.radnik.SoUpdateRadnik;
-import so.rrs.SoAddRadnikRadnaSmena;
-import so.rrs.SoDeleteRadnikRadnaSmena;
-import so.rrs.SoGetListRadnikRadnaSmena;
-import so.rrs.SoUpdateRadnikRadnaSmena;
+import so.rrs.SoAddRRS;
+import so.rrs.SoDeleteRRS;
+import so.rrs.SoGetListRRS;
+import so.rrs.SoUpdateRRS;
 import so.stavkaporudzbine.SoAddStavkaPorudzbine;
 import so.stavkaporudzbine.SoDeleteStavkaPorudzbine;
 import so.stavkaporudzbine.SoGetListStavkaPorudzbine;
@@ -234,7 +234,7 @@ public class ServerKontroler {
     }
 
     public int kreirajRadnaSmena(RadnaSmena radnaSmena) throws Exception {
-        SoAddRadnaSmena so = new SoAddRadnaSmena();
+        SoAddRS so = new SoAddRS();
         so.templateExecute(radnaSmena);
         int id = so.getId();
         if (id == -1) {
@@ -244,7 +244,7 @@ public class ServerKontroler {
     }
 
     public void obrisiRadnaSmena(RadnaSmena radnaSmena) throws Exception {
-        SoDeleteRadnaSmena so = new SoDeleteRadnaSmena();
+        SoDeleteRS so = new SoDeleteRS();
         so.templateExecute(radnaSmena);
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
@@ -253,7 +253,7 @@ public class ServerKontroler {
     }
 
     public List<RadnaSmena> vratiListuSviRadnaSmena() throws Exception {
-        SoGetListRadnaSmena so = new SoGetListRadnaSmena();
+        SoGetListRS so = new SoGetListRS();
         so.templateExecute(new RadnaSmena());
         List<RadnaSmena> radneSmene = so.getRadneSmene();
         if (radneSmene.isEmpty()) {
@@ -263,7 +263,7 @@ public class ServerKontroler {
     }
 
     public void promeniRadnaSmena(RadnaSmena radnaSmena) throws Exception {
-        SoUpdateRadnaSmena so = new SoUpdateRadnaSmena();
+        SoUpdateRS so = new SoUpdateRS();
         so.templateExecute(radnaSmena);
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
@@ -272,7 +272,7 @@ public class ServerKontroler {
     }
 
     public int kreirajRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
-        SoAddRadnikRadnaSmena so = new SoAddRadnikRadnaSmena();
+        SoAddRRS so = new SoAddRRS();
         so.templateExecute(radnikRadnaSmena);
         int id = so.getId();
         if (id == -1) {
@@ -282,7 +282,7 @@ public class ServerKontroler {
     }
 
     public void obrisiRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
-        SoDeleteRadnikRadnaSmena so = new SoDeleteRadnikRadnaSmena();
+        SoDeleteRRS so = new SoDeleteRRS();
         so.templateExecute(radnikRadnaSmena);
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
@@ -291,7 +291,7 @@ public class ServerKontroler {
     }
 
     public void promeniRadnikRadnaSmena(RadnikRadnaSmena radnikRadnaSmena) throws Exception {
-        SoUpdateRadnikRadnaSmena so = new SoUpdateRadnikRadnaSmena();
+        SoUpdateRRS so = new SoUpdateRRS();
         so.templateExecute(radnikRadnaSmena);
         int affectedRows = so.getAffectedRows();
         if (affectedRows == 0) {
@@ -300,7 +300,7 @@ public class ServerKontroler {
     }
 
     public List<RadnikRadnaSmena> vratiListuSviRadnikRadnaSmena() throws Exception {
-        SoGetListRadnikRadnaSmena so = new SoGetListRadnikRadnaSmena();
+        SoGetListRRS so = new SoGetListRRS();
         so.templateExecute(new RadnikRadnaSmena());
         List<RadnikRadnaSmena> rrs = so.getRrs();
         if (rrs.isEmpty()) {
@@ -417,7 +417,7 @@ public class ServerKontroler {
     }
 
     public RadnaSmena pretraziRadnuSmenuPoId(RadnaSmena radnaSmena) throws Exception {
-        SoLoadRadnaSmena so = new SoLoadRadnaSmena();
+        SoLoadRS so = new SoLoadRS();
         so.templateExecute(radnaSmena);
         RadnaSmena rs = so.getRadnaSmena();
         if (rs == null) {
@@ -477,7 +477,7 @@ public class ServerKontroler {
     }
 
     public List<RadnaSmena> pretraziRadneSmenePoNazivu(RadnaSmena radnaSmena) throws Exception {
-        SoSearchRadnaSmena so = new SoSearchRadnaSmena();
+        SoSearchRS so = new SoSearchRS();
         so.templateExecute(radnaSmena);
         List<RadnaSmena> smene = so.getRadnaSmena();
         if (smene.isEmpty()) {

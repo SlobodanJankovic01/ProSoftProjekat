@@ -415,7 +415,9 @@ public class FrmListaPorudzbina extends javax.swing.JFrame {
             try {
                 Kontroler.getInstance().obrisiPorudzbina(p);
             } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise porudzbinu");
                 System.out.println("Greska pri brisanju porudzbine!" + ex.getMessage());
+                return;
             }
 
             JOptionPane.showMessageDialog(this, "Sistem je obrisao porudzbinu!");

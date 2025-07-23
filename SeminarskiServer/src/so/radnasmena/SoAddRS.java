@@ -13,7 +13,7 @@ import so.AbstractSO;
  *
  * @author Slobodan
  */
-public class SoAddRadnaSmena extends AbstractSO {
+public class SoAddRS extends AbstractSO {
 
     private int id;
 

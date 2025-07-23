@@ -13,27 +13,26 @@ import so.AbstractSO;
  *
  * @author Slobodan
  */
-public class SoAddRadnikRadnaSmena extends AbstractSO{
-    private int id;
+public class SoUpdateRRS extends AbstractSO {
+
+    private int affectedRows;
+
+    public int getAffectedRows() {
+        return affectedRows;
+    }
 
     @Override
     protected void validate(Object obj) throws Exception {
         AbstractDomainObject ado = (AbstractDomainObject) obj;
-
-        if (ado == null || !(ado instanceof RadnikRadnaSmena)) {
-            throw new Exception("Prosledjeni objekat nije instanca klase Radnik radna smena!");
+        if (!(ado instanceof RadnikRadnaSmena)) {
+            throw new Exception("Prosledjeni objekat nije instanca klase RadnikRadnaSmena!");
         }
     }
 
     @Override
     protected void execute(Object obj) throws Exception {
-
         AbstractDomainObject ado = (AbstractDomainObject) obj;
 
-        id = DBbroker.getInstance().insert(ado);
-    }
-
-    public int getId() {
-        return id;
+        affectedRows = DBbroker.getInstance().update(ado);
     }
 }

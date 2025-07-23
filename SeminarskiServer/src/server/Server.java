@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 import niti.Nit;
 
 /**
@@ -20,6 +22,7 @@ public class Server {
     private DBbroker dbb;
     private boolean running;
     private ServerSocket serverSoket;
+    List<Nit> niti=new ArrayList<>();
 
     public Server() {
         dbb = DBbroker.getInstance();
@@ -41,6 +44,7 @@ public class Server {
                     System.out.println("Server:Klijent se povezao sa serverom");
 
                     Nit nit = new Nit(soket, dbb);
+                    niti.add(nit);
                     new Thread(nit).start();
                 } catch (SocketException e) {
                     if (!running) {
@@ -62,6 +66,11 @@ public class Server {
         try {
             if (serverSoket != null && !serverSoket.isClosed()) {
                 serverSoket.close();
+                
+                for (Nit nit : niti) {
+                    nit.prekiniNit();
+                }
+                
             }
         } catch (IOException ex) {
             System.out.println("Greška pri zatvaranju server soketa: " + ex.getMessage());

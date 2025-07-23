@@ -307,7 +307,7 @@ public class UrediMusterija extends javax.swing.JFrame {
             cboxMesto.removeAllItems();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Neuspela promena musterije");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti musteriju");
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniMusterijuActionPerformed
@@ -329,7 +329,8 @@ public class UrediMusterija extends javax.swing.JFrame {
             try {
                 sveMusterije = Kontroler.getInstance().vratiListuSviMusterija();
             } catch (Exception ex) {
-                System.out.println("Greska pri ucitavanju liste radnih smena" + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje musteriju");
+                System.out.println("Sistem ne moze da nadje musteriju" + ex.getMessage());
             }
 
             Musterija izabranaMusterija = null;

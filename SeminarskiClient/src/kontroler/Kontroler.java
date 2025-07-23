@@ -477,7 +477,6 @@ public class Kontroler {
 
         throw odg.getEx();
     }*/
-
     public List<Proizvod> vratiListuProizvod(Proizvod p) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_PROIZVOD_PO_NAZIVU, p);
         sender.send(z);
@@ -618,7 +617,7 @@ public class Kontroler {
         if (odg.getEx() == null) {
             return;
         }
-
+        JOptionPane.showMessageDialog(null, "Sistem ne moze da obrise porudzbinu");
         throw odg.getEx();
 
     }
@@ -660,7 +659,7 @@ public class Kontroler {
         throw odg.getEx();
     }*/
 
-    /*public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
+ /*public List<Porudzbina> vratiListuPorudzbina(String nacinIsporuke) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE, (String) nacinIsporuke);
         sender.send(z);
 
@@ -671,8 +670,7 @@ public class Kontroler {
 
         throw odg.getEx();
     }*/
-    
-   /* public List<Porudzbina> vratiListuPorudzbina(Radnik r) throws Exception {
+ /* public List<Porudzbina> vratiListuPorudzbina(Radnik r) throws Exception {
         Zahtev z = new Zahtev(Operacija.VRATI_LISTU_PORUDZBINE_PO_RADNIKU, (Radnik) r);
         sender.send(z);
 
@@ -683,5 +681,4 @@ public class Kontroler {
 
         throw odg.getEx();
     }*/
-
 }

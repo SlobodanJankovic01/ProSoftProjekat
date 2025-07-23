@@ -388,6 +388,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         String nacinIsporuke = "";
 
         if (!jRadioDostava.isSelected() && !jRadioPreuzimanje.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da kreira porudzbinu");
             JOptionPane.showMessageDialog(this, "Mora biti izabran nacin isporuke!");
             return;
         }
@@ -570,7 +571,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
         }
         int brojac = 0;
         ukupnaCena = 0;
-        redniBroj=1;
+        redniBroj = 1;
 
         if (!sveStavkePorudzbine.isEmpty()) {
             for (StavkaPorudzbina sp : sveStavkePorudzbine) {
@@ -589,7 +590,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
 
                 ukupnaCena += sp.getCena();
                 brojac++;
-                redniBroj+=1;
+                redniBroj += 1;
             }
         }
 
@@ -638,7 +639,7 @@ public class FrmKreirajPorudzbinu extends javax.swing.JFrame {
     private void popuniAtribute() {
 
         try {
-            Porudzbina p=new Porudzbina(idPorudzbine, "", -1, null, "", -1, -1);
+            Porudzbina p = new Porudzbina(idPorudzbine, "", -1, null, "", -1, -1);
             p = Kontroler.getInstance().pretraziPorudzbina(p);
 
             txtNapomena.setText(p.getNapomena());

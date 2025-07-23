@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import komunikacija.Odgovor;
 import komunikacija.Operacija;
 import static komunikacija.Operacija.KREIRAJ_MUSTERIJA;
@@ -76,6 +78,7 @@ public class Nit implements Runnable {
     private DBbroker dbb;
     private Receiver receiver;
     private Sender sender;
+    private boolean stop=true;
 
     public Nit(Socket soket, DBbroker dbb) {
         this.soket = soket;
@@ -88,7 +91,7 @@ public class Nit implements Runnable {
     public void run() {
 
         try {
-            while (true) {
+            while (stop) {
                 try {
                     // Čitaj zahtev
                     Zahtev zahtev = (Zahtev) receiver.receive();
@@ -573,5 +576,18 @@ public class Nit implements Runnable {
         }
 
     }
+    
+    public void prekiniNit(){
+        
+        try {
+            stop=false;
+            soket.close();
+            System.out.println("Prekinuta nit");
+        } catch (IOException ex) {
+            Logger.getLogger(Nit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
 
 }

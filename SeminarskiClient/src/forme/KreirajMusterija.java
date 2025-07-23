@@ -178,6 +178,7 @@ public class KreirajMusterija extends java.awt.Dialog {
         String brTelefona = txtBrTelefona.getText().trim();
 
         if (!validacija()) {
+            JOptionPane.showMessageDialog(null, "Sistem ne moze da kreira musteriju");
             return;
         }
 
@@ -189,7 +190,7 @@ public class KreirajMusterija extends java.awt.Dialog {
                 this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Sistem ne moze da kreira musteriju");
+            JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti musteriju");
             System.out.println(ex.getMessage());
         }
 
@@ -275,7 +276,7 @@ public class KreirajMusterija extends java.awt.Dialog {
             lblGreska.setText("Molimo izaberite mesto.");
             return false;
         }
-        
+
         return true;
     }
 

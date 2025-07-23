@@ -7,40 +7,31 @@ package so.radnasmena;
 import db.DBbroker;
 import domain.AbstractDomainObject;
 import domain.RadnaSmena;
-import java.util.ArrayList;
-import java.util.List;
 import so.AbstractSO;
 
 /**
  *
  * @author Slobodan
  */
-public class SoSearchRadnaSmena extends AbstractSO {
+public class SoUpdateRS extends AbstractSO{
+    private int affectedRows;
 
-    List<RadnaSmena> smene;
-
-    public List<RadnaSmena> getRadnaSmena() {
-        return smene;
+    public int getAffectedRows() {
+        return affectedRows;
     }
 
     @Override
     protected void validate(Object obj) throws Exception {
-
         AbstractDomainObject ado = (AbstractDomainObject) obj;
-
-        if (ado == null || !(ado instanceof RadnaSmena)) {
+        if (!(ado instanceof RadnaSmena)) {
             throw new Exception("Prosledjeni objekat nije instanca klase RadnaSmena!");
         }
-
     }
 
     @Override
     protected void execute(Object obj) throws Exception {
-
         AbstractDomainObject ado = (AbstractDomainObject) obj;
 
-        List<AbstractDomainObject> lista = DBbroker.getInstance().selectList(ado);
-        smene = (ArrayList<RadnaSmena>) (ArrayList<?>) lista;
-
+        affectedRows = DBbroker.getInstance().update(ado);
     }
 }

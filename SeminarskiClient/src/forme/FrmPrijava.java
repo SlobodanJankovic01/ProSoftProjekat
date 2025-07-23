@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Slobodan
@@ -26,7 +25,7 @@ public class FrmPrijava extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
-        
+
         txtKorIme.setText("Admin");
         txtPass.setText("admin123");
     }
@@ -102,63 +101,25 @@ public class FrmPrijava extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
-        
-        
+
         try {
-            String korIme=txtKorIme.getText();
-            String pass=String.valueOf(txtPass.getPassword());
             
-            Radnik r=new Radnik();
+            String korIme = txtKorIme.getText();
+            String pass = String.valueOf(txtPass.getPassword());
+
+            Radnik r = new Radnik();
             r.setKorIme(korIme);
             r.setLoznika(pass);
-            
-            r=Kontroler.getInstance().prijaviRadnik(r);
-            FrmGlavna g=new FrmGlavna(r);
+
+            r = Kontroler.getInstance().prijaviRadnik(r);
+            FrmGlavna g = new FrmGlavna(r);
             this.dispose();
             
-            
-            /*String korIme=txtKorIme.getText();
-            String pass=String.valueOf(txtPass.getPassword());
-            
-            List<Radnik> radnici =new ArrayList<>();
-            radnici=Kontroler.getInstance().vratiListuSviRadnik();
-            
-            boolean postoji=false;
-            Radnik r=new Radnik();
-            
-            for (Radnik radnik : radnici) {
-            if(radnik.getKorIme().equals(korIme)){
-            postoji=true;
-            r=radnik;
-            }
-            }
-            
-            if (!postoji) {
-            JOptionPane.showMessageDialog(this, "Radnik sa unetim korisnickim imenom ne postoji!");
-            return;
-            }
-            
-            postoji=false;
-            
-            for (Radnik radnik : radnici) {
-            if(radnik.getLoznika().equals(pass))
-            postoji=true;
-            }
-            
-            if(!postoji){
-            JOptionPane.showMessageDialog(this, "Neispravna loznika");
-            return;
-            }
-            
-            JOptionPane.showMessageDialog(this, "Korisnicko ime i sifra su ispravni");
-            FrmGlavna g=new FrmGlavna(r);
-            this.dispose();
-            */
         } catch (Exception ex) {
-            System.out.println("Neuspesna prijava!");
-            Logger.getLogger(FrmPrijava.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Ne moze da se otvori glavna forma i meni");
+            System.out.println(ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnPrijavaActionPerformed
 
     /**
