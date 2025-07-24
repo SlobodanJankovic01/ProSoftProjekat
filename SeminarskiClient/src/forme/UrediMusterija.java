@@ -307,7 +307,7 @@ public class UrediMusterija extends javax.swing.JFrame {
             cboxMesto.removeAllItems();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti musteriju");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti musteriju\n"+ex.getMessage());
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnIzmeniMusterijuActionPerformed

@@ -7,8 +7,6 @@ package forme;
 import domain.Radnik;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import kontroler.Kontroler;
 
@@ -123,11 +121,6 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
 
     private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
 
-        if (!validacija()) {
-            JOptionPane.showMessageDialog(this, "Moraju biti popunjena sva polja");
-            return;
-        }
-
         String ime = txtIme.getText();
         String prezime = txtPrezime.getText();
         String korIme = txtKorIme.getText();
@@ -159,7 +152,7 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
             this.dispose();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Neuspesno kreiranje radnika");
+            JOptionPane.showMessageDialog(this, "Neuspesno kreiranje radnika\n"+ex.getMessage());
             System.out.println(ex.getMessage());
         }
 
@@ -213,12 +206,4 @@ public class FrmKreirajRadnika extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtpassLoznika;
     // End of variables declaration//GEN-END:variables
 
-    private boolean validacija() {
-        if (txtIme.getText().trim().isEmpty() || txtKorIme.getText().trim().isEmpty() || txtPrezime.getText().trim().isEmpty() ||
-                String.valueOf(txtpassLoznika.getPassword()).trim().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
 }

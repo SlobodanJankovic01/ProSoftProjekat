@@ -24,6 +24,22 @@ public class SoAddRadnik extends AbstractSO{
         if (ado == null || !(ado instanceof Radnik)) {
             throw new Exception("Prosledjeni objekat nije instanca klase Radnik!");
         }
+        
+        Radnik r = (Radnik) ado;
+        
+        if (r.getIme().isEmpty() || r.getPrezime().isEmpty() || r.getKorIme().isEmpty()
+                || r.getLoznika().isEmpty()) {
+            throw new Exception("Niste popunili sva polja!!!");
+        }
+        
+        if (!r.getIme().matches("[a-zA-Z]+")) {
+            throw new Exception("Ime nije u dobrom formatu!!!");
+        }
+
+        if (!r.getPrezime().matches("[a-zA-Z]+") ) {
+            throw new Exception("Prezime nije u dobrom formatu!!!");
+        }
+        
     }
 
     @Override

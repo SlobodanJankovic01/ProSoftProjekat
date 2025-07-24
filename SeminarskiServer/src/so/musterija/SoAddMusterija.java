@@ -14,17 +14,38 @@ import so.AbstractSO;
  * @author Slobodan
  */
 public class SoAddMusterija extends AbstractSO {
-    
-    
+
     private int id;
 
     @Override
     protected void validate(Object obj) throws Exception {
         AbstractDomainObject ado = (AbstractDomainObject) obj;
-
-        if (ado == null || !(ado instanceof Musterija)) {
+        if (!(ado instanceof Musterija)) {
             throw new Exception("Prosledjeni objekat nije instanca klase Musterija!");
         }
+
+        Musterija m = (Musterija) ado;
+
+        if (m.getIme().isEmpty() || m.getPrezime().isEmpty() || m.getBrojTelefona().isEmpty()) {
+            throw new Exception("Niste popunili sva polja!!!");
+        }
+
+        if (!m.getBrojTelefona().matches("\\d{9,10}")) {
+            throw new Exception("Broj telefona nije u ispravnom formatu!!!");
+        }
+
+        if (m.getIdMesto() == 0) {
+            throw new Exception("Nije popunjeno mesto!!!");
+        }
+        
+        if (!m.getIme().matches("[a-zA-Z]+")) {
+            throw new Exception("Ime nije u dobrom formatu!!!");
+        }
+
+        if (!m.getPrezime().matches("[a-zA-Z]+")) {
+            throw new Exception("Prezime nije u dobrom formatu!!!");
+        }
+
     }
 
     @Override

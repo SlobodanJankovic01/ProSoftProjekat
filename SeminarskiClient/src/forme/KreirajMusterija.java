@@ -172,17 +172,20 @@ public class KreirajMusterija extends java.awt.Dialog {
 
     private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
 
+        if (cboxMesto.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Mora biti izabrano mesto iz liste");
+            return;
+        }
         Mesto mesto = (Mesto) cboxMesto.getSelectedItem();
         String ime = txtIme.getText().trim();
         String prezime = txtPrezime.getText().trim();
         String brTelefona = txtBrTelefona.getText().trim();
 
-        if (!validacija()) {
-            JOptionPane.showMessageDialog(null, "Sistem ne moze da kreira musteriju");
-            return;
-        }
-
-        Musterija m = new Musterija(-1, txtIme.getText(), txtPrezime.getText(), txtBrTelefona.getText(), mesto.getIdMesto());
+        //if (!validacija()) {
+        //  JOptionPane.showMessageDialog(null, "Sistem ne moze da kreira musteriju");
+        //return;
+        //}
+        Musterija m = new Musterija(-1, ime, prezime, brTelefona, mesto.getIdMesto());
 
         try {
             if (Kontroler.getInstance().kreirajMusterija(m)) {
@@ -190,7 +193,7 @@ public class KreirajMusterija extends java.awt.Dialog {
                 this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti musteriju");
+            JOptionPane.showMessageDialog(null, "Sistem ne moze da zapamti musteriju\n"+ex.getMessage());
             System.out.println(ex.getMessage());
         }
 
