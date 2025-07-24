@@ -67,6 +67,7 @@ import komunikacija.Receiver;
 import komunikacija.Sender;
 import komunikacija.Zahtev;
 import kontroler.ServerKontroler;
+import server.Server;
 
 /**
  *
@@ -78,13 +79,16 @@ public class Nit implements Runnable {
     private DBbroker dbb;
     private Receiver receiver;
     private Sender sender;
-    private boolean stop=true;
+    private boolean stop = true;
+    private Server server;
+    private Radnik radnik;
 
-    public Nit(Socket soket, DBbroker dbb) {
+    public Nit(Socket soket, DBbroker dbb, Server server) {
         this.soket = soket;
         this.dbb = dbb;
         receiver = new Receiver(soket);
         sender = new Sender(soket);
+        this.server = server;
     }
 
     @Override
@@ -104,8 +108,10 @@ public class Nit implements Runnable {
                             try {
                                 radnik = ServerKontroler.getInstance().getRadnik(radnik);
                                 odgovor.setResult(radnik);
+                                server.ulogovaniRadnici.add(radnik);
+                                this.radnik = radnik;
                             } catch (SQLException e) {
-                                odgovor.setEx(e); 
+                                odgovor.setEx(e);
                             }
                             break;
                         }
@@ -507,54 +513,6 @@ public class Nit implements Runnable {
                             }
                             break;
                         }
-                        ///////
-                        /*
-                        case VRATI_RADNIKE_PO_SMENI: {
-                            try {
-                                List<Radnik> radnici = dbb.vratiListuRadnikPoSmeni((RadnaSmena) zahtev.getArgumenti());
-                                odgovor.setResult(radnici);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }
-                        case VRATI_LISTU_PORUDZBINE_PO_PROIZVODU: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoProizvodu((Proizvod) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }*/
-                        /*case VRATI_LISTU_PORUDZBINE_PO_NACINU_ISPORUKE: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoNacinuIsporuke((String) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }*/
-
-                        /*case VRATI_MUSTERIJU_PO_MESTU: {
-                            try {
-                                List<Musterija> musterije = dbb.vratiListuMusterijaMesto((Mesto) zahtev.getArgumenti());
-                                odgovor.setResult(musterije);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }*/
-                        /*case VRATI_LISTU_PORUDZBINE_PO_RADNIKU: {
-                            try {
-                                List<Porudzbina> porudzbine = dbb.vratiListuPorudzbinaPoRadniku((Radnik) zahtev.getArgumenti());
-                                odgovor.setResult(porudzbine);
-                            } catch (SQLException e) {
-                                odgovor.setEx(e);
-                            }
-                            break;
-                        }*/
                         default: {
                             odgovor.setEx(new UnsupportedOperationException("Nepoznata operacija: " + operacija));
                         }
@@ -569,6 +527,9 @@ public class Nit implements Runnable {
             }
         } finally {
             try {
+                if (radnik != null) {
+                    server.ulogovaniRadnici.remove(radnik);
+                }
                 soket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -576,18 +537,20 @@ public class Nit implements Runnable {
         }
 
     }
-    
-    public void prekiniNit(){
-        
+
+    public void prekiniNit() {
+
         try {
-            stop=false;
+            if (radnik != null) {
+                server.ulogovaniRadnici.remove(radnik);
+            }
+            stop = false;
             soket.close();
             System.out.println("Prekinuta nit");
         } catch (IOException ex) {
             Logger.getLogger(Nit.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
 
 }

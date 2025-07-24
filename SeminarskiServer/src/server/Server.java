@@ -5,6 +5,7 @@
 package server;
 
 import db.DBbroker;
+import domain.Radnik;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +23,8 @@ public class Server {
     private DBbroker dbb;
     private boolean running;
     private ServerSocket serverSoket;
-    List<Nit> niti=new ArrayList<>();
+    List<Nit> niti = new ArrayList<>();
+    public List<Radnik> ulogovaniRadnici = new ArrayList<>();
 
     public Server() {
         dbb = DBbroker.getInstance();
@@ -43,7 +45,7 @@ public class Server {
                     Socket soket = serverSoket.accept();
                     System.out.println("Server:Klijent se povezao sa serverom");
 
-                    Nit nit = new Nit(soket, dbb);
+                    Nit nit = new Nit(soket, dbb,this);
                     niti.add(nit);
                     new Thread(nit).start();
                 } catch (SocketException e) {
@@ -60,22 +62,25 @@ public class Server {
             System.out.println("Greska" + ex.getMessage());
         }
     }
-    
+
     public void stopServer() {
         running = false;
         try {
             if (serverSoket != null && !serverSoket.isClosed()) {
                 serverSoket.close();
-                
+
                 for (Nit nit : niti) {
                     nit.prekiniNit();
                 }
-                
+
             }
         } catch (IOException ex) {
             System.out.println("Greška pri zatvaranju server soketa: " + ex.getMessage());
         }
     }
-    
 
+    public List<Radnik> getUlogovaniRadnici() {
+        return ulogovaniRadnici;
+    }
+    
 }
